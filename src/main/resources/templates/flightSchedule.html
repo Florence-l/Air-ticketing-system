@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>查询结果</title>
+
+    <style>
+        * {
+            margin: 0.25rem;
+            padding: 0.25rem;
+            border-collapse: collapse;
+        }
+        body {
+            display: flex;
+            flex-direction: column;
+            background-image: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            background-size: cover;
+            background-repeat: no-repeat;
+            vertical-align: middle;
+            background-attachment: fixed;
+        }
+        header {
+            border: none;
+            background-image: linear-gradient(to right, rgba(46, 105, 224, 0.7), rgba(0, 255, 255, 0.18));
+            background-color: rgb(249, 252, 184);
+            box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.18);
+            padding: 1rem;
+        }
+
+        h1 {
+            font-family: Raleway, serif;
+            text-align: center;
+            font-size: xx-large;
+            color: white;
+        }
+        div.card {
+            background-color: rgba(255, 255, 255, 0.9);
+            box-shadow: 0 15px 30px -10px grey;
+            place-items: center;
+            font-size: medium;
+            margin: 2rem;
+            text-align: center;
+            display:inline-block;
+
+        }
+
+        #flight {
+            font-family: Arial, Helvetica, sans-serif;
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        #flight td, #flight th {
+            border: 1px solid #ddd;
+            padding: 8px;
+        }
+
+        #flight tr:nth-child(even){
+            background-color: #f2f2f2;
+        }
+
+        #flight tr:hover {
+            background-color: #ddd;
+        }
+
+        #flight th {
+            padding-top: 12px;
+            padding-bottom: 12px;
+            text-align: left;
+            background-color: #50508b;
+            color: white;
+        }
+
+        a.one:link, a.one:visited {
+            background-color: white;
+            color: black;
+            border: 2px solid #3acd99;
+            padding: 10px 20px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        a.one:hover, a.one:active {
+            background-color: green;
+            color: white;
+        }
+
+
+
+    </style>
+</head>
+<body data-new-gr-c-s-check-loaded="14.1008.0" data-gr-ext-installed="">
+<header class="heading">
+    <h1>查询结果</h1>
+</header>
+
+<div class="card">
+    <form id="flightinquiry" >
+
+        <label for="source">
+            出发地
+        </label>
+        <input id="source" name="source">
+        <br>
+
+        <label for="destination">
+            目的地
+        </label>
+        <input id="destination" name="destination">
+
+        <br>
+        <label for="date">
+            日期
+        </label>
+        <input id="date" name="date" type="date" value="">
+
+    </form>
+</div>
+
+<div class="card">
+
+<table id="flight">
+    <thead>
+    <tr>
+        <th>航班号</th>
+        <th>日期</th>
+        <th>出发地</th>
+        <th>目的地</th>
+        <th>出发时间</th>
+        <th>到达时间</th>
+        <th>余量</th>
+        <th>金额</th>
+        <th>预定</th>
+    </tr>
+    </thead>
+    <tbody>
+
+    <tr>
+        <td>1</td>
+        <td>5.24</td>
+        <td>上海</td>
+        <td>北京</td>
+        <td>01:00</td>
+        <td>03:00</td>
+        <td>200</td>
+        <td>500</td>
+        <td> <input type="submit" value="预定"></td>
+    </tr>
+    <tr>
+        <td>2</td>
+        <td>5.24</td>
+        <td>厦门</td>
+        <td>北京</td>
+        <td>11:00</td>
+        <td>13:00</td>
+        <td>200</td>
+        <td>500</td>
+        <td> <input type="submit" value="预定"></td>
+    </tr>
+    <tr>
+        <td>3</td>
+        <td>5.24</td>
+        <td>厦门</td>
+        <td>北京</td>
+        <td>11:00</td>
+        <td>13:00</td>
+        <td>200</td>
+        <td>500</td>
+        <td> <input type="submit" value="预定"></td>
+    </tr>
+    <tr>
+        <td>4</td>
+        <td>5.24</td>
+        <td>厦门</td>
+        <td>北京</td>
+        <td>11:00</td>
+        <td>13:00</td>
+        <td>200</td>
+        <td>500</td>
+        <td> <input type="submit" value="预定"></td>
+    </tr>
+    </tbody>
+</table>
+
+</div>
+
+
+</body>
+</body>
+
+</body>
+</html>
