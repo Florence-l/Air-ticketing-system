@@ -1,9 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE generatorConfiguration
         PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
-        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd" >
+
 <generatorConfiguration>
-    <context id="DB2Tables"    targetRuntime="MyBatis3">
+
+
+    <context id="DB2Tables"   targetRuntime="MyBatis3">
         <commentGenerator>
             <property name="suppressDate" value="true"/>
             <property name="suppressAllComments" value="true"/>
@@ -54,6 +58,11 @@
                enableSelectByExample="false"
                selectByExampleQueryId="false">
         </table>
+
+        <mappers>
+            <mapper resource="com/example/demo2/mapper/FlightMapper.xml">
+            </mapper>
+        </mappers>
 
     </context>
 </generatorConfiguration>
