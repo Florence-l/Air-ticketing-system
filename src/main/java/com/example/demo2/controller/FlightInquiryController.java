@@ -19,10 +19,16 @@ public class FlightInquiryController {
       public String inquiry(){
        return "flightInquiry"; }
 
-    @GetMapping("/test")
-    public String index(){
+    @GetMapping("/test1")
+    public String test1(){
+        return "common";
+    }
+
+    @GetMapping("/test2")
+    public String test2(){
         return "test";
     }
+
 
     @RequestMapping("/flightSchedule")
     public String schedule(){

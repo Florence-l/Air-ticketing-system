@@ -3,9 +3,11 @@
 <head>
   <meta charset="UTF-8">
   <title>航班查询</title>
-  <script src="//apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
-  <script src="http://cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <link rel="stylesheet" th:href="@{layui/css/layui.css}">
+  <script type="text/javascript" src="/js/jquery-1.8.3.min.js"></script>
+  <link type="text/css" rel="stylesheet" href="/css/style.css"/>
+</head>
   <style>
     * {
       margin: 0.25rem;
@@ -47,6 +49,7 @@
     }
 
   </style>
+
 </head>
 <body data-new-gr-c-s-check-loaded="14.1008.0" data-gr-ext-installed="">
 <header class="heading">
@@ -54,6 +57,7 @@
 </header>
 
 <div class="card">
+  <img src="/images/plane.jpg"/>
   <form id="flightInquery" action="/flightSchedule" method="post">
 
     <label for="source">
@@ -96,4 +100,5 @@
 </div>
 </body>
 
-</body></html>
+</body>
+</html>
