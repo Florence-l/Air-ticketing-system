@@ -15,10 +15,14 @@ import java.util.Date;
 public class FlightInquiryController {
    @Autowired
 
-    @GetMapping("/flightInquiry")
+    @GetMapping("/index")
       public String inquiry(){
        return "flightInquiry"; }
 
+    @GetMapping("/test")
+    public String index(){
+        return "test";
+    }
 
     @RequestMapping("/flightSchedule")
     public String schedule(){

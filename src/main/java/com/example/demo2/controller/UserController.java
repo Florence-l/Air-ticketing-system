@@ -12,7 +12,7 @@ public class UserController {
     @Autowired
     public UserService userService;
 
-    @RequestMapping(value = {"/"})
+    @GetMapping("/")
     public String RegisterHtml() {
         return "login3";
     }
