@@ -69,8 +69,8 @@ public class BrowerSecurityConfig extends WebSecurityConfigurerAdapter {
 
                 .and()
                 .authorizeRequests()
-                .antMatchers("/register","/login").permitAll()
-                .antMatchers("/css/**","/*.css").permitAll() // 在这里添加
+                .antMatchers("/register","/login","/index").permitAll()
+                .antMatchers("/css/*","/*.css","/style2.css").permitAll() // 在这里添加
                 .anyRequest().authenticated()
 
                 //记住我功能
@@ -97,7 +97,7 @@ public class BrowerSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     public void configure(WebSecurity web) throws Exception {
         //解决静态文件拦截的问题
-        web.ignoring().antMatchers("/register","static/css/**","/*.css");
+        web.ignoring().antMatchers("/register","/css/**","/**/*.css");
     }
 
 }
