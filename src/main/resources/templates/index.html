@@ -1,10 +1,230 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
-    <meta charset="UTF-8">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <title>index</title>
+    <link rel="stylesheet" th:href="@{layui/css/layui.css}">
+    <script type="text/javascript" src="/js/jquery-1.8.3.min.js"></script>
+    <link type="text/css" rel="stylesheet" href="/css/jqstyle.css"/>
+    <link rel="stylesheet" href="/css/index.css"/>
 </head>
 <body>
-<h1>登录成功</h1>
+
+<th:block th:include="common.html :: header"></th:block>
+<!--<div class="layui-carousel" id="test2" style="margin-top: 15px;">-->
+<!--    <div carousel-item="">-->
+<!--        <div>条目1</div>-->
+<!--    </div>-->
+<!--</div>-->
+
+<div class="tab_contents" style="margin-top: 50px;" >
+    <!--导航条-->
+    <ul class="tab_nav">
+        <li class="tabNav_active"><h2>国内/国际机票</h2></li>
+        <li><h2>在线选座</h2></li>
+        <li><h2>退票改签</h2></li>
+    </ul>
+    <!--面板区-->
+    <ul class="tab_box">
+        <li class="tabBox_active">
+            <form id="flightInquiry" action="/find_flight_required" method="post">
+            <div class="layui-form-item" style="font-size: 15px;color: #0C0C0C;font-family:'Microsoft YaHei'">
+                <label class="layui-form-label" >出发地</label>
+                    <input name="departurecity" type="text" required="required" class="layui-input">
+                <label class="layui-form-label">目的地</label>
+                    <input name="destination" type="text" required="required" class="layui-input">
+                <label class="layui-form-label">日期</label>
+                    <input name="date"  type="date" class="layui-input">
+            </div>
+
+            <div>
+                <button type="submit">查询
+                </button>
+            </div>
+            </form>
+        </li>
+        <li>
+            <div>
+                <h2>在线选座</h2>
+                <button>
+                    <a href="">Look at all ></a>
+                </button>
+            </div>
+        </li>
+        <li>
+            <div>
+                <h2>退票改签</h2>
+                <button>
+                    <a href="">Look at all></a>
+                </button>
+            </div>
+        </li>
+    </ul>
+</div>
+<br>
+<div style="width: 1200px;height: 300px" >
+<table class="flight">
+    <thead>
+    <tr>
+        <th>航班号</th>
+        <th>飞机号</th>
+        <th>出发地</th>
+        <th>目的地</th>
+        <th>出发时间</th>
+        <th>到达时间</th>
+        <th>日期</th>
+        <th>目的机场</th>
+        <th>出发机场</th>
+        <th>经过城市</th>
+
+    </tr>
+    </thead>
+    <tbody>
+
+    <tr th:each="fli:${flight}">
+        <th th:text="${fli.flightId}"></th>
+        <th th:text="${fli.airplaneId}"></th>
+        <td th:text="${fli.departurecity}"></td>
+        <td th:text="${fli.arrivalcity}"></td>
+        <td th:text="${fli.departuretime}"></td>
+        <td th:text="${fli.arrivaltime}"></td>
+        <td th:date="${fli.date}"></td>
+        <td th:text="${fli.departureAirport}"></td>
+        <td th:text="${fli.arrivalAirport}"></td>
+        <td th:text="${fli.passbyCity}"></td>
+        <td> <input type="submit" value="预定"></td>
+    </tr>
+
+    </tbody>
+</table>
+</div>
+<th:block th:include="common.html :: footer"></th:block>
+
+<script>
+    layui.use(['carousel', 'form'], function(){
+        var carousel = layui.carousel
+            ,form = layui.form;
+
+        //常规轮播
+        carousel.render({
+            elem: '#test1'
+            ,arrow: 'always'
+        });
+
+        //改变下时间间隔、动画类型、高度
+        carousel.render({
+            elem: '#test2'
+            ,interval: 1800
+            ,anim: 'fade'
+            ,height: '120px'
+        });
+
+        //设定各种参数
+        var ins3 = carousel.render({
+            elem: '#test3'
+        });
+        //图片轮播
+        carousel.render({
+            elem: '#test10'
+            ,width: '778px'
+            ,height: '440px'
+            ,interval: 5000
+        });
+
+        //事件
+        carousel.on('change(test4)', function(res){
+            console.log(res)
+        });
+
+        var $ = layui.$, active = {
+            set: function(othis){
+                var THIS = 'layui-bg-normal'
+                    ,key = othis.data('key')
+                    ,options = {};
+
+                othis.css('background-color', '#5FB878').siblings().removeAttr('style');
+                options[key] = othis.data('value');
+                ins3.reload(options);
+            }
+        };
+
+        //监听开关
+        form.on('switch(autoplay)', function(){
+            ins3.reload({
+                autoplay: this.checked
+            });
+        });
+
+        $('.demoSet').on('keyup', function(){
+            var value = this.value
+                ,options = {};
+            if(!/^\d+$/.test(value)) return;
+
+            options[this.name] = value;
+            ins3.reload(options);
+        });
+
+        //其它示例
+        $('.demoTest .layui-btn').on('click', function(){
+            var othis = $(this), type = othis.data('type');
+            active[type] ? active[type].call(this, othis) : '';
+        });
+    });
+
+    let tabNavItem = document.querySelectorAll(".tab_nav>li");
+    let tabBoxItem = document.querySelectorAll(".tab_box>li");
+    /*选中部分*/
+    let tabNavActive = document.querySelector(".tabNav_active");
+    let tabBoxActive = document.querySelector(".tabBox_active");
+
+    /*
+    思路:
+    循环遍历导航条
+    点击导航条切换类名控制显示与隐藏
+    */
+
+    tabNavItem.forEach(function (item, index) {
+        item.onmouseenter = function () {
+            tabNavActive.className = "";
+            this.className = "tabNav_active";
+            tabNavActive = this;
+
+            tabBoxActive.className = "";
+            tabBoxItem[index].className = "tabBox_active";
+            tabBoxActive = tabBoxItem[index];
+        }
+    })
+
+</script>
+<!--<script th:inline="none">-->
+<!--    layui.use(['table'], function(){-->
+<!--        var table = layui.table;//使用数据表格-->
+
+<!--        table.render({-->
+<!--            elem: '#orderList'-->
+<!--            ,height: 500-->
+<!--            ,url: 'order' //数据接口-->
+<!--            ,limit: 10-->
+<!--            ,limits: [10, 20, 30, 50]-->
+<!--            ,toolbar: 'default'-->
+<!--            ,page: true //开启分页-->
+<!--            ,cols: [[ //表头-->
+<!--                {field: 'order_id', title: '订单号', width:80, sort: true, fixed: 'left'}-->
+<!--                ,{field: 'passenger_id', title: '乘客号', width:80}-->
+<!--                ,{field: 'user_id', title: '用户ID', width:80}-->
+<!--                ,{field: 'flight_id', title: '航班号', width:80}-->
+<!--                ,{field: 'orderTime', title: '预定时间', width: 177}-->
+<!--                ,{field: 'paymentStatus', title: '支付状态', width: 80}-->
+<!--                ,{field: 'paymentTime', title: '支付时间', width: 177}-->
+<!--                ,{field: 'seat_id', title: '座位号', width: 80}-->
+<!--                ,{field: 'realPrice', title: '支付金额', width: 135}-->
+<!--            ]]-->
+<!--        });-->
+
+<!--    });-->
+
+<!--</script>-->
+</script>
 </body>
 </html>

@@ -1,8 +1,13 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
-    <meta charset="UTF-8">
-    <title>查询结果</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>result</title>
+    <link rel="stylesheet" th:href="@{layui/css/layui.css}">
+    <script type="text/javascript" src="/js/jquery-1.8.3.min.js"></script>
+    <link type="text/css" rel="stylesheet" href="/css/jqstyle.css"/>
+    <link rel="stylesheet" href="/css/index.css"/>
 
     <style>
         * {
@@ -95,99 +100,29 @@
     <h1>查询结果</h1>
 </header>
 
-<div class="card">
-    <form id="flightinquiry" >
 
-        <label for="source">
-            出发地
-        </label>
-        <input id="source" name="source">
-        <br>
-
-        <label for="destination">
-            目的地
-        </label>
-        <input id="destination" name="destination">
-
-        <br>
-        <label for="date">
-            日期
-        </label>
-        <input id="date" name="date" type="date" value="">
-
-    </form>
-</div>
-
-<div class="card">
-
-<table id="flight">
+<table class="flight">
     <thead>
     <tr>
         <th>航班号</th>
-        <th>日期</th>
         <th>出发地</th>
         <th>目的地</th>
-        <th>出发时间</th>
-        <th>到达时间</th>
-        <th>余量</th>
-        <th>金额</th>
-        <th>预定</th>
+        <th>日期</th>
+
     </tr>
     </thead>
     <tbody>
 
-    <tr>
-        <td>1</td>
-        <td>5.24</td>
-        <td>上海</td>
-        <td>北京</td>
-        <td>01:00</td>
-        <td>03:00</td>
-        <td>200</td>
-        <td>500</td>
+    <tr th:each="fli:${flight}">
+        <td th:text="${fli.departurecity}"></td>
+        <td th:text="${fli.arrivalcity}"></td>
+        <td th:date="${fli.date}"></td>
         <td> <input type="submit" value="预定"></td>
     </tr>
-    <tr>
-        <td>2</td>
-        <td>5.24</td>
-        <td>厦门</td>
-        <td>北京</td>
-        <td>11:00</td>
-        <td>13:00</td>
-        <td>200</td>
-        <td>500</td>
-        <td> <input type="submit" value="预定"></td>
-    </tr>
-    <tr>
-        <td>3</td>
-        <td>5.24</td>
-        <td>厦门</td>
-        <td>北京</td>
-        <td>11:00</td>
-        <td>13:00</td>
-        <td>200</td>
-        <td>500</td>
-        <td> <input type="submit" value="预定"></td>
-    </tr>
-    <tr>
-        <td>4</td>
-        <td>5.24</td>
-        <td>厦门</td>
-        <td>北京</td>
-        <td>11:00</td>
-        <td>13:00</td>
-        <td>200</td>
-        <td>500</td>
-        <td> <input type="submit" value="预定"></td>
-    </tr>
+
     </tbody>
 </table>
 
-</div>
-
-
-</body>
 </body>
 
-</body>
 </html>

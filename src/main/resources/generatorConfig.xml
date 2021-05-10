@@ -6,7 +6,6 @@
 
 <generatorConfiguration>
 
-
     <context id="DB2Tables"   targetRuntime="MyBatis3">
         <commentGenerator>
             <property name="suppressDate" value="true"/>
@@ -59,10 +58,13 @@
                selectByExampleQueryId="false">
         </table>
 
-        <mappers>
-            <mapper resource="com/example/demo2/mapper/FlightMapper.xml">
-            </mapper>
-        </mappers>
+        <table tableName="flight_table" domainObjectName="Flight"
+               enableCountByExample="false"
+               enableUpdateByExample="false"
+               enableDeleteByExample="false"
+               enableSelectByExample="false"
+               selectByExampleQueryId="false">
+        </table>
 
     </context>
 </generatorConfiguration>

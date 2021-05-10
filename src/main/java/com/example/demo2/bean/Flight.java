@@ -1,59 +1,83 @@
 package com.example.demo2.bean;
 
-import java.time.LocalTime;
 import java.util.Date;
 
 public class Flight {
     private Integer flightId;
-    private String source;
-    private String destination;
-    private LocalTime departureTime;
-    private LocalTime arrivalTime;
+
+    private Integer airplaneId;
+
+    private String departurecity;
+
+    private String arrivalcity;
+
+    private Date departuretime;
+
+    private Date arrivaltime;
+
     private Date date;
+
     private Integer arrivalAirport;
+
     private Integer departureAirport;
+
     private String passbyCity;
 
-
-    public Integer getFlightId(){ return flightId; }
-
-    public void setFlightId(Integer flightId){ this.flightId = flightId;}
-
-    public String getSource() {
-        return source;
+    public Integer getFlightId() {
+        return flightId;
     }
 
-    public void setSource(String source) {
-        this.source = source;
+    public void setFlightId(Integer flightId) {
+        this.flightId = flightId;
     }
 
-    public String getDestination() {
-        return destination;
+    public Integer getAirplaneId() {
+        return airplaneId;
     }
 
-    public void setDestination(String destination) {
-        this.destination = destination;
+    public void setAirplaneId(Integer airplaneId) {
+        this.airplaneId = airplaneId;
     }
 
-    public LocalTime getArrivalTime() {
-        return arrivalTime;
+    public String getDeparturecity() {
+        return departurecity;
     }
 
-    public void setArrivalTime(LocalTime arrivalTime) {
-        this.arrivalTime = arrivalTime;
+    public void setDeparturecity(String departurecity) {
+        this.departurecity = departurecity == null ? null : departurecity.trim();
     }
 
-    public LocalTime getDepartureTime() {
-        return departureTime;
+    public String getArrivalcity() {
+        return arrivalcity;
     }
 
-    public void setDepartureTime(LocalTime departureTime) {
-        this.departureTime = departureTime;
+    public void setArrivalcity(String arrivalcity) {
+        this.arrivalcity = arrivalcity == null ? null : arrivalcity.trim();
     }
 
-    public Date getDate(){return date;}
+    public Date getDeparturetime() {
+        return departuretime;
+    }
 
-    public void setDate(Date date){this.date = date;}
+    public void setDeparturetime(Date departuretime) {
+        this.departuretime = departuretime;
+    }
+
+    public Date getArrivaltime() {
+        return arrivaltime;
+    }
+
+    public void setArrivaltime(Date arrivaltime) {
+        this.arrivaltime = arrivaltime;
+    }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
+    }
 
     public Integer getArrivalAirport() {
         return arrivalAirport;
@@ -63,7 +87,7 @@ public class Flight {
         this.arrivalAirport = arrivalAirport;
     }
 
-    public Integer getDepartureAirport(){
+    public Integer getDepartureAirport() {
         return departureAirport;
     }
 
@@ -76,22 +100,6 @@ public class Flight {
     }
 
     public void setPassbyCity(String passbyCity) {
-        this.passbyCity = passbyCity;
+        this.passbyCity = passbyCity == null ? null : passbyCity.trim();
     }
-
-    @Override
-    public String toString() {
-        return "FlightSchedule{" +
-                "flightid=" + flightId +
-                ", source='" + source + '\'' +
-                ", destination='" + destination + '\'' +
-                ", departureTime=" + departureTime +
-                ", arrivalTime=" + arrivalTime +
-                ", date=" + date +
-                ", depatureAirport=" + departureAirport +
-                ", arrivalAirport=" + arrivalAirport +
-                ", passbyCity=" + passbyCity +
-                '}';
-    }
-
 }

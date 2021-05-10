@@ -1,18 +1,34 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.demo2.mapper.FlightMapper">
-<!--id对应接口中的方法名，parameterType和接口中对应方法的参数类型一致，
-resultType和接口中对应方法的返回值类型一致-->
+  <resultMap id="BaseResultMap" type="com.example.demo2.bean.Flight">
+    <id column="flight_id" jdbcType="INTEGER" property="flightId" />
+    <result column="airplane_id" jdbcType="INTEGER" property="airplaneId" />
+    <result column="departurecity" jdbcType="VARCHAR" property="departurecity" />
+    <result column="arrivalcity" jdbcType="VARCHAR" property="arrivalcity" />
+    <result column="departuretime" jdbcType="TIME" property="departuretime" />
+    <result column="arrivaltime" jdbcType="TIME" property="arrivaltime" />
+    <result column="date" jdbcType="DATE" property="date" />
+    <result column="arrival_airport" jdbcType="INTEGER" property="arrivalAirport" />
+    <result column="departure_airport" jdbcType="INTEGER" property="departureAirport" />
+    <result column="passby_city" jdbcType="VARCHAR" property="passbyCity" />
+  </resultMap>
 
+  <sql id="Base_Column_List">
+    flight_id, airplane_id, departurecity, arrivalcity, departuretime, arrivaltime, date,
+    arrival_airport, departure_airport, passby_city
+  </sql>
 
-    <select id="findAll" resultType="com.example.demo2.bean.Flight">
+  <select id="findByRequired" resultType="com.example.demo2.bean.Flight" parameterType="com.example.demo2.bean.Flight">
+    select * from flight_table where 1=1
+    <if test="departurecity !null and departurecity !=''"> and departurecity = #{departurecity}</if>
+    <if test="arrivalcity !null and arrivalcity !=''"> and arrivalcity = #{arrivalcity}</if>
+    <if test="date !null and date !=''"> and date = #{date}</if>
+
+  </select>
+
+  <select id="findAll" resultType="com.example.demo2.bean.Flight">
     select * from flight_table
-    </select>
-
-    <select id="select"  resultType="com.example.demo2.bean.Flight">
-        select * from flight_table
-        where departurecity={#source} and arrivalcity={#destination} and date={#date}
-    </select>
-
+  </select>
 
 </mapper>
