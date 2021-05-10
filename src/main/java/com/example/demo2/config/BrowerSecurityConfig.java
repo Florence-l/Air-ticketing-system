@@ -99,7 +99,7 @@ public class BrowerSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     public void configure(WebSecurity web) throws Exception {
         //解决静态文件拦截的问题
-        web.ignoring().antMatchers("/register","/css/**","/**/*.css","/layui/*","/js/*","/*.js");
+        web.ignoring().antMatchers("/register","/css/**","/**/*.css","/js/*","/*.js");
     }
 
 }
