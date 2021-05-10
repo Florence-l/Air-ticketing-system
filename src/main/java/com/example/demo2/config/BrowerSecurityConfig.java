@@ -72,7 +72,7 @@ public class BrowerSecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .authorizeRequests()
                 .antMatchers("/register","/login","/index").permitAll()
-                .antMatchers("/css/*","/*.css","/layui/*","/js/*","/*.js").permitAll() // 在这里添加
+                .antMatchers("/css/*","/*.css","/layui/*","/js/*","/*.js","/layui/").permitAll() // 在这里添加
                 .anyRequest().authenticated()
 
                 //记住我功能
