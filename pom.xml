@@ -133,6 +133,17 @@
                 </includes>
                 <filtering>false</filtering>
             </resource>
+            <resource>
+                <directory>src/main/resources/static/layui</directory>
+                <includes>
+                    <include>**/*.woff</include>
+                    <include>**/*.woff2</include>
+                    <include>**/*.ttf</include>
+                    <include>**/*.eot</include>
+                    <include>**/*.svg</include>
+                </includes>
+                <filtering>false</filtering>
+            </resource>
         </resources>
     </build>
 
