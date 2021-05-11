@@ -1,78 +1,80 @@
 package com.example.demo2.controller;
 
+import com.example.demo2.Util.LayuiTableResultUtil;
+import com.example.demo2.Util.RequiredUtil;
 import com.example.demo2.bean.Flight;
-//import com.example.demo2.service.FlightService;
-import com.example.demo2.dao.FlightDao;
-import com.example.demo2.mapper.FlightMapper;
 import com.example.demo2.service.FlightService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Collection;
-import java.util.Date;
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @Controller
 public class FlightInquiryController {
+    public static String getdeparturecity;
+    public static String getarrivalcity;
+    public static String getdate;
+
     @Autowired
-    FlightDao flightDao;
-    FlightService flightService;
+    public FlightService flightService;
+
     @GetMapping("/test")
-    public String show(){
+    public String register() {
         return "test";
     }
 
-    @GetMapping("/flightInquiry")
-    public String show1(){
-        return "flightInquiry";
+    @GetMapping("/result")
+    public String test() {
+        return "flightSchedule";
     }
-    @GetMapping("/test2")
-    public String test2(){
-        return "test";
+
+    @GetMapping("/index")
+    public String showindex(){
+               return "index";
     }
-//
-//    @RequestMapping("/flihgtlist")
-//    public String findAll(Model model){
-//        List<Flight> flightlist=flightService.findAll();
-//        model.addAttribute("flightlist",flightlist);
-//        return "list";
-//    }
 
-//    public FlightService flightService;
-//
-//    @RequestMapping("/findAll")
-//    public List<Flight> findAll(Model model){
-//        List<Flight> all= flightService.findAll();
-//        System.out.println(all+"++++++++++");
-//
-//        return all;
-//    }
-//
-//
-//
-////
-//    @PostMapping("/find_flight_required")
-//    public Collection<Flight> find_flight_required(@RequestParam("departurecity") String departurecity,
-//                                                   @RequestParam("arrivalcity") String arrivalcity,
-//                                                   @RequestParam("date") Date date,
-//                                                   Model model){
-//        Flight fli = new Flight();
-//        fli.setDeparturecity(departurecity);
-//        fli.setArrivalcity(arrivalcity);
-//        fli.setDate(date);
-//
-//        Collection<Flight> flight= flightDao.getRequired(fli);
-//        System.out.println(flight);
-//        model.addAttribute("flight",flight);
-//        return "index";
-//    }
+    @PostMapping("/index")
+    public String query( String departurecity, String arrivalcity, String date, Model model){
+       getdeparturecity=departurecity;
+       getarrivalcity=arrivalcity;
+       getdate=date;
+
+       model.addAttribute("departurecity",getdeparturecity);
+       model.addAttribute("arrivalcity",getarrivalcity);
+       model.addAttribute("date",getdate);
+       System.out.println(getdeparturecity+getarrivalcity+getdate);
+
+        return "redirect:/result";
+    }
+
+    @RequestMapping("flight")
+    @ResponseBody()
+    public LayuiTableResultUtil<List> flightresult(HttpServletRequest request) {
+        System.out.println(getdeparturecity+getarrivalcity+getdate);
+        RequiredUtil Required = new RequiredUtil();
+        if (!Required.Required(request.getParameter("limit").trim())) {
+            return new LayuiTableResultUtil<List>("分页异常", null, 1, 10);
+        }
+        if (!Required.Required(request.getParameter("page").trim())) {
+            return new LayuiTableResultUtil<List>("分页异常", null, 1, 10);
+        }
+        int limit = Integer.parseInt(request.getParameter("limit").trim());
+        int page = Integer.parseInt(request.getParameter("page").trim());
 
 
+        List<Flight> flightList = flightService.findByRequired(getdeparturecity,getarrivalcity,getdate ,page, limit);
+        int countflight = flightService.countAllFlight();
 
+        LayuiTableResultUtil<List> list = new LayuiTableResultUtil<List>("", flightList, 0, countflight);
+        if (flightList != null) {
+            return list;
+        }
 
-
-
-
+        return null;
+    }
 }
+
+

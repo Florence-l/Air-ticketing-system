@@ -3,40 +3,40 @@ package com.example.demo2.bean;
 import java.util.Date;
 
 public class Flight {
-    private Integer flightId;
+    private Integer flight_id;
 
-    private Integer airplaneId;
+    private Integer airplane_id;
 
     private String departurecity;
 
     private String arrivalcity;
 
-    private Date departuretime;
+    private String departuretime;
 
-    private Date arrivaltime;
+    private String arrivaltime;
 
-    private Date date;
+    private String date;
 
-    private Integer arrivalAirport;
+    private Integer arrival_airport;
 
-    private Integer departureAirport;
+    private Integer departure_airport;
 
-    private String passbyCity;
+    private String passby_city;
 
-    public Integer getFlightId() {
-        return flightId;
+    public Integer getFlight_id() {
+        return flight_id;
     }
 
-    public void setFlightId(Integer flightId) {
-        this.flightId = flightId;
+    public void setFlight_id(Integer flight_id) {
+        this.flight_id = flight_id;
     }
 
-    public Integer getAirplaneId() {
-        return airplaneId;
+    public Integer getAirplane_id() {
+        return airplane_id;
     }
 
-    public void setAirplaneId(Integer airplaneId) {
-        this.airplaneId = airplaneId;
+    public void setAirplane_id(Integer airplane_id) {
+        this.airplane_id = airplane_id;
     }
 
     public String getDeparturecity() {
@@ -55,51 +55,55 @@ public class Flight {
         this.arrivalcity = arrivalcity == null ? null : arrivalcity.trim();
     }
 
-    public Date getDeparturetime() {
+    public String getDeparturetime() {
         return departuretime;
     }
 
-    public void setDeparturetime(Date departuretime) {
+    public void setDeparturetime(String departuretime) {
         this.departuretime = departuretime;
     }
 
-    public Date getArrivaltime() {
+    public String getArrivaltime() {
         return arrivaltime;
     }
 
-    public void setArrivaltime(Date arrivaltime) {
+    public void setArrivaltime(String arrivaltime) {
         this.arrivaltime = arrivaltime;
     }
 
-    public Date getDate() {
+    public String getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(String date) {
         this.date = date;
     }
 
-    public Integer getArrivalAirport() {
-        return arrivalAirport;
+    public Integer getArrival_airport() {
+        return arrival_airport;
     }
 
-    public void setArrivalAirport(Integer arrivalAirport) {
-        this.arrivalAirport = arrivalAirport;
+    public void setArrival_airport(Integer arrival_airport) {
+        this.arrival_airport = arrival_airport;
     }
 
-    public Integer getDepartureAirport() {
-        return departureAirport;
+    public Integer getDeparture_airport() {
+        return departure_airport;
     }
 
-    public void setDepartureAirport(Integer departureAirport) {
-        this.departureAirport = departureAirport;
+    public void setDeparture_airport(Integer departure_airport) {
+        this.departure_airport = departure_airport;
     }
 
-    public String getPassbyCity() {
-        return passbyCity;
+    public String getPassby_city() {
+        return passby_city;
     }
 
-    public void setPassbyCity(String passbyCity) {
-        this.passbyCity = passbyCity == null ? null : passbyCity.trim();
+    public void setPassby_city(String passby_city) {
+        this.passby_city = passby_city == null ? null : passby_city.trim();
     }
+
+
+
+
 }

@@ -28,14 +28,14 @@
     <!--面板区-->
     <ul class="tab_box">
         <li class="tabBox_active">
-            <form id="flightInquiry" action="/find_flight_required" method="post">
+            <form id="flightInquiry" action="/index" method="post">
             <div class="layui-form-item" style="font-size: 15px;color: #0C0C0C;font-family:'Microsoft YaHei'">
                 <label class="layui-form-label" >出发地</label>
-                    <input name="departurecity" type="text" required="required" class="layui-input">
+                    <input name="departurecity" th:text="${departurecity}" type="text" required="required" class="layui-input">
                 <label class="layui-form-label">目的地</label>
-                    <input name="destination" type="text" required="required" class="layui-input">
+                    <input name="arrivalcity" th:text="${arrivalcity}" type="text" required="required" class="layui-input">
                 <label class="layui-form-label">日期</label>
-                    <input name="date"  type="date" class="layui-input">
+                    <input name="date" th:text="${date}" type="text" class="layui-input">
             </div>
 
             <div>
@@ -64,40 +64,40 @@
 </div>
 <br>
 <div style="width: 1200px;height: 300px" >
-<table class="flight">
-    <thead>
-    <tr>
-        <th>航班号</th>
-        <th>飞机号</th>
-        <th>出发地</th>
-        <th>目的地</th>
-        <th>出发时间</th>
-        <th>到达时间</th>
-        <th>日期</th>
-        <th>目的机场</th>
-        <th>出发机场</th>
-        <th>经过城市</th>
+<!--<table class="flight">-->
+<!--    <thead>-->
+<!--    <tr>-->
+<!--        <th>航班号</th>-->
+<!--        <th>飞机号</th>-->
+<!--        <th>出发地</th>-->
+<!--        <th>目的地</th>-->
+<!--        <th>出发时间</th>-->
+<!--        <th>到达时间</th>-->
+<!--        <th>日期</th>-->
+<!--        <th>目的机场</th>-->
+<!--        <th>出发机场</th>-->
+<!--        <th>经过城市</th>-->
 
-    </tr>
-    </thead>
-    <tbody>
+<!--    </tr>-->
+<!--    </thead>-->
+<!--    <tbody>-->
 
-    <tr th:each="fli:${flight}">
-        <th th:text="${fli.flightId}"></th>
-        <th th:text="${fli.airplaneId}"></th>
-        <td th:text="${fli.departurecity}"></td>
-        <td th:text="${fli.arrivalcity}"></td>
-        <td th:text="${fli.departuretime}"></td>
-        <td th:text="${fli.arrivaltime}"></td>
-        <td th:date="${fli.date}"></td>
-        <td th:text="${fli.departureAirport}"></td>
-        <td th:text="${fli.arrivalAirport}"></td>
-        <td th:text="${fli.passbyCity}"></td>
-        <td> <input type="submit" value="预定"></td>
-    </tr>
+<!--    <tr th:each="fli:${flight}">-->
+<!--        <th th:text="${fli.flightId}"></th>-->
+<!--        <th th:text="${fli.airplaneId}"></th>-->
+<!--        <td th:text="${fli.departurecity}"></td>-->
+<!--        <td th:text="${fli.arrivalcity}"></td>-->
+<!--        <td th:text="${fli.departuretime}"></td>-->
+<!--        <td th:text="${fli.arrivaltime}"></td>-->
+<!--        <td th:date="${fli.date}"></td>-->
+<!--        <td th:text="${fli.departureAirport}"></td>-->
+<!--        <td th:text="${fli.arrivalAirport}"></td>-->
+<!--        <td th:text="${fli.passbyCity}"></td>-->
+<!--        <td> <input type="submit" value="预定"></td>-->
+<!--    </tr>-->
 
-    </tbody>
-</table>
+<!--    </tbody>-->
+<!--</table>-->
 </div>
 <th:block th:include="common.html :: footer"></th:block>
 

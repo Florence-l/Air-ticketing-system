@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.demo2.mapper.FlightMapper">
-  <resultMap id="BaseResultMap" type="com.example.demo2.bean.Flight">
-    <id column="flight_id" jdbcType="INTEGER" property="flightId" />
-    <result column="airplane_id" jdbcType="INTEGER" property="airplaneId" />
+  <resultMap id="FlightResultMap" type="com.example.demo2.bean.Flight">
+    <id column="flight_id" jdbcType="INTEGER" property="flight_id" />
+    <result column="airplane_id" jdbcType="INTEGER" property="airplane_id" />
     <result column="departurecity" jdbcType="VARCHAR" property="departurecity" />
     <result column="arrivalcity" jdbcType="VARCHAR" property="arrivalcity" />
-    <result column="departuretime" jdbcType="TIME" property="departuretime" />
-    <result column="arrivaltime" jdbcType="TIME" property="arrivaltime" />
-    <result column="date" jdbcType="DATE" property="date" />
-    <result column="arrival_airport" jdbcType="INTEGER" property="arrivalAirport" />
-    <result column="departure_airport" jdbcType="INTEGER" property="departureAirport" />
-    <result column="passby_city" jdbcType="VARCHAR" property="passbyCity" />
+    <result column="departuretime" jdbcType="VARCHAR" property="departuretime" />
+    <result column="arrivaltime" jdbcType="VARCHAR" property="arrivaltime" />
+    <result column="date" jdbcType="VARCHAR" property="date" />
+    <result column="arrival_airport" jdbcType="INTEGER" property="arrival_airport" />
+    <result column="departure_airport" jdbcType="INTEGER" property="departure_airport" />
+    <result column="passby_city" jdbcType="VARCHAR" property="passby_city" />
   </resultMap>
 
   <sql id="Base_Column_List">
@@ -19,14 +19,18 @@
     arrival_airport, departure_airport, passby_city
   </sql>
 
-  <select id="findByRequired" resultType="com.example.demo2.bean.Flight" parameterType="com.example.demo2.bean.Flight">
-    select * from flight_table where 1=1
-    <if test="departurecity !null and departurecity !=''"> and departurecity = #{departurecity}</if>
-    <if test="arrivalcity !null and arrivalcity !=''"> and arrivalcity = #{arrivalcity}</if>
-    <if test="date !null and date !=''"> and date = #{date}</if>
+  <select id="findByRequired" resultMap="FlightResultMap" resultType="com.example.demo2.bean.Flight" >
+    select * from flight_table where departurecity = #{departurecity} and departurecity = #{departurecity} and arrivalcity = #{arrivalcity}
 
   </select>
 
+  <select id="findByid" resultType="com.example.demo2.bean.Flight" resultMap="FlightResultMap">
+    select * from flight_table where flight_id = #{flight_id}
+  </select>
+
+  <select id="countAllFlight" resultType="int">
+    select count(flight_id) from flight_table
+  </select>
   <select id="findAll" resultType="com.example.demo2.bean.Flight">
     select * from flight_table
   </select>
