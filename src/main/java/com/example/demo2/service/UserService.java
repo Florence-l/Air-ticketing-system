@@ -48,18 +48,38 @@ public class UserService  implements UserDetailsService {
 
     /**注册
      * 判断用户中是否已经存在待注册用户名，不存在就将密码加密后插入到数据库表中
+     * 判断邮箱是否已经注册
+     * 用户已存在 3
+     * 邮箱已注册 2
+     * 用户不存在 邮箱未注册 1
      */
-    public boolean register(User user) {
+    public int register(User user) {
         //判断用户是否已存在
         User u=userMapper.loadUserByUsername(user.getUsername());
         //不存在，添加用户
         if(u==null) {
-            //使用BCryptPasswordEncoder进行密码加密
-            String password = passwordEncoder().encode(user.getPassword());
-            user.setPassword(password);
-            userMapper.insert(user);
-            return true;
+            u=userMapper.selectUserByEmail(user.getEmail());
+            //该邮箱还没注册
+            if(u==null) {
+                //使用BCryptPasswordEncoder进行密码加密
+                String password = passwordEncoder().encode(user.getPassword());
+                user.setPassword(password);
+                userMapper.insert(user);
+                return 1;
+            }
+            else
+                return 2;
         }
-        else return false;
+        else return 3;
     }
+
+    public User selectUserByEmail(String email) {
+        User u=userMapper.selectUserByEmail(email);
+        return u;
+    }
+
+    public void resetPwd(User u) {
+        userMapper.resetPwd(u);
+    }
+
 }

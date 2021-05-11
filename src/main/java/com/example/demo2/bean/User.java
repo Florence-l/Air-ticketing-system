@@ -13,15 +13,23 @@ public class User implements UserDetails {
     private Integer userId;
     private String username;
     private String password;
+    private String email;
     private Boolean enabled;
     private Boolean locked;
     private Boolean expired;
     private Boolean credentialsexpire;
 
-    public User(String name, String password) {
-            this.username=name;
+    public User(String username, String password) {
+            this.username=username;
             this.password=password;
     }
+
+    public User(String username, String password, String email) {
+        this.username=username;
+        this.password=password;
+        this.email=email;
+    }
+
     public Integer getUserId() { return userId; }
 
     public void setUserId(Integer userId) { this.userId = userId; }
@@ -42,6 +50,14 @@ public class User implements UserDetails {
 
     public void setPassword(String password) {
         this.password = password == null ? null : password.trim();
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String username) {
+        this.email = email == null ? null : email.trim();
     }
 
     @Override
