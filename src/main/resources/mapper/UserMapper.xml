@@ -5,19 +5,15 @@
     <id column="user_id" jdbcType="INTEGER" property="userId" />
     <result column="username" jdbcType="VARCHAR" property="username" />
     <result column="password" jdbcType="VARCHAR" property="password" />
+    <result column="email" jdbcType="VARCHAR" property="email" />
   </resultMap>
-<!--  <resultMap id="BaseResultMap" type="com.example.demo2.bean.User">-->
-<!--    <id column="user_id" jdbcType="INTEGER" property="user_id" />-->
-<!--    <result column="username" jdbcType="VARCHAR" property="username" />-->
-<!--    <result column="password" jdbcType="VARCHAR" property="password" />-->
-<!--  </resultMap>-->
   <sql id="Base_Column_List">
-    user_id, username, password
+    user_id, username, password, email
   </sql>
 
   <insert id="insert" parameterType="com.example.demo2.bean.User">
-    insert into user (user_id, username, password)
-    values (#{userId,jdbcType=INTEGER}, #{username,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR})
+    insert into user (user_id, username, password,email)
+    values (#{userId,jdbcType=INTEGER}, #{username,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR},#{email,jdbcType=VARCHAR})
   </insert>
 
   <select id="login" parameterType="com.example.demo2.bean.User" resultMap="BaseResultMap">
@@ -35,5 +31,15 @@
   <select id="loadUserByUsername" parameterType="com.example.demo2.bean.User" resultMap="BaseResultMap">
     select * from user where username = #{username}
   </select>
+
+  <select id="selectUserByEmail" parameterType="com.example.demo2.bean.User" resultMap="BaseResultMap">
+    select * from user where email = #{email}
+  </select>
+
+  <update id="resetPwd" parameterType="com.example.demo2.bean.User" >
+    update user
+    set password = #{password}
+    where email = #{email}
+  </update>
 
 </mapper>

@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <title>common</title>
+  <link rel="stylesheet" th:href="@{layui/css/layui.css}">
+  <script type="text/javascript" src="/js/jquery-1.8.3.min.js"></script>
+  <link type="text/css" rel="stylesheet" href="/css/jqstyle.css"/>
+</head>
+<body>
+
+
+<div th:fragment="header" class="layui-layout layui-layout-admin">
+  <div class="layui-header layui-bg-cyan">
+    <div class="layui-logo layui-hide-xs layui-bg-cyan">logo</div>
+    <!-- logo区 -->
+    <ul class="layui-nav layui-layout-right layui-bg-cyan">
+      <!-- 移动端显示 -->
+      <li class="layui-nav-item layui-show-xs-inline-block layui-hide-sm" lay-header-event="menuLeft">
+        <i class="layui-icon layui-icon-spread-left"></i>
+      </li>
+
+      <li class="layui-nav-item layui-hide-xs"><a href="">注册</a></li>
+      <li class="layui-nav-item layui-hide-xs"><a href="">登录</a></li>
+      <li class="layui-nav-item">
+        <a href="javascript:;">订单</a>
+        <dl class="layui-nav-child">
+          <dd><a href="">1</a></dd>
+          <dd><a href="">2</a></dd>
+          <dd><a href="">3</a></dd>
+        </dl>
+      </li>
+      <li class="layui-nav-item layui-hide layui-show-md-inline-block">
+        <a href="javascript:;">
+          <img src="//tva1.sinaimg.cn/crop.0.0.118.118.180/5db11ff4gw1e77d3nqrv8j203b03cweg.jpg" class="layui-nav-img">
+          我的
+        </a>
+        <dl class="layui-nav-child">
+          <dd><a href="">乘客信息</a></dd>
+          <dd><a href="">个人信息</a></dd>
+          <dd><a href="">订单</a></dd>
+          <hr>
+          <dd style="text-align: center;"><a href="">退出</a></dd>
+        </dl>
+      </li>
+    </ul>
+
+  </div>
+  <script th:src="@{layui/layui.js}"></script>
+  <script>
+    //JS
+    layui.use(['element', 'layer', 'util'], function(){
+      var element = layui.element
+              ,layer = layui.layer
+              ,util = layui.util
+              ,$ = layui.$;
+
+      //头部事件
+      util.event('lay-header-event', {});
+
+    });
+  </script>
+</div>
+
+<div class="layui-body">
+  <!-- 内容主体区域 -->
+  <div style="padding: 100px;">内容主体区域</div>
+  <div style="padding: 100px;">内容主体区域</div>
+  <div style="padding: 100px;">内容主体区域</div>
+
+</div>
+
+<div th:fragment="footer">
+  <div class="b_nav" style="bottom: 0px;position: relative;margin-top: 50px;">
+    <dl>
+      <dt><a href="#">服务公告</a></dt>
+      <dd><a href="#">禁止携带危险品</a></dd>
+      <dd><a href="#">欺诈短信电话提醒</a></dd>
+    </dl>
+    <dl>
+      <dt><a href="#">出行安心</a></dt>
+      <dd><a href="#">权力保障出行</a></dd>
+      <dd><a href="#">风险及时预警</a></dd>
+      <dd><a href="#">提供紧急支援</a></dd>
+    </dl>
+    <dl>
+      <dt><a href="#">会员中心</a></dt>
+      <dd><a href="#">资金管理</a></dd>
+      <dd><a href="#">我的收藏</a></dd>
+      <dd><a href="#">我的订单</a></dd>
+    </dl>
+    <dl>
+      <dt><a href="#">服务保证</a></dt>
+      <dd><a href="#">自助退改原则</a></dd>
+      <dd><a href="#">售后服务保证</a></dd>
+      <dd><a href="#">客服7*24在线</a></dd>
+    </dl>
+    <dl>
+      <dt><a href="#">联系我们</a></dt>
+      <dd><a href="#">网站故障报告</a></dd>
+      <dd><a href="#">购票咨询</a></dd>
+      <dd><a href="#">投诉与建议</a></dd>
+    </dl>
+    <div class="b_tel_bg">
+      <a href="#" class="b_sh1">新浪微博</a>
+      <a href="#" class="b_sh2">腾讯微博</a>
+      <p>
+        服务热线：<br />
+        <span>1234567890</span>
+      </p>
+    </div>
+
+  </div>
+</div>
+
+
+
+</body>
+</html>

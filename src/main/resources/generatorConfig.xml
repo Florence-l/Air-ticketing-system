@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE generatorConfiguration
         PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
-        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd" >
+
 <generatorConfiguration>
-    <context id="DB2Tables"    targetRuntime="MyBatis3">
+
+    <context id="DB2Tables"   targetRuntime="MyBatis3">
         <commentGenerator>
             <property name="suppressDate" value="true"/>
             <property name="suppressAllComments" value="true"/>
@@ -48,6 +51,14 @@
         去除example
         -->
         <table tableName="user" domainObjectName="User"
+               enableCountByExample="false"
+               enableUpdateByExample="false"
+               enableDeleteByExample="false"
+               enableSelectByExample="false"
+               selectByExampleQueryId="false">
+        </table>
+
+        <table tableName="flight_table" domainObjectName="Flight"
                enableCountByExample="false"
                enableUpdateByExample="false"
                enableDeleteByExample="false"
