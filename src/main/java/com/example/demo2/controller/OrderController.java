@@ -20,7 +20,7 @@ public class OrderController {
     @Autowired
     public OrderService orderService;
 
-    @RequestMapping("order")
+    @RequestMapping("/order")
     @ResponseBody()
     public LayuiTableResultUtil<List> oderdetail(HttpServletRequest request)
     {
