@@ -173,6 +173,7 @@ button.ghost {
     height: 50px;
     padding: 0px 0px;
     letter-spacing: 0px;
+    margin-left: 20px;
 }
 
 .form-container button:hover {
