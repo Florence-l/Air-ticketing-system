@@ -4,23 +4,46 @@
     <resultMap id="OrderResultMap" type="com.example.demo2.bean.Order">
         <id column="order_id" jdbcType="INTEGER" property="order_id" />
         <result column="passenger_id" jdbcType="INTEGER" property="passenger_id" />
-        <result column="user_id" javaType="INTEGER" property="user_id" />
-        <result column="flight_id" jdbcType="INTEGER" property="flight_id" />
-        <result column="orderTime" jdbcType="VARCHAR" property="orderTime" />
-        <result column="paymentStatus" jdbcType="INTEGER" property="orderTime" />
+<!--        <result column="user_id" javaType="INTEGER" property="user_id" />-->
+<!--        <result column="flight_id" jdbcType="INTEGER" property="flight_id" />-->
+<!--        <result column="orderTime" jdbcType="VARCHAR" property="orderTime" />-->
+<!--        <result column="paymentStatus" jdbcType="INTEGER" property="orderTime" />-->
         <result column="paymentTime" jdbcType="VARCHAR" property="paymentTime" />
         <result column="seat_id" jdbcType="INTEGER" property="seat_id" />
         <result column="realPrice" jdbcType="FLOAT" property="realPrice" />
+        <association property="flight" javaType="Flight">
+            <id column="flight_id" property="flight_id" />
+            <result column="departurecity" property="departurecity"/>
+            <result column="arrivalcity" property="arrivalcity"/>
+            <result column="date" property="date"/>
+            <result column="departuretime" property="departuretime"/>
+            <result column="arrivaltime" property="arrivaltime"/>
+        </association>
     </resultMap>
-    <sql id="Base_Column_List">
-        order_id, passenger_id, user_id, flight_id, orderTime, paymentStatus, paymentTime, seat_id, realPrice
-    </sql>
+<!--    <sql id="Base_Column_List">-->
+<!--        order_id, passenger_id, user_id, flight_id, orderTime, paymentStatus, paymentTime, seat_id, realPrice-->
+<!--    </sql>-->
 
 
 
-    <select id="findByid" resultType="com.example.demo2.bean.Order" resultMap="OrderResultMap">
-        select * from order_table where user_id = #{user_id}
+    <select id="findByid" resultMap="OrderResultMap">
+        select
+        order_id,
+        passenger_id,
+        paymentTime,
+        seat_id,
+        departurecity,
+        arrivalcity,
+        date,
+        departuretime,
+        arrivaltime,
+        realPrice
+        from order_table
+        inner join flight_table  on order_table.flight_id = flight_table.flight_id
+        where user_id = #{user_id}
     </select>
+
+
     <select id="countAllOrder" resultType="int">
         select count(order_id) from order_table
     </select>

@@ -15,6 +15,7 @@ public class Order {
     private String paymentTime;
     private Integer seat_id;
     private Float realPrice;
+    private Flight flight;
 
     public Order(){
 
@@ -105,6 +106,16 @@ public class Order {
     public void setRealPrice(Float realPrice) {
         this.realPrice = realPrice;
     }
+
+    public Flight getFlight() {
+        return flight;
+    }
+
+    public void setFlight(Flight flight) {
+        this.flight = flight;
+    }
+
+
 
     @Override
     public String toString() {
