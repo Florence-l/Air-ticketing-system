@@ -31,8 +31,9 @@
   <select id="countAllFlight" resultType="int">
     select count(flight_id) from flight_table
   </select>
-  <select id="findAll" resultType="com.example.demo2.bean.Flight">
-    select * from flight_table
+
+  <select id="findByRandom" resultType="com.example.demo2.bean.Flight" resultMap="FlightResultMap">
+    select * from flight_table order by rand() limit 2
   </select>
 
 </mapper>

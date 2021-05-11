@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
+import java.util.Random;
 
 @Controller
 public class FlightInquiryController {
@@ -21,13 +22,8 @@ public class FlightInquiryController {
     @Autowired
     public FlightService flightService;
 
-    @GetMapping("/test")
-    public String register() {
-        return "test";
-    }
-
     @GetMapping("/result")
-    public String test() {
+    public String showresult() {
         return "flightSchedule";
     }
 
@@ -36,6 +32,15 @@ public class FlightInquiryController {
                return "index";
     }
 
+
+    //航班推荐(随机)
+    @RequestMapping("/index/re")
+    @ResponseBody()
+    public List<Flight> recommend(Flight flight){
+        List<Flight> recommendlist=flightService.findByRandom();
+        return recommendlist;
+    }
+    //航班查询
     @PostMapping("/index")
     public String query( String departurecity, String arrivalcity, String date, Model model){
        getdeparturecity=departurecity;
@@ -75,6 +80,8 @@ public class FlightInquiryController {
 
         return null;
     }
+
+
 }
 
 

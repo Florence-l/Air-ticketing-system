@@ -32,13 +32,20 @@ public class FlightService implements FlightMapper{
     }
 
     @Override
-    public List<Flight> findByid(Integer flight_id, int page, int limits) {
-        List<Flight> list = flightMapper.findByid(flight_id,(limits-1)*page,page);
+    public List<Flight> findByid(Integer flight_id) {
+        List<Flight> list = flightMapper.findByid(flight_id);
         if(list!=null){
             return list;
         }
         return null;
     }
 
-
+    @Override
+    public List<Flight> findByRandom(){
+        List<Flight> list = flightMapper.findByRandom();
+        if(list!=null){
+            return list;
+        }
+        return null;
+    }
 }
