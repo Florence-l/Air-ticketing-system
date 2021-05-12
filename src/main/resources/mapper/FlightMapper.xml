@@ -9,8 +9,8 @@
     <result column="departuretime" jdbcType="VARCHAR" property="departuretime" />
     <result column="arrivaltime" jdbcType="VARCHAR" property="arrivaltime" />
     <result column="date" jdbcType="VARCHAR" property="date" />
-    <result column="arrival_airport" jdbcType="INTEGER" property="arrival_airport" />
-    <result column="departure_airport" jdbcType="INTEGER" property="departure_airport" />
+    <result column="arrival_airport" jdbcType="VARCHAR" property="arrival_airport" />
+    <result column="departure_airport" jdbcType="VARCHAR" property="departure_airport" />
     <result column="passby_city" jdbcType="VARCHAR" property="passby_city" />
   </resultMap>
 
@@ -33,7 +33,7 @@
   </select>
 
   <select id="findByRandom" resultType="com.example.demo2.bean.Flight" resultMap="FlightResultMap">
-    select * from flight_table order by rand() limit 2
+    select * from flight_table order by rand() limit 10
   </select>
 
 </mapper>

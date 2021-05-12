@@ -47,16 +47,14 @@
             ,toolbar: 'default'
             ,page: true //开启分页
             ,cols: [[ //表头
-                 {field: 'flight_id', title: '航班号', width:80, sort: true, fixed: 'left'}
-                ,{field: 'airplane_id', title: '飞机号', width:80}
-                ,{field: 'departurecity', title: '出发城市', width: 100}
+                 {field: 'departurecity', title: '出发城市', width: 80}
                 ,{field: 'arrivalcity', title: '到达城市', width: 100}
-                ,{field: 'departuretime', title: '出发时间', width: 120}
-                ,{filed: 'arrivaltime', title: '到达时间', width: 120}
+                ,{field: 'departuretime', title: '出发时间',sort: true, width: 120}
+                ,{filed: 'arrivaltime', title: '到达时间',sort: true, width: 120}
                 ,{field: 'date', title: '日期', width: 120}
-                ,{field: 'arrival_airport', title: '到达机场', width: 100}
-                ,{field: 'departure_airport', title: '出发机场', width: 100}
-                ,{field: 'passby_city', title: '经过城市', width: 100}
+                ,{field: 'arrival_airport', title: '到达机场', width: 120}
+                ,{field: 'departure_airport', title: '出发机场', width: 120}
+                ,{field: 'passby_city', title: '经过城市', width: 80}
             ]]
         });
 

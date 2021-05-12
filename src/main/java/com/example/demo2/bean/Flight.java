@@ -17,9 +17,9 @@ public class Flight {
 
     private String date;
 
-    private Integer arrival_airport;
+    private String arrival_airport;
 
-    private Integer departure_airport;
+    private String departure_airport;
 
     private String passby_city;
 
@@ -79,19 +79,19 @@ public class Flight {
         this.date = date;
     }
 
-    public Integer getArrival_airport() {
+    public String getArrival_airport() {
         return arrival_airport;
     }
 
-    public void setArrival_airport(Integer arrival_airport) {
+    public void setArrival_airport(String arrival_airport) {
         this.arrival_airport = arrival_airport;
     }
 
-    public Integer getDeparture_airport() {
+    public String getDeparture_airport() {
         return departure_airport;
     }
 
-    public void setDeparture_airport(Integer departure_airport) {
+    public void setDeparture_airport(String departure_airport) {
         this.departure_airport = departure_airport;
     }
 
