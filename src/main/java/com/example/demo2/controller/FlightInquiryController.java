@@ -32,6 +32,10 @@ public class FlightInquiryController {
                return "index";
     }
 
+    @GetMapping("/book")
+    public String showbook(){
+        return "booking";
+    }
 
     //航班推荐(随机)
     @RequestMapping("/index/re")
@@ -40,6 +44,7 @@ public class FlightInquiryController {
         List<Flight> recommendlist=flightService.findByRandom();
         return recommendlist;
     }
+
     //航班查询
     @PostMapping("/index")
     public String query( String departurecity, String arrivalcity, String date, Model model){
