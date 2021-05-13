@@ -14,20 +14,20 @@
 <th:block th:include="common.html :: header"></th:block>
 <div class="layui-carousel" id="test10">
     <div carousel-item="">
-        <div><img src="images/plane1.jpg" style="width: 1300px;height:350px"></div>
-        <div><img src="images/plane4.jpg" style="width: 1300px;height:350px"></div>
-        <div><img src="images/plane3.jpg" style="width: 1300px;height:350px"></div>
-        <div><img src="images/plane2.jpg" style="width: 1300px;height:350px"></div>
-        <div><img src="images/plane.jpg" style="width: 1300px;height:350px"></div>
+        <div><img src="images/plane1.jpg" style="width: 100%;height:100%"></div>
+        <div><img src="images/plane4.jpg" style="width: 100%;height:100%"></div>
+        <div><img src="images/plane3.jpg" style="width: 100%;height:100%"></div>
+        <div><img src="images/plane2.jpg" style="width: 100%;height:100%"></div>
+        <div><img src="images/plane5.jpg" style="width: 100%;height:100%"></div>
 
 
     </div>
 </div>
 
-<div class="tab_contents" style="margin-top: 20px;" >
+<div class="tab_contents" style="margin-top: 40px;" >
     <!--导航条-->
     <ul class="tab_nav">
-        <li class="tabNav_active"><h2>国内/国际机票</h2></li>
+        <li class="tabNav_active"><h2>国内机票</h2></li>
         <li><h2>在线选座</h2></li>
         <li><h2>退票改签</h2></li>
     </ul>
@@ -41,7 +41,7 @@
                 <label class="layui-form-label">目的地</label>
                     <input name="arrivalcity" th:text="${arrivalcity}" type="text" required="required" class="layui-input">
                 <label class="layui-form-label">日期</label>
-                    <input name="date" th:text="${date}" type="text" required="required" class="layui-input">
+                    <input name="date" th:text="${date}" type="text" required="required" class="layui-input" placeholder="格式如：yyyy.mm.dd">
             </div>
 
             <div>
@@ -105,8 +105,8 @@
         //图片轮播
         carousel.render({
             elem: '#test10'
-            ,width: '1300px'
-            ,height: '350px'
+            ,width: '100%'
+            ,height: '300px'
             ,interval: 5000
         });
 
@@ -197,8 +197,8 @@
                 {field: 'departurecity', title: '出发城市', width: 100}
                 ,{field: 'arrivalcity', title: '到达城市', width: 100}
                 ,{field: 'departuretime', title: '出发时间',sort: true, width: 120}
+                ,{field: 'arrivaltime', title: '到达时间',sort: true, width: 130}
                 ,{field: 'date', title: '日期', width: 120}
-                ,{filed: 'arrivaltime', title: '到达时间',sort: true, width: 120}
                 ,{field: 'arrival_airport', title: '到达机场', width: 120}
                 ,{field: 'departure_airport', title: '出发机场', width: 120}
             ]]

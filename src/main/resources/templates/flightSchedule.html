@@ -6,6 +6,7 @@
     <title>航班查询结果</title>
     <link rel="stylesheet" th:href="@{layui/css/layui.css}">
     <link type="text/css" rel="stylesheet" href="/css/jqstyle.css"/>
+    <link rel="stylesheet" href="/css/index.css"/>
     <style type="text/css">
         .btn{
             width: 100px;
@@ -25,12 +26,15 @@
 
 <th:block th:include="common.html :: header"></th:block>
 
-<div class="layui-body">
-    <div class="layui-low">
+
+<div class="card">
+    <h2 style="font-size: 18px">查询结果</h2>
+    <div class="tab_box">
         <table class="layui-hide" id="flightList"></table>
     </div>
-
 </div>
+
+
 <th:block th:include="common.html :: footer"></th:block>
 
 <script th:src="@{layui/layui.js}"></script>
@@ -47,14 +51,13 @@
             ,toolbar: 'default'
             ,page: true //开启分页
             ,cols: [[ //表头
-                 {field: 'departurecity', title: '出发城市', width: 80}
+                 {field: 'departurecity', title: '出发城市', width: 100}
                 ,{field: 'arrivalcity', title: '到达城市', width: 100}
                 ,{field: 'departuretime', title: '出发时间',sort: true, width: 120}
-                ,{filed: 'arrivaltime', title: '到达时间',sort: true, width: 120}
+                ,{field: 'arrivaltime', title: '到达时间',sort: true, width: 130}
                 ,{field: 'date', title: '日期', width: 120}
                 ,{field: 'arrival_airport', title: '到达机场', width: 120}
                 ,{field: 'departure_airport', title: '出发机场', width: 120}
-                ,{field: 'passby_city', title: '经过城市', width: 80}
             ]]
         });
 
