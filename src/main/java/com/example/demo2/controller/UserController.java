@@ -37,9 +37,9 @@ public class UserController {
 
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
-    @GetMapping("/")
-    public String RegisterHtml() {
-        return "index";
+    @RequestMapping("/")
+    public String start() {
+        return "/index";
     }
 
     //跳转到注册页面
@@ -101,7 +101,7 @@ public class UserController {
     public String sendEmail(String email) {
         System.out.println("\n发送邮件\n");
         SimpleMailMessage message = new SimpleMailMessage();
-        String code = VerifyCode(6);    //随机数生成6位验证码
+        String code = userService.VerifyCode(6);    //随机数生成6位验证码
         message.setFrom(sender);
         message.setTo(email);
         message.setSubject("航空订票系统");// 标题
@@ -109,7 +109,7 @@ public class UserController {
         try {
             javaMailSender.send(message);
             logger.info("文本邮件发送成功！");
-            saveCode(code);
+            resultMap=userService.saveCode(code);
             return "success";
         }catch (MailSendException e){
             logger.error("目标邮箱不存在");
@@ -118,29 +118,6 @@ public class UserController {
             logger.error("文本邮件发送异常！", e);
             return "failure";
         }
-    }
-
-    //生成随机验证码
-    private String VerifyCode(int n){
-        Random r = new Random();
-        StringBuffer sb =new StringBuffer();
-        for(int i = 0;i < n;i ++){
-            int ran1 = r.nextInt(10);
-            sb.append(String.valueOf(ran1));
-        }
-        return sb.toString();
-    }
-
-    //保存验证码和时间
-    private void saveCode(String code){
-        SimpleDateFormat sf = new SimpleDateFormat("yyyyMMddHHmmss");
-        Calendar c = Calendar.getInstance();
-        c.add(Calendar.MINUTE, 5);
-        String currentTime = sf.format(c.getTime());// 生成5分钟后时间，用户校验是否过期
-
-        String hash =  MD5Utils.code(code);//生成MD5值
-        resultMap.put("hash", hash);
-        resultMap.put("tamp", currentTime);
     }
 
 
@@ -153,16 +130,6 @@ public class UserController {
     @RequestMapping("/index")
     public String index(){
         return "index";
-    }
-
-    @RequestMapping("/success")
-    public String  success(){
-        return "index";
-    }
-
-    @RequestMapping("/fail")
-    public String  fail(){
-        return "fail";
     }
 
     //重置密码

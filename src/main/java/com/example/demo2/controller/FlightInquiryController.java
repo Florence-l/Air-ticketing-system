@@ -82,7 +82,6 @@ public class FlightInquiryController {
         if (flightList != null) {
             return list;
         }
-
         return null;
     }
 

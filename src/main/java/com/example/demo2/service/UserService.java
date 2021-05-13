@@ -2,6 +2,7 @@ package com.example.demo2.service;
 
 import com.example.demo2.bean.User;
 import com.example.demo2.mapper.UserMapper;
+import com.example.demo2.security.MD5Utils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -13,8 +14,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
-import java.util.ArrayList;
-import java.util.List;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 @Component
 @Service
@@ -80,6 +81,31 @@ public class UserService  implements UserDetailsService {
 
     public void resetPwd(User u) {
         userMapper.resetPwd(u);
+    }
+
+    //生成随机验证码
+    public String VerifyCode(int n){
+        Random r = new Random();
+        StringBuffer sb =new StringBuffer();
+        for(int i = 0;i < n;i ++){
+            int ran1 = r.nextInt(10);
+            sb.append(String.valueOf(ran1));
+        }
+        return sb.toString();
+    }
+
+    //保存验证码和时间
+    public Map<String, Object> saveCode(String code){
+        Map<String, Object> resultMap=new HashMap<>();
+        SimpleDateFormat sf = new SimpleDateFormat("yyyyMMddHHmmss");
+        Calendar c = Calendar.getInstance();
+        c.add(Calendar.MINUTE, 5);
+        String currentTime = sf.format(c.getTime());// 生成5分钟后时间，用户校验是否过期
+
+        String hash =  MD5Utils.code(code);//生成MD5值
+        resultMap.put("hash", hash);
+        resultMap.put("tamp", currentTime);
+        return resultMap;
     }
 
 }

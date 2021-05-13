@@ -55,8 +55,6 @@ public class BrowerSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-//        http.cors().and().csrf().disable()
-//                .antMatcher("/");
         http
                 .formLogin()
                 .loginPage("/login")
@@ -70,8 +68,8 @@ public class BrowerSecurityConfig extends WebSecurityConfigurerAdapter {
 
                 .and()
                 .authorizeRequests()
-                .antMatchers("/register","/login","/index","/sendEmail","/reset").permitAll()
-                .antMatchers("/css/*","/*.css","/layui/*","/js/*","/*.js","/layui/","/index/re","**/*.jpg","flight").permitAll() // 在这里添加
+                .antMatchers("/","/register","/login","/index","/sendEmail","/reset","/result").permitAll()
+                .antMatchers("/css/**","/*.css","/js/*","/*.js","/layui/**","/index/re","/flight","/layui/**/**").permitAll() // 在这里添加
                 .anyRequest().authenticated()
 
                 //记住我功能
@@ -84,7 +82,7 @@ public class BrowerSecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .logout()
                 .logoutUrl("/logout")
-                .logoutSuccessUrl("/login")
+                .logoutSuccessUrl("/index")
 
                 .and()
                 .csrf().disable();
@@ -98,7 +96,7 @@ public class BrowerSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     public void configure(WebSecurity web) throws Exception {
         //解决静态文件拦截的问题
-        web.ignoring().antMatchers("/register","/css/**","/**/*.css","/js/*","/*.js","/layui/**/**","**/*.jpg");
+        web.ignoring().antMatchers("/css/**","/**/*.css","/js/*","/*.js","/layui/**/**","/**/*.jpg");
     }
 
 }
