@@ -36,6 +36,9 @@
 
 
 <th:block th:include="common.html :: footer"></th:block>
+<script type="text/html" id="toolbtn">
+    <a class="layui-btn layui-btn-sm layui-btn-radius layui-btn-primary" lay-event="book" href="/book">预定</a>
+</script>
 
 <script th:src="@{layui/layui.js}"></script>
 <script th:inline="none">
@@ -58,6 +61,7 @@
                 ,{field: 'date', title: '日期', width: 120}
                 ,{field: 'arrival_airport', title: '到达机场', width: 120}
                 ,{field: 'departure_airport', title: '出发机场', width: 120}
+                ,{fixed: 'right', title:'操作', toolbar: '#toolbtn', width:150}
             ]]
         });
 
