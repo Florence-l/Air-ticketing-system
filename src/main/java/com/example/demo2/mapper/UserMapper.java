@@ -16,5 +16,7 @@ public interface UserMapper {
 
     User selectUserByEmail(String email);
 
+    User selectUserByName(String username);
+
     void resetPwd(User u);
 }

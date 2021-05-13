@@ -16,15 +16,13 @@ public class TestController{
     @Autowired
     public OrderService orderService;
 
-    @RequestMapping("/test11")
-    @ResponseBody
-    public List<Order> test11(){
-        return orderService.findByid(1,10,8);
-    }
 
-    @GetMapping("/test22")
-    public String test22(){
-        return "mine";
 
+
+
+
+    @GetMapping("/common")
+    public String common(){
+        return "common";
     }
 }

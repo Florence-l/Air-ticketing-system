@@ -20,7 +20,7 @@
     select * from user where username= #{username} and password = #{password};
   </select>
 
-  <select id="selectUserByName" parameterType="com.example.demo2.bean.User" resultMap="BaseResultMap">
+  <select id="selectUserByName" parameterType="com.example.demo2.bean.User">
     select * from user where username=#{username}
   </select>
 

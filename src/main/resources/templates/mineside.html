@@ -11,17 +11,17 @@
 <div th:fragment="side">
     <div style="width: 200px; position:absolute ; height: 500px; background: #3C3C3C">
         <ul class="layui-nav layui-nav-tree" lay-filter="test">
-            <li class="layui-nav-item"><a href="javascript:;">我的首页</a></li>
+            <li class="layui-nav-item"><a th:href="@{mine}">我的首页</a></li>
             <li class="layui-nav-item layui-nav-itemed">
                 <a class="" href="javascript:;">我的订单</a>
                 <dl class="layui-nav-child">
-                    <dd><a th:href="@{test}">全部订单</a></dd>
-                    <dd><a th:href="@{login.html}">未支付</a></dd>
+                    <dd><a th:href="@{orderdetail}">全部订单</a></dd>
+                    <dd><a th:href="@{orderunpay}">未支付</a></dd>
                 </dl>
             </li>
 
             <li class="layui-nav-item"><a href="javascript:;">我的消息</a></li>
-            <li class="layui-nav-item"><a href="">乘客信息</a></li>
+            <li class="layui-nav-item"><a th:href="@{passengerdetail}">乘客信息</a></li>
             <li class="layui-nav-item"><a href="">个人信息</a></li>
 
         </ul>

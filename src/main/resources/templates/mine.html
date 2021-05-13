@@ -59,16 +59,10 @@
 </head>
 <body>
 <th:block th:include="common.html :: header"></th:block>
-
 <th:block th:include="mineside.html :: side"></th:block>
-<div class="layui-layout layui-layout-admin">
-    <div class="layui-side">
-        <div class="layui-side-scroll">
-        </div>
-    </div>
-    <div class="layui-body">
-                <div style="padding: 15px;">
-                        <div class="member-box">
+<div style="position: relative;margin-left: 200px;width: auto">
+    <div style="padding: 15px;">
+        <div class="member-box">
                             <div style="background-image: radial-gradient(#99CCCC, #7171B7); height: 110px">
                                 <div class="member-info">
                                     <div class="member-pic">
@@ -90,22 +84,39 @@
                                 </div>
                             </div>
                         </div>
-                        <ul class="home-tab">
-                            <li role="presentation" class="current">
-                                <span>全部订单</span>
-                            </li>
-                            <li role="presentation">
-                                <span>待付款</span>
-                            </li>
-                        </ul>
-                        <div class="layui-low">
-                            <table class="layui-hide" id="orderList"></table>
-                        </div>
+        <fieldset class="layui-elem-field layui-field-title" style="margin-top: 30px;">
+            <legend>订单信息</legend>
+        </fieldset>
+        <div class="layui-tab layui-tab-brief" lay-filter="tab-all">
+            <ul class="layui-tab-title">
+                <li data-status="" class="layui-this">全部订单</li>
+                <li data-status="1">待付款</li>
+            </ul>
+            <div class="layui-tab-content">
+                <div class="layui-tab-item layui-show">
+                    <table class="layui-hide" id="orderList"></table>
+                    <ul class="order-list home-order-list">
+                        <li class="load-more ">
+                            <a href="/orderdetail">
+                                更多订单 >
+                            </a>
+                        </li>
+                    </ul>
                 </div>
+                <div class="layui-tab-item">
+                    <table class="layui-hide" id="orderPay"></table>
+                    <ul class="order-list home-order-list">
+                        <li class="load-more ">
+                            <a href="/orderunpay">
+                                更多订单 >
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
     </div>
-<!--    <div class="layui-footer">-->
-<!--        <th:block th:include="common.html :: footer"></th:block>-->
-<!--    </div>-->
 </div>
 
 <!--<th:block th:include="common.html :: footer"></th:block>-->
@@ -118,9 +129,31 @@ layui.use(['table'], function(){
 
   table.render({
     elem: '#orderList'
-    ,height: 500
     ,url: 'order' //数据接口
     ,limit: 3
+    ,where: {
+        status: status
+        }
+    ,cols: [[ //表头
+      {field: 'order_id', title: '订单号', width:90, sort: true, fixed: 'left'}
+      ,{field: 'passenger_id', title: '乘客号', width:90}
+      ,{field: 'paymentTime', title: '支付时间', width: 180}
+      ,{field: 'seat_id', title: '座位号', width: 90}
+      ,{templet:'<div>{{d.flight.departurecity}}</div>', title: '出发城市', width: 90}
+      ,{templet:'<div>{{d.flight.arrivalcity}}</div>', title: '到达城市', width: 90}
+      ,{templet:'<div>{{d.flight.date}}</div>', title: '日期', width: 120}
+      ,{templet:'<div>{{d.flight.departuretime}}</div>', title: '出发时间', width: 120}
+      ,{templet:'<div>{{d.flight.arrivaltime}}</div>', title: '到达时间', width: 120}
+      ,{field: 'realPrice', title: '支付金额', width: 135}
+    ]]
+  });
+  table.render({
+    elem: '#orderPay'
+    ,url: 'unpay' //数据接口
+    ,limit: 3
+    ,where: {
+        status: status
+        }
     ,cols: [[ //表头
       {field: 'order_id', title: '订单号', width:90, sort: true, fixed: 'left'}
       ,{field: 'passenger_id', title: '乘客号', width:90}
@@ -137,6 +170,24 @@ layui.use(['table'], function(){
 
 });
 
+</script>
+<script>
+    layui.use(['element', 'table'], function () {
+    var $ = layui.jquery, table = layui.table, element = layui.element;
+            // 初始化加载
+    getList('#orderList', '')
+    element.on('tab(tab-all)', function (data) {
+                // console.log(this);        // 当前Tab标题所在的原始DOM元素
+                // console.log(data.index);  // 得到当前Tab的所在下标
+                // console.log(data.elem);   // 得到当前的Tab大容器
+                var status = $(this).attr('data-status')
+                var position = '#orderList'
+                switch (status) {
+                    case '1': position = '#orderPay'; break;
+                    default: position = '#orderList';
+                }
+            })
+   });
 </script>
 <script>
 //JS
