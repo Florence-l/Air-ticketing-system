@@ -32,11 +32,11 @@
                 </div>
 
                 <div class="txtb">
-                    <input type="password" name="password" required="required" autocomplete="off">
+                    <input type="password" name="password" id="password" required="required" autocomplete="off">
                     <span data-placeholder="新 密  码" ></span>
                 </div>
                 <div class="txtb">
-                    <input type="password" name="password2"  required="required" autocomplete="off">
+                    <input type="password" name="password2" id="password2" required="required" autocomplete="off">
                     <span data-placeholder="确认密码" ></span>
                 </div>
 
@@ -84,6 +84,20 @@
                 layer.close(loading);
             }
         })
+    });
+
+    $('#save').on('click',function (){
+        var passsword=$('#password').val();
+        var password2=$('#password2').val();
+        var reg_password=/(^[a-zA-Z0-9_-]{6,19}$)/;
+        if(!reg_password.test(passsword)){
+            layer.msg('密码需为6-19位英文和数字的组合！', {time: 1500, icon: 5, shift: 6});
+            return false;
+        }
+        if(passsword!=password2){
+            layer.msg('密码不一致！', {time: 1500, icon: 5, shift: 6});
+            return false;
+        }
     });
 
 </script>
