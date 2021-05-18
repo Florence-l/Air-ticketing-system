@@ -30,15 +30,16 @@
 <div class="card">
     <h2 style="font-size: 18px">查询结果</h2>
     <div class="tab_box">
-        <table class="layui-hide" id="flightList"></table>
+        <table class="layui-hide" id="flightList" lay-filter="test"></table>
     </div>
 </div>
 
 
 <th:block th:include="common.html :: footer"></th:block>
 <script type="text/html" id="toolbtn">
-    <a class="layui-btn layui-btn-sm layui-btn-radius layui-btn-primary" lay-event="book" href="/book">预定</a>
+    <button class="layui-btn layui-btn-sm layui-btn-radius layui-btn-primary" lay-event="book">预定</button>
 </script>
+
 
 <script th:src="@{layui/layui.js}"></script>
 <script th:inline="none">
@@ -61,12 +62,31 @@
                 ,{field: 'date', title: '日期', width: 120}
                 ,{field: 'arrival_airport', title: '到达机场', width: 120}
                 ,{field: 'departure_airport', title: '出发机场', width: 120}
-                ,{fixed: 'right', title:'操作', toolbar: '#toolbtn', width:150}
+                ,{fixed: '', title:'操作', toolbar: "#toolbtn", width:150}
             ]]
         });
+    table.on('tool(test)', function (obj)  {
+        var book_date = obj.data.date;
+        var book_departurecity = obj.data.departurecity;
+        var book_arrivalcity = obj.data.arrivalcity;
+        var book_departuretime = obj.data.departuretime;
+        var book_arrivaltime = obj.data.arrivaltime;
+        var book_arrival_airport = obj.data.arrival_airport;
+        var book_departure_airport = obj.data.departure_airport;
+        if (obj.event === 'book') {
+            window.location.href="/book?book_departurecity="+escape(book_departurecity)+"&book_arrivalcity="
+            +escape(book_arrivalcity)+"&book_departuretime="+escape(book_departuretime)+"&book_arrivaltime="
+            +escape(book_arrivaltime)+"&book_arrival_airport="+escape(book_arrival_airport)+"&book_departure_airport="
+            +escape(book_departure_airport)+"&book_date="+escape(book_date);
+
+          }
 
     });
 
+    });
+
+
 </script>
+
 </body>
 </html>
