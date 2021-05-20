@@ -3148,7 +3148,6 @@ a cite {
 .layui-table-view .layui-table[lay-size=lg] .layui-table-cell {
     height: 100%;
     width:100%;
-    line-height: 1.2
 }
 
 .layui-table[lay-size=sm] td, .layui-table[lay-size=sm] th {
