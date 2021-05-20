@@ -49,11 +49,17 @@
 <div class="card">
     <h2 style="font-size: 18px">查询结果</h2>
     <div class="tab_box">
-        <table class="layui-hide" id="flightList" lay-filter="flightList"></table>
+        <table class="layui-hide" id="flightList" lay-filter="test"></table>
     </div>
 </div>
 
 <th:block th:include="common.html :: footer"></th:block>
+
+<script type="text/html" id="toolbtn">
+    <button class="layui-btn layui-btn-xs layui-btn-radius layui-btn-primary" lay-event="book">预定</button>
+</script>
+
+
 <script type="text/javascript">
     getid=function (){
         document.getElementById("flightInquiry").submit();
@@ -64,6 +70,7 @@
         window.location.href='http://localhost:8080/result?departurecity='+a+'&arrivalcity='+b+'&date='+c;
     }
 </script>
+
 
 <script th:src="@{layui/layui.js}"></script>
 
@@ -93,30 +100,39 @@
             ,limit: 10
             ,limits: [10, 20, 30, 50]
             ,page: true //开启分页
-            ,data:[]
             ,cols: [[ //表头
-                 {field: 'flight_id', title: '航班号', width: 100}
-                ,{field: 'departurecity', title: '出发城市', width: 100}
+                 {field: 'departurecity', title: '出发城市', width: 100}
                 ,{field: 'arrivalcity', title: '到达城市', width: 100}
                 ,{field: 'departuretime', title: '出发时间',sort: true, width: 120}
                 ,{field: 'arrivaltime', title: '到达时间',sort: true, width: 130}
                 ,{field: 'date', title: '日期', width: 120}
                 ,{field: 'arrival_airport', title: '到达机场', width: 120}
                 ,{field: 'departure_airport', title: '出发机场', width: 120}
-                ,{field: 'action',title: '操作',templet:setTitle,width:100}
+                ,{fixed: '', title:'操作', toolbar: "#toolbtn", width:150}
             ]]
         });
-        function setTitle(obj){
-            id=obj.flight_id;
-            var btn="";
-            btn +='<button class="layui-btn layui-btn-xs layui-btn-radius layui-btn-primary" onclick="geti()">订票</button>'
-            return btn;
-        }
-        geti=function (){
-            window.location.href='http://localhost:8080/jieshouURL?id='+id;
-        }
+    table.on('tool(test)', function (obj)  {
+        var book_date = obj.data.date;
+        var book_departurecity = obj.data.departurecity;
+        var book_arrivalcity = obj.data.arrivalcity;
+        var book_departuretime = obj.data.departuretime;
+        var book_arrivaltime = obj.data.arrivaltime;
+        var book_arrival_airport = obj.data.arrival_airport;
+        var book_departure_airport = obj.data.departure_airport;
+        if (obj.event === 'book') {
+            window.location.href="/book?book_departurecity="+escape(book_departurecity)+"&book_arrivalcity="
+            +escape(book_arrivalcity)+"&book_departuretime="+escape(book_departuretime)+"&book_arrivaltime="
+            +escape(book_arrivaltime)+"&book_arrival_airport="+escape(book_arrival_airport)+"&book_departure_airport="
+            +escape(book_departure_airport)+"&book_date="+escape(book_date);
+
+          }
 
     });
+
+    });
+
+
 </script>
+
 </body>
 </html>

@@ -19366,22 +19366,22 @@
       <div id="J_flightInfo" jskit-key="flight" jskit-type="txt">
         <div class="flight-info " style="">
           <div class="flight-city">
-            <div class="flt-date">05-14<span class="week">周五</span></div>
-            <div class="flt-depart ">北京</div> <div class="flt-arrow"><i class="ico-arrow"></i></div> 
-            <div class="flt-arrive ">上海</div>
+            <div class="flt-date" id="date"><span class="week"></span></div>
+            <div class="flt-depart " id="d_city"></div> <div class="flt-arrow"><i class="ico-arrow"></i></div> 
+            <div class="flt-arrive " id="a_city"></div>
           </div>
 
           <div class="flight-detail">
-            <div class="flt-depart"><span class="time">07:40</span> <span class="airport">大兴国际机场</span>
+            <div class="flt-depart"><span class="time" id="d_time"></span> <span id="d_port" class="airport"></span>
             </div>
             <div class="flt-arrow flt-non-stop">
-              <div class="cost-time"><i class="ico-clock"></i>2h20m</div>
+<!--              <div class="cost-time"><i class="ico-clock"></i>2h20m</div>-->
               <div class="timeline"> <i class="ico-airport"></i> <i class="dot"></i> <i
                       class="dot dot-end"></i></div>
             </div>
-            <div class="flt-arrive"><span class="time">10:00</span>
+            <div class="flt-arrive"><span class="time" id="a_time"></span>
               <div id="arriveTime_1_1" style="display: none">到达时间为第2天，2021年05月14日 10时00分</div><span
-                      class="airport">浦东国际机场T1</span>
+                      class="airport" id="a_port"></span>
             </div>
           </div>
         </div>
@@ -23477,6 +23477,31 @@
   </div>
 </div>
 <div id="adsbox"> </div>
+<script LANGUAGE="JavaScript">
+    function getQueryString(name) {
+    var reg = new RegExp('(^|&)' + name + '=([^&]*)(&|$)', 'i');
+    var r = window.location.search.substr(1).match(reg);
+    if (r != null) {
+        return unescape(r[2]);
+    }
+    return null;
+}
+var date = (unescape(getQueryString("book_date"))).slice(5);
+var departurecity = unescape(getQueryString("book_departurecity"));
+var arrivalcity = unescape(getQueryString("book_arrivalcity"));
+var departuretime = (unescape(getQueryString("book_departuretime"))).slice(0,-3);
+var arrivaltime = (unescape(getQueryString("book_arrivaltime"))).slice(0,-3);
+var arrival_airport = unescape(getQueryString("book_arrival_airport"));
+var departure_airport = unescape(getQueryString("book_departure_airport"));
+document.getElementById('date').innerHTML = date;
+document.getElementById('d_city').innerHTML = departurecity;
+document.getElementById('a_city').innerHTML = arrivalcity;
+document.getElementById('d_time').innerHTML = departuretime;
+document.getElementById('a_time').innerHTML = arrivaltime;
+document.getElementById('d_port').innerHTML = departure_airport;
+document.getElementById('a_port').innerHTML = arrival_airport;
+
+</script>
 </body>
 
 </html>

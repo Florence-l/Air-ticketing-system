@@ -36,7 +36,6 @@ public class MineController {
     @GetMapping("/mine")
     public String mine(){
         return "mine";
-
     }
     @GetMapping("/passengerdetail")
     public String passengerDetail(){

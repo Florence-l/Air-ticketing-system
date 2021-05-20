@@ -48,6 +48,17 @@ public class UserController {
         return "register";
     }
 
+    //跳转到登录页面
+    @GetMapping(value={"/login"})
+    public String login(){
+        return "login";
+    }
+
+    @RequestMapping("/index")
+    public String index(){
+        return "index";
+    }
+
     //注册处理
     @PostMapping("/register")
     public String register(String username, String password, String password2, String email, String checkcode, RedirectAttributes attributes) {
@@ -80,16 +91,12 @@ public class UserController {
                         System.out.println("\n用户名已存在\n");
                     }
                 }
-                //密码和确认密码不一致  在注册页面上显示提示信息
-                else attributes.addFlashAttribute("msg", "密码不一致");
             }else {
                 //验证码不正确，校验失败
-                System.out.println("2");
                 attributes.addFlashAttribute("msg", "验证码输入不正确");
             }
         } else {
             // 超时
-            System.out.println("3");
             attributes.addFlashAttribute("msg", "验证码已过期");
         }
         return "redirect:/register";
@@ -118,18 +125,6 @@ public class UserController {
             logger.error("文本邮件发送异常！", e);
             return "failure";
         }
-    }
-
-
-    //跳转到登录页面
-    @GetMapping(value={"/login"})
-    public String login(){
-        return "login";
-    }
-
-    @RequestMapping("/index")
-    public String index(){
-        return "index";
     }
 
     //重置密码
@@ -164,18 +159,12 @@ public class UserController {
                         attributes.addFlashAttribute("msg", "重置密码成功");
                         return "redirect:/login";
                     }
-                    //密码和确认密码不一致  在注册页面上显示提示信息
-                    else attributes.addFlashAttribute("msg", "密码不一致");
-                    //注册不成功就保持在注册页面
-
                 } else {
                     //验证码不正确，校验失败
-                    System.out.println("2");
                     attributes.addFlashAttribute("msg", "验证码输入不正确");
                 }
             } else {
                 // 超时
-                System.out.println("3");
                 attributes.addFlashAttribute("msg", "验证码已过期");
             }
         }
