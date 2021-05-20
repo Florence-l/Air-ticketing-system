@@ -47,7 +47,7 @@ public class FlightInquiryController {
 
     //航班查询
     @PostMapping("/index")
-    public String query( String departurecity, String arrivalcity, String date, Model model){
+    public void query( String departurecity, String arrivalcity, String date, Model model){
        getdeparturecity=departurecity;
        getarrivalcity=arrivalcity;
        getdate=date;
@@ -57,7 +57,6 @@ public class FlightInquiryController {
        model.addAttribute("date",getdate);
        System.out.println(getdeparturecity+getarrivalcity+getdate);
 
-        return "redirect:/result";
     }
 
     @RequestMapping("flight")
@@ -87,5 +86,7 @@ public class FlightInquiryController {
 
 
 }
+
+
 
 

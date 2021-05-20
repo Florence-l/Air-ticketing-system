@@ -189,3 +189,56 @@ a.one:hover, a.one:active {
     color: white;
 }
 
+.filter-v2 .result-wrapper .flight-list.root-flights .flight-item .flight-box .flight-detail {
+    width: 410px;
+}
+.flight-list .flight-item .flight-box .flight-detail {
+    display: inline-block;
+    vertical-align: middle;
+    width: 360px;
+    text-align: center;
+}
+.filter-v2 .result-wrapper .flight-list.root-flights .flight-item .flight-box .flight-detail .depart-box {
+    width: 100px;
+}
+.flight-list .flight-item .flight-box .flight-detail .depart-box {
+    position: relative;
+    display: inline-block;
+    vertical-align: top;
+    width: 110px;
+    text-align: right;
+}
+.flight-list .flight-item .flight-box .flight-detail .airport .name {
+    max-width: 83px;
+}
+
+.flight-list .flight-item .flight-box .flight-detail .airport .name {
+    display: inline-block;
+    overflow: hidden;
+    -o-text-overflow: ellipsis;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    vertical-align: middle;
+}
+.low-price-reprot-container-v2 .search-box {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    height: 38px;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    -webkit-box-pack: justify;
+    -ms-flex-pack: justify;
+    justify-content: space-between;
+}
+.low-price-reprot-container .search-box {
+    margin-bottom: 16px;
+}
+.low-price-reprot-container-v2 .search-box>div:nth-of-type(1) .low-price-reprot-title-v2 {
+    color: #333333;
+    font-size: 26px;
+    font-weight: 600;
+    line-height: 32px;
+    margin-right: 24px;
+}

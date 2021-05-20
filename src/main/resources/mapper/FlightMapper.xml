@@ -33,7 +33,7 @@
   </select>
 
   <select id="findByRandom" resultType="com.example.demo2.bean.Flight" resultMap="FlightResultMap">
-    select * from flight_table order by rand() limit 10
+    select * from flight_table order by rand() limit 5
   </select>
 
 </mapper>

@@ -253,10 +253,8 @@ div.card {
     box-shadow: 0 15px 30px -10px grey;
     place-items: center;
     font-size: medium;
-    margin-top: 10rem;
+    margin-top: 3rem;
     margin-bottom: 10rem;
-    margin-left: 20rem;
-    margin-right: 20rem;
     text-align: center;
     display:inline-block;
     border-radius: 12px 12px 12px 12px;

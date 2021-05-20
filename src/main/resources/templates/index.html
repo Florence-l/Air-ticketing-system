@@ -8,8 +8,9 @@
     <script type="text/javascript" src="/js/jquery-1.8.3.min.js"></script>
     <link type="text/css" rel="stylesheet" href="/css/jqstyle.css"/>
     <link rel="stylesheet" href="/css/index.css"/>
+    <script type="text/javascript" src="/js/getUrl.js"></script>
 </head>
-<body>
+<body style="text-align: center">
 
 <th:block th:include="common.html :: header"></th:block>
 <div class="layui-carousel" id="test10">
@@ -32,20 +33,20 @@
     <!--面板区-->
     <ul class="tab_box">
         <li class="tabBox_active">
-            <form id="flightInquiry" action="/index" method="post">
+            <form id="flightInquiry" action="/index" method="post" target="iframe">
             <div class="layui-form-item" style="font-size: 15px;color: #0C0C0C;font-family:'Microsoft YaHei'">
                 <label class="layui-form-label" >出发地</label>
-                    <input name="departurecity" th:text="${departurecity}" type="text" required="required" class="layui-input">
+                    <input id="dc" name="departurecity" th:text="${departurecity}" type="text" required="required" class="layui-input">
                 <label class="layui-form-label">目的地</label>
-                    <input name="arrivalcity" th:text="${arrivalcity}" type="text" required="required" class="layui-input">
+                    <input id="ac" name="arrivalcity" th:text="${arrivalcity}" type="text" required="required" class="layui-input">
                 <label class="layui-form-label">日期</label>
-                    <input name="date" th:text="${date}" type="text" required="required" class="layui-input" placeholder="格式如：yyyy.mm.dd">
+                    <input id="da" name="date" th:text="${date}" type="text" required="required" class="layui-input" placeholder="格式如：yyyy.mm.dd">
             </div>
-
-            <div>
-                <button type="submit">查询</button>
-            </div>
+                <div>
+                    <button id="bt" type="submit" onclick="getid()">查询</button>
+                </div>
             </form>
+            <iframe id="iframe" name="iframe" style="display:none;"></iframe>
 
             <div><img src="images/citypl2.jpg" style="width:400px;height:300px;border-radius: 50px 50px 50px 50px;margin-left: 200px"></div>
         </li>
@@ -65,16 +66,16 @@
     </ul>
 </div>
 <br>
-<div>
 
-</div>
 
-<div class="card">
-     <h2 style="font-size: 18px">航班推荐</h2>
+<div style="font-size: 18px;width: 100px">航班推荐</div>
+
+<div class="card" style="text-align: center">
     <div class="tab_box">
         <table class="layui-hide" id="recommendlist"></table>
     </div>
 </div>
+
 
 
 <th:block th:include="common.html :: footer"></th:block>
@@ -175,6 +176,16 @@
 </script>
 
 <script th:src="@{layui/layui.js}"></script>
+<script type="text/javascript">
+    getid=function (){
+        document.getElementById("flightInquiry").submit();
+        var a = document.getElementById("dc").value;
+        var b = document.getElementById("ac").value;
+        var c = document.getElementById("da").value;
+
+        window.location.href='http://localhost:8080/result?departurecity='+a+'&arrivalcity='+b+'&date='+c;
+}
+</script>
 
 <script type="text/html" id="toolbtn">
     <a class="layui-btn layui-btn-sm layui-btn-radius layui-btn-primary" lay-event="book" href="/book">预定</a>
@@ -186,8 +197,10 @@
 
         table.render({
             elem: '#recommendlist'
-            ,height: 500
             ,url: '/index/re' //数据接口
+            ,skin:'line'
+            ,size:'lg'
+
             ,parseData:function (res) {
                 console.log(res);
                 return {
@@ -197,15 +210,28 @@
                     data: res,
                 }
             }
-            ,cols: [[ //表头
-                {field: 'departurecity', title: '出发城市', width: 100}
-                ,{field: 'arrivalcity', title: '到达城市', width: 100}
-                ,{field: 'departuretime', title: '出发时间',sort: true, width: 120}
-                ,{field: 'arrivaltime', title: '到达时间',sort: true, width: 130}
+            ,done: function (res, curr, count) {
+                $('th').hide();
+                //更改颜色
+                var that = this.elem.next(); res.data.forEach(function (item, index) {
+                    if (index % 2 == 0) {
+                        //var tr = that.find(".layui-table-box tbody tr[data-index='" + index + "']").css('background-color', 'rgba(236,237,255,0.85)').addClass('addclass');
+                    } else {
+                       // var tr = that.find(".layui-table-box tbody tr[data-index='" + index + "']").css('background-color', 'rgba(231,242,246,0.7)').addClass('addclass');
+                    }
+                })
+            }
+
+            ,cols: [[ //表头5
+                 {field: 'photo',templet:function (d) {return '<div><img src="images/citypl2.jpg"></div>'}}
+                ,{title: '出发城市', width: 80,templet:function (d){
+                        return  '<span style="color: #000000;font-size: 15px;font-weight: bold">'+d.departurecity+'</span></br><span style="color:#999999;font-size: 13px">'+d.departuretime + '</span></br>' + d.departure_airport + '</span>';
+                    }}
+                ,{title: '到达城市', width: 80,templet:function (d){
+                        return  '<span style="color: #000000;font-size: 15px;font-weight: bold">'+d.arrivalcity + '</span></br><span style="color:#999999;font-size: 13px">' + d.arrivaltime + '</span></br>' + d.arrival_airport + '</span>';
+                    }}
                 ,{field: 'date', title: '日期', width: 120}
-                ,{field: 'arrival_airport', title: '到达机场', width: 120}
-                ,{field: 'departure_airport', title: '出发机场', width: 120}
-                ,{fixed: 'right', title:'操作', toolbar: '#toolbtn', width:150}
+                ,{fixed: 'right', title:'操作', toolbar: '#toolbtn', width:80}
             ]]
         });
 
