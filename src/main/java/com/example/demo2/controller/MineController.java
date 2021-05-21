@@ -5,6 +5,7 @@ import com.example.demo2.Util.RequiredUtil;
 import com.example.demo2.bean.Order;
 import com.example.demo2.bean.User;
 import com.example.demo2.service.OrderService;
+import com.example.demo2.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -21,7 +22,7 @@ import java.util.List;
 public class MineController {
     @Autowired
     public OrderService orderService;
-    private User user;
+    public UserService userService;
 
     @GetMapping("/orderdetail")
     public String orderdetail(){
@@ -48,11 +49,10 @@ public class MineController {
 
     }
 
-    @RequestMapping(value = "/username")
+    @RequestMapping("/username")
     @ResponseBody
     public String currentUserName(Principal principal) {
-        return principal.getName();
-
+        return userService.selectUserByName(principal.getName()).getUsername();
     }
 
 
@@ -71,8 +71,9 @@ public class MineController {
         int limit = Integer.parseInt(request.getParameter("limit").trim());
         int page = Integer.parseInt(request.getParameter("page").trim());
 
-
-        List<Order> orderList = orderService.findByid(1,page,limit);
+        User user = userService.selectUserByName(principal.getName());
+        Integer userid = user.getUserId();
+        List<Order> orderList = orderService.findByid(userid,page,limit);
         int countOrder = orderService.countAllOrder();
 
         LayuiTableResultUtil<List> list = new LayuiTableResultUtil<List>("",orderList,0,countOrder);

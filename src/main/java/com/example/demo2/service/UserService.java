@@ -75,7 +75,12 @@ public class UserService  implements UserDetailsService {
     }
 
     public User selectUserByEmail(String email) {
-        User u=userMapper.selectUserByEmail(email);
+        User u = userMapper.selectUserByEmail(email);
+        return u;
+    }
+
+    public User selectUserByName(String name){
+        User u = userMapper.loadUserByUsername(name);
         return u;
     }
 
