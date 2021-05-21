@@ -22,6 +22,7 @@ import java.util.List;
 public class MineController {
     @Autowired
     public OrderService orderService;
+    @Autowired
     public UserService userService;
 
     @GetMapping("/orderdetail")
@@ -47,12 +48,6 @@ public class MineController {
     public String insert(){
         return "passengerInsert";
 
-    }
-
-    @RequestMapping("/username")
-    @ResponseBody
-    public String currentUserName(Principal principal) {
-        return userService.selectUserByName(principal.getName()).getUsername();
     }
 
 

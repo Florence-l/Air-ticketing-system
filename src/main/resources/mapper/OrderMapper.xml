@@ -59,7 +59,6 @@
         where user_id = #{user_id} and paymentStatus = 0
     </select>
 
-
     <select id="countAllOrder" resultType="int">
         select count(order_id) from order_table
     </select>
