@@ -21,7 +21,7 @@
   </select>
 
   <select id="selectUserByName" parameterType="com.example.demo2.bean.User">
-    select * from user where username=#{username}
+    select * from user where username= #{username}
   </select>
 
   <delete id="delete" parameterType="com.example.demo2.bean.User">
