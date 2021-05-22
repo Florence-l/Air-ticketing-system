@@ -23,6 +23,8 @@ public class Flight {
 
     private String passby_city;
 
+    private Integer price;
+
     public Integer getFlight_id() {
         return flight_id;
     }
@@ -103,7 +105,11 @@ public class Flight {
         this.passby_city = passby_city == null ? null : passby_city.trim();
     }
 
-
-
+    public Integer getPrice() {
+        return price;
+    }
+    public void setPrice(Integer price) {
+        this.price = price;
+    }
 
 }

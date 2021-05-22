@@ -7,6 +7,7 @@
     <link rel="stylesheet" th:href="@{layui/css/layui.css}">
     <link type="text/css" rel="stylesheet" href="/css/jqstyle.css"/>
     <link rel="stylesheet" href="/css/index.css"/>
+    <link rel="stylesheet" href="/css/schedule.css"/>
     <script type="text/javascript" src="/js/jquery-1.8.3.min.js"></script>
     <script type="text/javascript" src="/js/getUrl.js"></script>
     <style type="text/css">
@@ -23,35 +24,49 @@
         }
     </style>
 </head>
-<body style="text-align: center">
+<body>
 
 
 <th:block th:include="common.html :: header"></th:block>
-<div class="tab_contents" style="margin-top:40px;" >
-<ul class="tab_box">
-    <li class="tabBox_active">
-        <form id="flightInquiry" action="/index" method="post" target="iframe">
-            <div class="layui-form-item" style="font-size: 15px;color: #0C0C0C;font-family:'Microsoft YaHei'">
-                <label class="layui-form-label" >出发地</label>
-                <input name="departurecity" id="gdeparturecity" type="text" required="required" class="layui-input">
-                <label class="layui-form-label">目的地</label>
-                <input name="arrivalcity" id="garrivalcity" type="text" required="required" class="layui-input">
-                <label class="layui-form-label">日期</label>
-                <input name="date" id="gdate" type="text" required="required" class="layui-input" placeholder="格式如：yyyy.mm.dd">
-            </div>
-            <button type="submit" onclick="getid()">查询</button>
-        </form>
-        <iframe id="iframe" name="iframe" style="display:none;" ></iframe>
-    </li>
-</ul>
+<div class="wrapper">
+    <div class="container">
+        <article class="part card-details">
+            <h1>
+                Flight Schedule Details
+            </h1>
+            <form id="flightInquiry" action="/index" method="post" target="iframe">
+                <div class="group card-number">
+                    <label style="font-size:14px">出发地</label>
+                    <input style="font-size:16px" name="departurecity" id="gdeparturecity" type="text" required="required">
+
+                </div>
+                <div class="group card-name">
+                    <label style="font-size:14px">目的地</label>
+                    <input style="font-size:16px" name="arrivalcity" id="garrivalcity" type="text" required="required">
+                </div>
+                <div class="group card-name">
+                        <label style="font-size:14px">日期</label>
+                        <input style="font-size:16px" name="date" id="gdate" type="text" required="required" placeholder="格式如：yyyy.mm.dd">
+                </div>
+                <div class="grup submit-group">
+                    <button type="submit" onclick="getid()">查询</button>
+                </div>
+            </form>
+            <iframe id="iframe" name="iframe" style="display:none;" ></iframe>
+        </article>
+        <div class="part bg"></div>
+    </div>
 </div>
 
-<div class="card">
+<div class="card" style="position: relative;left: 50%;margin-left: -486px;">
     <h2 style="font-size: 18px">查询结果</h2>
     <div class="tab_box">
         <table class="layui-hide" id="flightList" lay-filter="test"></table>
     </div>
 </div>
+
+
+
 
 <th:block th:include="common.html :: footer"></th:block>
 
@@ -103,12 +118,13 @@
             ,cols: [[ //表头
                  {field: 'departurecity', title: '出发城市', width: 100}
                 ,{field: 'arrivalcity', title: '到达城市', width: 100}
-                ,{field: 'departuretime', title: '出发时间',sort: true, width: 120}
-                ,{field: 'arrivaltime', title: '到达时间',sort: true, width: 130}
+                ,{field: 'departuretime', title: '出发时间',sort: true, width: 110}
+                ,{field: 'arrivaltime', title: '到达时间', width: 110}
                 ,{field: 'date', title: '日期', width: 120}
                 ,{field: 'arrival_airport', title: '到达机场', width: 120}
                 ,{field: 'departure_airport', title: '出发机场', width: 120}
-                ,{fixed: '', title:'操作', toolbar: "#toolbtn", width:150}
+                , {field: 'price', title: '价格', width: 100,templet:function (d) {return '<span style="color:#23a9de;font-size: 16px;font-weight: bold">'+"￥"+d.price;}}
+                ,{fixed: '', title:'操作', toolbar: "#toolbtn", width:130}
             ]]
         });
     table.on('tool(test)', function (obj)  {
@@ -119,11 +135,12 @@
         var book_arrivaltime = obj.data.arrivaltime;
         var book_arrival_airport = obj.data.arrival_airport;
         var book_departure_airport = obj.data.departure_airport;
+        var book_price=obj.data.price;
         if (obj.event === 'book') {
             window.location.href="/book?book_departurecity="+escape(book_departurecity)+"&book_arrivalcity="
             +escape(book_arrivalcity)+"&book_departuretime="+escape(book_departuretime)+"&book_arrivaltime="
             +escape(book_arrivaltime)+"&book_arrival_airport="+escape(book_arrival_airport)+"&book_departure_airport="
-            +escape(book_departure_airport)+"&book_date="+escape(book_date);
+            +escape(book_departure_airport)+"&book_date="+escape(book_date)+"&book_price="+escape(book_price);
 
           }
 

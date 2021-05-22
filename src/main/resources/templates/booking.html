@@ -18604,6 +18604,7 @@
 <body class="page-v2">
 <div class="header-wrapper">
   <h1 style="padding-top: 22px;padding-left: 20px;">机票预订</h1>
+    <h1 style="padding-top: 22px;padding-left: 20px;"><a href="/result">返回</a></h1>
 </div>
 <div class="container" id="J_container">
   <div id="J_globalLoading" class="loading-box page-loading" style="display: none;"> <img
@@ -19533,8 +19534,7 @@
               <div class="corner">免费</div>
             </div>
           </div>
-          <div class="total-price"> <span jskit-key="order-price" jskit-type="txt"
-                                          id="J_totalPrice"><dfn>¥</dfn>1560</span></div>
+          <div class="total-price"> <span jskit-key="order-price" jskit-type="txt" id="p_price">¥</span></div>
         </div>
       </div>
       <div id="J_TGQCompareInfo">
@@ -23493,6 +23493,7 @@ var departuretime = (unescape(getQueryString("book_departuretime"))).slice(0,-3)
 var arrivaltime = (unescape(getQueryString("book_arrivaltime"))).slice(0,-3);
 var arrival_airport = unescape(getQueryString("book_arrival_airport"));
 var departure_airport = unescape(getQueryString("book_departure_airport"));
+var price=unescape(getQueryString("book_price"));
 document.getElementById('date').innerHTML = date;
 document.getElementById('d_city').innerHTML = departurecity;
 document.getElementById('a_city').innerHTML = arrivalcity;
@@ -23500,6 +23501,7 @@ document.getElementById('d_time').innerHTML = departuretime;
 document.getElementById('a_time').innerHTML = arrivaltime;
 document.getElementById('d_port').innerHTML = departure_airport;
 document.getElementById('a_port').innerHTML = arrival_airport;
+document.getElementById('p_price').innerHTML = price;
 
 </script>
 </body>

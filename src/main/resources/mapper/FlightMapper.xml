@@ -12,15 +12,16 @@
     <result column="arrival_airport" jdbcType="VARCHAR" property="arrival_airport" />
     <result column="departure_airport" jdbcType="VARCHAR" property="departure_airport" />
     <result column="passby_city" jdbcType="VARCHAR" property="passby_city" />
+    <result column="price" jdbcType="INTEGER" property="price"/>
   </resultMap>
 
   <sql id="Base_Column_List">
     flight_id, airplane_id, departurecity, arrivalcity, departuretime, arrivaltime, date,
-    arrival_airport, departure_airport, passby_city
+    arrival_airport, departure_airport, passby_city ,price
   </sql>
 
   <select id="findByRequired" resultMap="FlightResultMap" resultType="com.example.demo2.bean.Flight" >
-    select * from flight_table where departurecity = #{departurecity} and departurecity = #{departurecity} and arrivalcity = #{arrivalcity}
+    select * from flight_table where departurecity = #{departurecity} and arrivalcity = #{arrivalcity} and date =#{date}
 
   </select>
 
