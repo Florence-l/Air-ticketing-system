@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <fieldset class="layui-elem-field layui-field-title" style="margin-top: 30px;">
+        <legend>个人信息设置</legend>
+    </fieldset>
+    <div style="font-size: 18px;width: 100px">航班推荐</div>
+
+    <div class="card" style="text-align: center">
+        <div class="tab_box">
+            <table class="layui-hide" id="userinfo" lay-filter="test"></table>
+        </div>
+    </div>
+
+    <script th:inline="none">
+    layui.use(['table'], function(){
+        var table = layui.table;//使用数据表格
+
+        table.render({
+            elem: '#userinfo'
+            ,url: '/' //数据接口
+            ,skin:'line'
+            ,size:'lg'
+
+            ,parseData:function (res) {
+                console.log(res);
+                return {
+                    "code": 0,
+                    "msg": "",
+                    "count": 1000,
+                    data: res,
+                }
+            }
+            ,done: function (res, curr, count) {
+                $('th').hide();
+                //更改颜色
+                var that = this.elem.next(); res.data.forEach(function (item, index) {
+                    if (index % 2 == 0) {
+                        //var tr = that.find(".layui-table-box tbody tr[data-index='" + index + "']").css('background-color', 'rgba(236,237,255,0.85)').addClass('addclass');
+                    } else {
+                       // var tr = that.find(".layui-table-box tbody tr[data-index='" + index + "']").css('background-color', 'rgba(231,242,246,0.7)').addClass('addclass');
+                    }
+                })
+            }
+
+            ,cols: [[ //表头5
+<!--                 {field: 'photo',templet:function (d) {return '<div><img src="images/citypl1.jpg"></div>'}}-->
+                {title: '昵称', width: 80,templet:function (d){
+                        return  '<span style="color: #000000;font-size: 16px;font-weight: bold">'+d.departurecity+'</span>';
+                    }}
+                ,{title: '邮箱', width: 80,templet:function (d){
+                        return  '<span style="color: #000000;font-size: 16px;font-weight: bold">'+d.arrivalcity + '</span></br><span style="color:#999999;font-size: 13px">' + d.arrivaltime + '</span></br>' + d.arrival_airport + '</span>';
+                    }}
+                ,{field: 'date', title: '日期', width: 120}
+                ,{fixed: '', title:'操作', toolbar: "#toolbtn", width:80}
+            ]]
+
+        });
+        table.on('tool(test)', function (obj)  {
+            var book_date = obj.data.date;
+            var book_departurecity = obj.data.departurecity;
+            var book_arrivalcity = obj.data.arrivalcity;
+            var book_departuretime = obj.data.departuretime;
+            var book_arrivaltime = obj.data.arrivaltime;
+            var book_arrival_airport = obj.data.arrival_airport;
+            var book_departure_airport = obj.data.departure_airport;
+            if (obj.event === 'book') {
+                window.location.href="/book?book_departurecity="+escape(book_departurecity)+"&book_arrivalcity="
+                    +escape(book_arrivalcity)+"&book_departuretime="+escape(book_departuretime)+"&book_arrivaltime="
+                    +escape(book_arrivaltime)+"&book_arrival_airport="+escape(book_arrival_airport)+"&book_departure_airport="
+                    +escape(book_departure_airport)+"&book_date="+escape(book_date);
+
+            }
+
+        });
+    });
+
+    </script>
+
+</body>
+</html>

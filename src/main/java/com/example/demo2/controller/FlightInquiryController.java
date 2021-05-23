@@ -29,7 +29,7 @@ public class FlightInquiryController {
 
     @GetMapping("/index")
     public String showindex(){
-               return "index";
+        return "index";
     }
 
     @GetMapping("/book")
@@ -48,14 +48,14 @@ public class FlightInquiryController {
     //航班查询
     @PostMapping("/index")
     public void query( String departurecity, String arrivalcity, String date, Model model){
-       getdeparturecity=departurecity;
-       getarrivalcity=arrivalcity;
-       getdate=date;
+        getdeparturecity=departurecity;
+        getarrivalcity=arrivalcity;
+        getdate=date;
 
-       model.addAttribute("departurecity",getdeparturecity);
-       model.addAttribute("arrivalcity",getarrivalcity);
-       model.addAttribute("date",getdate);
-       System.out.println(getdeparturecity+getarrivalcity+getdate);
+        model.addAttribute("departurecity",getdeparturecity);
+        model.addAttribute("arrivalcity",getarrivalcity);
+        model.addAttribute("date",getdate);
+        System.out.println(getdeparturecity+getarrivalcity+getdate);
 
     }
 
@@ -86,7 +86,3 @@ public class FlightInquiryController {
 
 
 }
-
-
-
-

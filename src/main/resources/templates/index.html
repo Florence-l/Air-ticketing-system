@@ -47,6 +47,7 @@
 </style>
 <body style="text-align: center">
 
+
 <th:block th:include="common.html :: header"></th:block>
 <div class="layui-carousel" id="test10">
     <div carousel-item="">
@@ -102,15 +103,20 @@
 </div>
 <br>
 
-<div class="containernew center" style="margin-top: 100px;">
-<div class="cardnew">
-    <h2>航班推荐</h2>
-    <hr/>
+
+<div style="font-size: 18px;width: 100px">航班推荐</div>
+
+<div class="card" style="text-align: center">
     <div class="tab_box">
         <table class="layui-hide" id="recommendlist" lay-filter="test"></table>
     </div>
 </div>
+
+<div style="background : blue">
+    <span id="test11"></span>
 </div>
+
+
 
 <th:block th:include="common.html :: footer"></th:block>
 
@@ -257,14 +263,14 @@
             }
 
             ,cols: [[ //表头5
-                 {field: 'photo',templet:function (d) {return '<div><img src="images/logo.jpg"></div>'}}
+                 {field: 'photo',templet:function (d) {return '<div><img src="images/citypl1.jpg"></div>'}}
                 ,{title: '出发城市', width: 80,templet:function (d){
-                        return  '<span style="color: #000000;font-size: 16px;font-weight: bold">'+d.departurecity+'</span></br><span style="color:#999999;font-size: 13px">'+d.departuretime;
+                        return  '<span style="color: #000000;font-size: 16px;font-weight: bold">'+d.departurecity+'</span></br><span style="color:#999999;font-size: 13px">'+d.departuretime + '</span></br>' + d.departure_airport + '</span>';
                     }}
                 ,{title: '到达城市', width: 80,templet:function (d){
-                        return  '<span style="color: #000000;font-size: 16px;font-weight: bold">'+d.arrivalcity + '</span></br><span style="color:#999999;font-size: 13px">' + d.arrivaltime;
+                        return  '<span style="color: #000000;font-size: 16px;font-weight: bold">'+d.arrivalcity + '</span></br><span style="color:#999999;font-size: 13px">' + d.arrivaltime + '</span></br>' + d.arrival_airport + '</span>';
                     }}
-                ,{field: 'price', title: '价格',width:120, templet:function (d) {return '<span style="color:#23a9de;font-size: 16px;font-weight: bold">'+"￥"+d.price;}}
+                ,{field: 'date', title: '日期', width: 120}
                 ,{fixed: '', title:'操作', toolbar: "#toolbtn", width:80}
             ]]
 
@@ -277,18 +283,32 @@
             var book_arrivaltime = obj.data.arrivaltime;
             var book_arrival_airport = obj.data.arrival_airport;
             var book_departure_airport = obj.data.departure_airport;
-            var book_price=obj.data.price;
             if (obj.event === 'book') {
                 window.location.href="/book?book_departurecity="+escape(book_departurecity)+"&book_arrivalcity="
                     +escape(book_arrivalcity)+"&book_departuretime="+escape(book_departuretime)+"&book_arrivaltime="
                     +escape(book_arrivaltime)+"&book_arrival_airport="+escape(book_arrival_airport)+"&book_departure_airport="
-                    +escape(book_departure_airport)+"&book_date="+escape(book_date)+"&book_price="+escape(book_price);
+                    +escape(book_departure_airport)+"&book_date="+escape(book_date);
 
             }
 
         });
     });
 
+</script>
+
+<script>
+    $(function () {
+        $.ajax({
+                type:"get",
+                url:"/index/re",
+                data:{},
+                async: false,
+                success:function (data) {
+                    $('#test11').html(data[0].departurecity);
+                }
+
+            });
+    })
 </script>
 </body>
 </html>

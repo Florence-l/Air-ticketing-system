@@ -7,9 +7,7 @@ import com.example.demo2.bean.User;
 import com.example.demo2.service.OrderService;
 import com.example.demo2.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.userdetails.UserDetails;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -77,6 +75,17 @@ public class MineController {
         }
         return null;
     }
+
+//    @RequestMapping(value = "/search")
+//    public String ajaxlist(Model model){
+//
+//      List<Order> tmp = orderService.findByid(1,2,10);
+//      if(tmp!=null){
+//          model.addAttribute("search_result",tmp);
+//          return "index";
+//      }
+//        return "index";
+//    }
     @RequestMapping("unpay")
     @ResponseBody()
     public LayuiTableResultUtil<List> oderUnpay(HttpServletRequest request)
