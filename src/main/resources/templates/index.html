@@ -17,12 +17,10 @@
         margin-left: auto;
         margin-right: auto;
     }
-
     .center{
         align-items: center;
         justify-content: center;
     }
-
     .cardnew {
         background-color: white;
         width: auto;
@@ -43,10 +41,8 @@
         background-color:  rgba(237, 207, 53, 0.8);
         margin: 0px;
     }
-
 </style>
 <body style="text-align: center">
-
 
 <th:block th:include="common.html :: header"></th:block>
 <div class="layui-carousel" id="test10">
@@ -58,7 +54,6 @@
         <div><img src="images/plane5.jpg" style="width: 100%;height:100%"></div>
     </div>
 </div>
-
 <div class="tab_contents" style="margin-top: 40px;" >
     <!--导航条-->
     <ul class="tab_nav">
@@ -70,23 +65,21 @@
     <ul class="tab_box">
         <li class="tabBox_active">
             <form id="flightInquiry" action="/index" method="post" target="iframe">
-            <div class="layui-form-item" style="font-size: 15px;color: #0C0C0C;font-family:'Microsoft YaHei'">
-                <label class="layui-form-label" >出发地</label>
+                <div class="layui-form-item" style="font-size: 15px;color: #0C0C0C;font-family:'Microsoft YaHei'">
+                    <label class="layui-form-label" >出发地</label>
                     <input id="dc" name="departurecity" th:text="${departurecity}" type="text" required="required" class="layui-input">
-                <label class="layui-form-label">目的地</label>
+                    <label class="layui-form-label">目的地</label>
                     <input id="ac" name="arrivalcity" th:text="${arrivalcity}" type="text" required="required" class="layui-input">
-                <label class="layui-form-label">日期</label>
+                    <label class="layui-form-label">日期</label>
                     <input id="da" name="date" th:text="${date}" type="text" required="required" class="layui-input" placeholder="格式如：yyyy.mm.dd">
-            </div>
+                </div>
                 <div>
                     <button id="bt" type="submit" onclick="getid()">查询</button>
                 </div>
             </form>
             <iframe id="iframe" name="iframe" style="display:none;"></iframe>
-
             <div><img src="images/citypl2.jpg" style="width:400px;height:300px;border-radius: 50px 50px 50px 50px;margin-left: 200px"></div>
         </li>
-
         <li>
             <h2>在线选座</h2>
             <div>
@@ -103,20 +96,15 @@
 </div>
 <br>
 
-
-<div style="font-size: 18px;width: 100px">航班推荐</div>
-
-<div class="card" style="text-align: center">
-    <div class="tab_box">
-        <table class="layui-hide" id="recommendlist" lay-filter="test"></table>
+<div class="containernew center" style="margin-top: 100px;">
+    <div class="cardnew">
+        <h2>航班推荐</h2>
+        <hr/>
+        <div class="tab_box">
+            <table class="layui-hide" id="recommendlist" lay-filter="test"></table>
+        </div>
     </div>
 </div>
-
-<div style="background : blue">
-    <span id="test11"></span>
-</div>
-
-
 
 <th:block th:include="common.html :: footer"></th:block>
 
@@ -136,7 +124,6 @@
             ,anim: 'fade'
             ,height: '120px'
         });
-
         //设定各种参数
         var ins3 = carousel.render({
             elem: '#test3'
@@ -148,73 +135,60 @@
             ,height: '300px'
             ,interval: 3000
         });
-
         //事件
         carousel.on('change(test4)', function(res){
             console.log(res)
         });
-
         var $ = layui.$, active = {
             set: function(othis){
                 var THIS = 'layui-bg-normal'
                     ,key = othis.data('key')
                     ,options = {};
-
                 othis.css('background-color', '#5FB878').siblings().removeAttr('style');
                 options[key] = othis.data('value');
                 ins3.reload(options);
             }
         };
-
         //监听开关
         form.on('switch(autoplay)', function(){
             ins3.reload({
                 autoplay: this.checked
             });
         });
-
         $('.demoSet').on('keyup', function(){
             var value = this.value
                 ,options = {};
             if(!/^\d+$/.test(value)) return;
-
             options[this.name] = value;
             ins3.reload(options);
         });
-
         //其它示例
         $('.demoTest .layui-btn').on('click', function(){
             var othis = $(this), type = othis.data('type');
             active[type] ? active[type].call(this, othis) : '';
         });
     });
-
     let tabNavItem = document.querySelectorAll(".tab_nav>li");
     let tabBoxItem = document.querySelectorAll(".tab_box>li");
     /*选中部分*/
     let tabNavActive = document.querySelector(".tabNav_active");
     let tabBoxActive = document.querySelector(".tabBox_active");
-
     /*
     思路:
     循环遍历导航条
     点击导航条切换类名控制显示与隐藏
     */
-
     tabNavItem.forEach(function (item, index) {
         item.onmouseenter = function () {
             tabNavActive.className = "";
             this.className = "tabNav_active";
             tabNavActive = this;
-
             tabBoxActive.className = "";
             tabBoxItem[index].className = "tabBox_active";
             tabBoxActive = tabBoxItem[index];
         }
     })
-
 </script>
-
 <script th:src="@{layui/layui.js}"></script>
 <script type="text/javascript">
     getid=function (){
@@ -222,25 +196,20 @@
         var a = document.getElementById("dc").value;
         var b = document.getElementById("ac").value;
         var c = document.getElementById("da").value;
-
         window.location.href='http://localhost:8080/result?departurecity='+a+'&arrivalcity='+b+'&date='+c;
 }
 </script>
-
 <script type="text/html" id="toolbtn">
     <button class="layui-btn layui-btn-xs layui-btn-radius layui-btn-primary" lay-event="book">预定</button>
 </script>
-
 <script th:inline="none">
     layui.use(['table'], function(){
         var table = layui.table;//使用数据表格
-
         table.render({
             elem: '#recommendlist'
             ,url: '/index/re' //数据接口
             ,skin:'line'
             ,size:'lg'
-
             ,parseData:function (res) {
                 console.log(res);
                 return {
@@ -263,14 +232,14 @@
             }
 
             ,cols: [[ //表头5
-                 {field: 'photo',templet:function (d) {return '<div><img src="images/citypl1.jpg"></div>'}}
+                 {field: 'photo',templet:function (d) {return '<div><img src="images/logo.jpg"></div>'}}
                 ,{title: '出发城市', width: 80,templet:function (d){
-                        return  '<span style="color: #000000;font-size: 16px;font-weight: bold">'+d.departurecity+'</span></br><span style="color:#999999;font-size: 13px">'+d.departuretime + '</span></br>' + d.departure_airport + '</span>';
+                        return  '<span style="color: #000000;font-size: 16px;font-weight: bold">'+d.departurecity+'</span></br><span style="color:#999999;font-size: 13px">'+d.departuretime;
                     }}
                 ,{title: '到达城市', width: 80,templet:function (d){
-                        return  '<span style="color: #000000;font-size: 16px;font-weight: bold">'+d.arrivalcity + '</span></br><span style="color:#999999;font-size: 13px">' + d.arrivaltime + '</span></br>' + d.arrival_airport + '</span>';
+                        return  '<span style="color: #000000;font-size: 16px;font-weight: bold">'+d.arrivalcity + '</span></br><span style="color:#999999;font-size: 13px">' + d.arrivaltime;
                     }}
-                ,{field: 'date', title: '日期', width: 120}
+                ,{field: 'price', title: '价格',width:120, templet:function (d) {return '<span style="color:#23a9de;font-size: 16px;font-weight: bold">'+"￥"+d.price;}}
                 ,{fixed: '', title:'操作', toolbar: "#toolbtn", width:80}
             ]]
 
@@ -283,11 +252,12 @@
             var book_arrivaltime = obj.data.arrivaltime;
             var book_arrival_airport = obj.data.arrival_airport;
             var book_departure_airport = obj.data.departure_airport;
+            var book_price=obj.data.price;
             if (obj.event === 'book') {
                 window.location.href="/book?book_departurecity="+escape(book_departurecity)+"&book_arrivalcity="
                     +escape(book_arrivalcity)+"&book_departuretime="+escape(book_departuretime)+"&book_arrivaltime="
                     +escape(book_arrivaltime)+"&book_arrival_airport="+escape(book_arrival_airport)+"&book_departure_airport="
-                    +escape(book_departure_airport)+"&book_date="+escape(book_date);
+                    +escape(book_departure_airport)+"&book_date="+escape(book_date)+"&book_price="+escape(book_price);
 
             }
 
@@ -296,19 +266,37 @@
 
 </script>
 
+
+
 <script>
+
     $(function () {
+
         $.ajax({
+
                 type:"get",
+
                 url:"/index/re",
+
                 data:{},
+
                 async: false,
+
                 success:function (data) {
+
                     $('#test11').html(data[0].departurecity);
+
                 }
 
+
+
+
             });
+
     })
+
 </script>
+
 </body>
+
 </html>
