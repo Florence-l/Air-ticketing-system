@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.example.demo2.mapper.PassengerMapper" >
+<mapper namespace="com.example.demo2.mapper.PassengerMapper">
   <resultMap id="BaseResultMap" type="com.example.demo2.bean.Passenger" >
     <id column="passenger_id" property="passenger_id" jdbcType="INTEGER" />
     <result column="user_name" property="user_name" jdbcType="VARCHAR" />
@@ -10,18 +10,22 @@
   <sql id="Base_Column_List" >
     passenger_id, user_name, user_tel
   </sql>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+
+  <!--selectById:返回含有指定passenger_id数值的一条完整信息-->
+  <select id="selectById" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
     <include refid="Base_Column_List" />
     from passenger_table
-    where passenger_id = #{passengerId,jdbcType=INTEGER}
+    where passenger_id = #{passenger_id,jdbcType=INTEGER}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+
+  <delete id="deleteById" parameterType="java.lang.Integer" >
     delete from passenger_table
-    where passenger_id = #{passengerId,jdbcType=INTEGER}
+    where passenger_id = #{passenger_id,jdbcType=INTEGER}
   </delete>
 
 
+<!--insert:所有的字段都会添加一遍-->
   <insert id="insert" parameterType="com.example.demo2.bean.Passenger" >
     insert into passenger_table (passenger_id, user_name, user_tel
       )
@@ -30,33 +34,35 @@
   </insert>
 
 
-
+<!--insertSelective:只给有值的字段赋值（会对传进来的值做非空判断）-->
   <insert id="insertSelective" parameterType="com.example.demo2.bean.Passenger" >
     insert into passenger_table
     <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="passengerId != null" >
+      <if test="passenger_id != null" >
         passenger_id,
       </if>
-      <if test="userName != null" >
+      <if test="user_name != null" >
         user_name,
       </if>
-      <if test="userTel != null" >
+      <if test="user_tel != null" >
         user_tel,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="passengerId != null" >
-        #{passengerId,jdbcType=INTEGER},
+      <if test="passenger_id != null" >
+        #{passenger_id,jdbcType=INTEGER},
       </if>
-      <if test="userName != null" >
-        #{userName,jdbcType=VARCHAR},
+      <if test="user_name != null" >
+        #{user_name,jdbcType=VARCHAR},
       </if>
-      <if test="userTel != null" >
-        #{userTel,jdbcType=INTEGER},
+      <if test="user_tel != null" >
+        #{user_tel,jdbcType=INTEGER},
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.example.demo2.bean.Passenger" >
+
+
+<!--  <update id="updateByPrimaryKeySelective" parameterType="com.example.demo2.bean.Passenger" >
     update passenger_table
     <set >
       <if test="userName != null" >
@@ -73,5 +79,5 @@
     set user_name = #{userName,jdbcType=VARCHAR},
       user_tel = #{userTel,jdbcType=INTEGER}
     where passenger_id = #{passengerId,jdbcType=INTEGER}
-  </update>
+  </update>-->
 </mapper>

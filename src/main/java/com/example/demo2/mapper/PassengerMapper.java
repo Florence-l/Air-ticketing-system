@@ -14,5 +14,7 @@ public interface PassengerMapper {
 
     int insert(Passenger passenger);
 
+    Passenger selectById(Passenger passenger);
+
 }
 

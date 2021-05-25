@@ -1,7 +1,11 @@
 package com.example.demo2.bean;
 
+import javax.persistence.Id;
+
+
 public class Passenger {
     private String user_name;
+    @Id
     private Integer passenger_id;
     private Integer user_tel;
 

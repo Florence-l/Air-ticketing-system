@@ -19,4 +19,9 @@ public class PassengerService{
         passengerMapper.insert(passenger);
         return 1;
     }
+
+    public Passenger selectAllPassenger(Passenger passenger){
+        Passenger p = passengerMapper.selectById(passenger);
+        return p;
+    }
 }
