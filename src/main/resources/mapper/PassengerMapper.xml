@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.demo2.mapper.PassengerMapper" >
+  <resultMap id="BaseResultMap" type="com.example.demo2.bean.Passenger" >
+    <id column="passenger_id" property="passenger_id" jdbcType="INTEGER" />
+    <result column="user_name" property="user_name" jdbcType="VARCHAR" />
+    <result column="user_tel" property="user_tel" jdbcType="INTEGER" />
+  </resultMap>
+
+  <sql id="Base_Column_List" >
+    passenger_id, user_name, user_tel
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from passenger_table
+    where passenger_id = #{passengerId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from passenger_table
+    where passenger_id = #{passengerId,jdbcType=INTEGER}
+  </delete>
+
+
+  <insert id="insert" parameterType="com.example.demo2.bean.Passenger" >
+    insert into passenger_table (passenger_id, user_name, user_tel
+      )
+    values (#{passenger_id,jdbcType=INTEGER}, #{user_name,jdbcType=VARCHAR}, #{user_tel,jdbcType=INTEGER}
+      )
+  </insert>
+
+
+
+  <insert id="insertSelective" parameterType="com.example.demo2.bean.Passenger" >
+    insert into passenger_table
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="passengerId != null" >
+        passenger_id,
+      </if>
+      <if test="userName != null" >
+        user_name,
+      </if>
+      <if test="userTel != null" >
+        user_tel,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="passengerId != null" >
+        #{passengerId,jdbcType=INTEGER},
+      </if>
+      <if test="userName != null" >
+        #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="userTel != null" >
+        #{userTel,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.example.demo2.bean.Passenger" >
+    update passenger_table
+    <set >
+      <if test="userName != null" >
+        user_name = #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="userTel != null" >
+        user_tel = #{userTel,jdbcType=INTEGER},
+      </if>
+    </set>
+    where passenger_id = #{passengerId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.example.demo2.bean.Passenger" >
+    update passenger_table
+    set user_name = #{userName,jdbcType=VARCHAR},
+      user_tel = #{userTel,jdbcType=INTEGER}
+    where passenger_id = #{passengerId,jdbcType=INTEGER}
+  </update>
+</mapper>

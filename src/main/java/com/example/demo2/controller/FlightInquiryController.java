@@ -37,6 +37,11 @@ public class FlightInquiryController {
         return "booking";
     }
 
+/*    @GetMapping("/booking")
+    public String booking(){
+        return "booking";
+    }*/
+
     //航班推荐(随机)
     @RequestMapping("/index/re")
     @ResponseBody()

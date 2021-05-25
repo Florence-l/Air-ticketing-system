@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE generatorConfiguration
         PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
-        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd"
-        "http://mybatis.org/dtd/mybatis-3-config.dtd" >
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
 
 <generatorConfiguration>
 
@@ -59,6 +58,14 @@
         </table>
 
         <table tableName="flight_table" domainObjectName="Flight"
+               enableCountByExample="false"
+               enableUpdateByExample="false"
+               enableDeleteByExample="false"
+               enableSelectByExample="false"
+               selectByExampleQueryId="false">
+        </table>
+
+        <table tableName="passenger_table" domainObjectName="Passenger"
                enableCountByExample="false"
                enableUpdateByExample="false"
                enableDeleteByExample="false"

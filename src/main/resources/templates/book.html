@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml" >
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Login</title>
+<link rel="stylesheet" type="text/css"href="/css/style2.css">
+<link type="text/css" rel="stylesheet" href="/css/jqstyle.css"/>
+<link rel="stylesheet" th:href="@{layui/css/layui.css}">
+<link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css" />
+<script src="//apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+<script src="http://cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+</head>
+
+<body>
+<div class="mainContainer">
+    <th:block th:include="common.html :: header"></th:block>
+    <div class="container" id="book-box">
+        <div class="form-container book-container">
+            <form action="/book" method="post">
+                <h1>乘客</h1>
+                <span class="help-block" style="color: red" th:text="${session.SPRING_SECURITY_LAST_EXCEPTION?.message}"></span>
+                <div class="txtb">
+                    <input name="user_name" required="required">
+                    <span data-placeholder="姓名"></span>
+                </div>
+                <div class="txtb">
+                    <input name="passenger_id" required="required">
+                    <span data-placeholder="身份证"></span>
+                </div>
+                <div class="txtb">
+                    <input name="user_tel" required="required">
+                    <span data-placeholder="中国区号86"></span>
+                </div>
+
+                <div>
+                    <p id="msg" style="color: red" th:text="${msg}"></p>
+                </div>
+                <button type="submit">提交</button>
+            </form>
+        </div>
+    </div>
+
+</div>
+</body>
+
+<script>
+    $(".txtb input").on("focus",function(){
+        $(this).addClass("focus")
+    })
+
+    $(".txtb input").on("blur",function(){
+        if($(this).val() == '')
+            $(this).removeClass("focus")
+    })
+
+    $("#resetPwd").on("click",function(){
+        $(window).attr('location',"/reset");
+    })
+
+</script>
+</html>
