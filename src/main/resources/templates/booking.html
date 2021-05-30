@@ -4,6 +4,8 @@
     <title>website</title>
     <script type="text/javascript" src="jquery-1.8.3.min.js"></script>
     <script type="text/javascript" src="main.js"></script>
+    <script type="text/javascript" src="booking.js"></script>
+
     <script src="//apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
     <link rel="stylesheet" href="layui/css/layui.css">
     <script src="/layui/layui.js"></script>
@@ -18,7 +20,6 @@
         .ico-error,
         .ico-info,
         .ico-num-1,
-        .ico-num-2,
 
         html {
             font-family: sans-serif;
@@ -521,19 +522,6 @@
             font-size: 14px
         }
 
-        .passenger-box .form-toggle .ico-help {
-            position: absolute;
-            top: 50%;
-            right: -17px;
-            margin-top: -6px
-        }
-
-        .passenger-box .form-line .ico-help {
-            position: absolute;
-            top: 23px;
-            right: -17px
-        }
-
         .passenger-box .passenger-info {
             display: inline-block;
             vertical-align: middle;
@@ -558,13 +546,6 @@
             padding-right: 0;
             width: 219px;
             vertical-align: top
-        }
-
-
-        .passenger-search .form-line {
-            width: 200px;
-            padding-left: 22px;
-            border-bottom: 1px solid #27e
         }
 
         .passenger-search .form-input {
@@ -616,11 +597,6 @@
             *display: inline;
             *zoom: 1
         }
-
-        .passenger-name-en:first-child {
-            margin-right: 17px
-        }
-
 
         .contact-box {
             margin-bottom: 30px
@@ -748,7 +724,7 @@
             }
 
         </style>
-        <div class="main" id="J_main" style="">
+        <div class="main" id="J_main" >
             <div id="J_step1">
                 <div id="J_psychology"></div>
                 <div id="_passenger">
@@ -760,312 +736,102 @@
                         </div>
 
                         <div id="J_passengerList" render-guid="1620891312881_50">
+
                             <div id="passengerMain" class="c-slidedown_14">
-                                <div id="mycard"style="display: none;">
+                                <div id="mycard" style="display: none;">
                                     <!-- 添加的乘客信息表 -->
                                     <div class="basic-card J_passenger"  >
                                         <div class="passenger-info">
                                             <div class="form">
-                                                <div bind-xclass="{'form-error':passengerList[0].showErrors.name || passengerList[0].showErrors.enName}"
-                                                     class="form-line J_lang">
-
-                                                    <!--<div id="passengerCnNameEle0" class="J_passenger_name_zh">
-
-                                                        <input id="p_name_0" maxlength="15" class="form-input form-input-block J_inputName c-input_1 p-autocomplete_24" type="text" value="">
-
-                                                        <span data-placeholder="用户名"></span>
-                                                        <div style="display: none;"></div>
-                                                    </div> -->
-
-                                                    <div id="passengerCnNameEle0"
-                                                         bind-xclass="{hide:!(!passengerList[0].langIsEN || passengerList[0].isEnNameChanged)}"
-                                                         class="J_passenger_name_zh"><input id="p_name_0"
-                                                                                            p-autocomplete-master="isHighFrequency"
-                                                                                            p-autocomplete-onselect="onSelectAutoComplete"
-                                                                                            p-autocomplete-current="passengerList[0]" maxlength="15"
-                                                                                            class="form-input form-input-block J_inputName c-input_1 p-autocomplete_24"
-                                                                                            bind-value="<<passengerList[0].pName>>" autocomplete="nope"
-                                                                                            type="text" c-bind-blur="onBlurName(passengerList[0],0)"
-                                                                                            c-bind-input="onBlurName(passengerList[0],0)" value=""> <label
-                                                            for="p_name_0" bind-xclass="{hide:passengerList[0].langIsEN}"
-                                                            class="form-input-hint">姓名，请与登机证件姓名保持一致</label>
-                                                        <div class="form-warn-msg c-repeat_10"
-                                                             render-guid="1620891312881_50" style="display: none;"></div>
-                                                        <div bind-xclass="{hide:!passengerList[0].showErrors.name}"
-                                                             class="form-error-msg hide c-errorstyle_15"><i
-                                                                class="ico-error"></i> <span
-                                                                bind-text="<<passengerList[0].showErrors.name>>"></span>
-                                                        </div>
+                                                <div class="form-line J_lang">
+                                                    <div id="passengerCnNameEle0">
+                                                        <input type="text" name="user_name" id="p_name_0" maxlength="15" class="form-input form-input-block J_inputName c-input_1 p-autocomplete_24">
+                                                        <label for="p_name_0" class="form-input-hint">姓名，请与登机证件姓名保持一致</label>
                                                     </div>
-
                                                 </div>
+
                                                 <div class="form-line passenger-identity">
                                                     <div class="form-item">
                                                         <div class="form-select c-dropdown_3" c-dropdown-toggle="">
                                                             <div class="form-select-txt"><span>身份证</span><i
                                                                     class="ico-caret-down"></i></div>
                                                         </div>
-                                                        <div class="cardType-alert form-warn-msg c-repeat_10"
-                                                             render-guid="1620891312881_50" style="display: none;"></div>
-                                                        <div bind-xclass="{hide:!passengerList[0].showErrors.cardType}"
-                                                             class="form-error-msg hide c-errorstyle_15"><i
-                                                                class="ico-error"></i> <span
-                                                                bind-text="<<passengerList[0].showErrors.cardType>>"></span>
-                                                        </div>
-                                                    </div> <div
-                                                        bind-xclass="{'form-error':passengerList[0].showErrors.cardNo||(passengerList[0].idCardType==1&&passengerList[0].showErrors.birthday)}"
-                                                        class="form-item"> <input id="p_card_no_0"
-                                                                                  bind-xclass="{'text-transform-uppercase':passengerList[0].isCalBirthdayCardType(),'form-input-hasvalue': passengerList[0].idCardNo}"
-                                                                                  c-formatter-on="passengerList[0].isFormatCarNO()"
-                                                                                  c-formatter-options="{segments: passengerList[0].isHKMOTWRPCardType()?[6,8,6]:[6, 8, 4] ,separator: ' ',keepSeparators: false}"
-                                                                                  class="form-input J_input text-transform-uppercase c-formatter_4 c-input_1"
-                                                                                  type="text" autocomplete="nope" maxlength="18"
-                                                                                  bind-value="<<passengerList[0].idCardNo>>"
-                                                                                  data-cformatter="{&quot;segments&quot;:[6,8,4],&quot;separator&quot;:&quot; &quot;,&quot;keepSeparators&quot;:false}"
-                                                                                  c-bind-blur="onBlurIDCardNo(passengerList[0],0)" value="">
+                                                    </div> <div class="form-item">
+                                                    <input name="passenger_id" id="p_card_no_0" maxlength="18"
+                                                           class="form-input J_input text-transform-uppercase c-formatter_4 c-input_1">
                                                     <label id="cardNoTip_0" for="p_card_no_0"
                                                            class="form-input-hint">登机证件号码</label>
-                                                    <div class="form-warn-msg c-repeat_10"
-                                                         render-guid="1620891312881_50" style="display: none;"></div>
-                                                    <div class="form-error-msg hide"
-                                                         bind-xclass="{hide: !(membersRegistereError.idCardShow&&0==0)}">
-                                                        <i class="ico-error"></i> <span
-                                                            bind-text="<<#membersRegistereError.msg>>"></span></div>
-                                                    <div bind-xclass="{hide:!passengerList[0].isCalBirthdayCardType() }"
-                                                         class="c-repeat_10" render-guid="1620891312881_50"
-                                                         style="display: none;"></div>
-                                                    <div bind-xclass="{hide:!passengerList[0].showErrors.cardNo}"
-                                                         class="form-error-msg hide c-errorstyle_15"><i
-                                                            class="ico-error"></i> <span
-                                                            bind-html="<<#passengerList[0].showErrors.cardNo>>"></span>
-                                                    </div>
-                                                    <div bind-xclass="{hide:!((passengerList[0].isCalBirthdayCardType()) && (!passengerList[0].showErrors.cardNo) && passengerList[0].showErrors.birthday)}"
-                                                         class="form-error-msg hide c-errorstyle_15"><i
-                                                            class="ico-error"></i> <span
-                                                            bind-html="<<#passengerList[0].showErrors.birthday>>"></span>
-                                                    </div>
                                                 </div>
                                                 </div>
-                                                <div bind-xclass="{hide:!passengerList[0].errors.cardType}"
-                                                     class="form-error-msg hide c-errorstyle_15"><i class="ico-error"></i>
-                                                    <span bind-html="<<#passengerList[0].errors.cardType>>"></span></div>
 
-                                                <div bind-xclass="{hide:!passengerList[0].errors.nationality}"
-                                                     class="form-error-msg hide c-errorstyle_15"><i class="ico-error"></i>
-                                                    <span bind-html="<<#passengerList[0].errors.nationality>>"></span></div>
                                                 <div class="form-line passenger-phone">
                                                     <div class="form-item">
-                                                        <div class="form-select">
-                                                            <div class="form-select-txt"> <span>中国区号 86</span> <i
-                                                                    class="ico-caret-down"></i> </div>
+                                                        <div class="form-select c-dropdown_3">
+                                                            <div class="form-select-txt"><span>中国区号 86</span><i
+                                                                    class="ico-caret-down"></i></div>
                                                         </div>
-                                                    </div>
-                                                    <div class="form-item phone-number"> <input id="p_cellphone_0"
-                                                                                                class="form-input c-input_1" type="text" c-formatter-on=""
-                                                                                                c-formatter-options="{segments: [3, 4, 4],keepSeparators: true}"
-                                                                                                bind-value="<<#passengerList[0].mobilePhone>>"
-                                                                                                autocomplete="nope" c-bind-blur="onBlurContactMobile(0)"
-                                                                                                value=""> <label for="p_cellphone_0" class="form-input-hint">
+                                                    </div><div class="form-item phone-number">
+                                                    <input name="user_tel" id="p_cellphone_0" class="form-input c-input_1">
+                                                    <label for="p_cellphone_0" class="form-input-hint">
                                                         乘机人手机号码（选填） </label>
-                                                        <div class="form-error-msg hide"
-                                                             bind-xclass="{hide: !passengerList[0].mobilePhoneError.show}"><i
-                                                                class="ico-error"></i> <span
-                                                                bind-text="<<#passengerList[0].mobilePhoneError.msg>>"></span>
-                                                        </div>
-                                                    </div>
+                                                </div>
                                                 </div>
                                             </div>
                                         </div><a
                                             class="delete c-ubt_11" onclick="$(this).parent().remove()"><i
                                             class="close">×</i><span bind-text="<<delText>>">删除</span></a>
-
                                     </div>
-                                    <div class="passenger-num"><i class="ico-num-1"></i></div>
                                 </div>
                             </div>
+
                             <!-- 第一个乘客信息表 -->
                             <div class="basic-card J_passenger">
                                 <div class="passenger-info">
                                     <div class="form">
-                                        <div bind-xclass="{'form-error':passengerList[1].showErrors.name || passengerList[1].showErrors.enName}"
-                                             class="form-line J_lang">
-                                            <div id="passengerEnNameEle1"
-                                                 bind-xclass="{hide:!(passengerList[1].langIsEN || passengerList[1].isCnNameChanged), 'form-error':passengerList[1].showErrors.surName, 'onlyPassport': (passengerList[1].onlyPassport || hasEngCard)}"
-                                                 class="form-item passenger-name-en J_passenger_name_en hide onlyPassport">
-                                                <input id="p_surname_1"
-                                                       class="form-input form-input-block text-transform-uppercase J_inputLastName c-input_1"
-                                                       type="text" maxlength="26"
-                                                       bind-value="<<passengerList[1].surName>>"
-                                                       c-bind-blur="onBlurLastName(passengerList[1])" value="">
-                                                <div class="form-warn-msg c-repeat_10"
-                                                     render-guid="1620891312881_50" style="display: none;"></div>
-                                                <div bind-xclass="{hide:!passengerList[1].showErrors.surName}"
-                                                     class="form-error-msg J_error hide c-errorstyle_15"><i
-                                                        class="ico-error"></i> <span
-                                                        bind-text="<<passengerList[1].showErrors.surName>>"></span>
-                                                </div>
-                                            </div>
-                                            <div bind-xclass="{hide:!(passengerList[1].langIsEN || passengerList[1].isCnNameChanged),'form-error':passengerList[1].showErrors.givenName, 'onlyPassport': (passengerList[1].onlyPassport || hasEngCard)}"
-                                                 class="form-item passenger-name-en J_passenger_name_en hide onlyPassport">
-                                                <input id="p_givenname_1"
-                                                       class="form-input form-input-block text-transform-uppercase J_input c-input_1"
-                                                       type="text" maxlength="26"
-                                                       bind-value="<<passengerList[1].givenName>>"
-                                                       c-bind-blur="onBlurFirstName(passengerList[1])" value="">
-                                                <div class="form-warn-msg c-repeat_10"
-                                                     render-guid="1620891312881_50" style="display: none;"></div>
-                                                <div bind-xclass="{hide:!passengerList[1].showErrors.givenName}"
-                                                     class="form-error-msg hide c-errorstyle_15"><i
-                                                        class="ico-error"></i> <span
-                                                        bind-text="<<passengerList[1].showErrors.givenName>>"></span>
-                                                </div>
-                                            </div>
-
+                                        <div class="form-line J_lang">
                                             <div id="passengerCnNameEle1" class="txtb">
                                                 <input type="text" name="user_name" id="p_name_1" maxlength="15" class="form-input form-input-block J_inputName c-input_1 p-autocomplete_24">
                                                 <label for="p_name_1" class="form-input-hint">姓名，请与登机证件姓名保持一致</label>
-                                                <!-- <span data-placeholder="姓名，请与登机证件姓名保持一致"></span> -->
-                                                <div class="form-warn-msg c-repeat_10"
-                                                     render-guid="1620891312881_50" style="display: none;"></div>
-                                                <div bind-xclass="{hide:!passengerList[1].showErrors.name}"
-                                                     class="form-error-msg hide c-errorstyle_15"><i
-                                                        class="ico-error"></i> <span
-                                                        bind-text="<<passengerList[1].showErrors.name>>"></span>
-                                                </div>
-
                                             </div>
-                                            <div bind-xclass="{hide:! passengerList[1].showErrors.enName}"
-                                                 class="form-error-msg hide c-errorstyle_15"><i
-                                                    class="ico-error"></i> <span
-                                                    bind-text="<<passengerList[1].showErrors.enName>>"></span></div>
                                         </div>
+
                                         <div class="form-line passenger-identity">
                                             <div class="form-item">
                                                 <div class="form-select c-dropdown_3" c-dropdown-toggle="">
                                                     <div class="form-select-txt"><span>身份证</span><i
                                                             class="ico-caret-down"></i></div>
                                                 </div>
-                                                <div class="cardType-alert form-warn-msg c-repeat_10"
-                                                     render-guid="1620891312881_50" style="display: none;"></div>
-                                                <div bind-xclass="{hide:!passengerList[1].showErrors.cardType}"
-                                                     class="form-error-msg hide c-errorstyle_15"><i
-                                                        class="ico-error"></i> <span
-                                                        bind-text="<<passengerList[1].showErrors.cardType>>"></span>
-                                                </div>
-
-
-
-                                            </div> <div
-                                                bind-xclass="{'form-error':passengerList[1].showErrors.cardNo||(passengerList[1].idCardType==1&&passengerList[1].showErrors.birthday)}"
-                                                class="form-item">
-
+                                            </div> <div class="form-item">
                                             <input name="passenger_id" id="p_card_no_1"
                                                    class="form-input J_input text-transform-uppercase c-formatter_4 c-input_1">
                                             <label for="p_card_no_1" class="form-input-hint">登机证件号码</label>
+                                        </div>
+                                        </div>
 
-
-                                            <div class="form-warn-msg c-repeat_10"
-                                                 render-guid="1620891312881_50" style="display: none;"></div>
-                                            <div class="form-error-msg hide"
-                                                 bind-xclass="{hide: !(membersRegistereError.idCardShow&&1==0)}">
-                                                <i class="ico-error"></i> <span
-                                                    bind-text="<<#membersRegistereError.msg>>"></span></div>
-                                            <div bind-xclass="{hide:!passengerList[1].isCalBirthdayCardType() }"
-                                                 class="c-repeat_10" render-guid="1620891312881_50"
-                                                 style="display: none;"></div>
-                                            <div bind-xclass="{hide:!passengerList[1].showErrors.cardNo}"
-                                                 class="form-error-msg hide c-errorstyle_15"><i
-                                                    class="ico-error"></i> <span
-                                                    bind-html="<<#passengerList[1].showErrors.cardNo>>"></span>
-                                            </div>
-                                            <div bind-xclass="{hide:!((passengerList[1].isCalBirthdayCardType()) && (!passengerList[1].showErrors.cardNo) && passengerList[1].showErrors.birthday)}"
-                                                 class="form-error-msg hide c-errorstyle_15"><i
-                                                    class="ico-error"></i> <span
-                                                    bind-html="<<#passengerList[1].showErrors.birthday>>"></span>
-                                            </div>
-                                        </div>
-                                        </div>
-                                        <div bind-xclass="{hide:!passengerList[1].errors.cardType}"
-                                             class="form-error-msg hide c-errorstyle_15"><i class="ico-error"></i>
-                                            <span bind-html="<<#passengerList[1].errors.cardType>>"></span></div>
-                                        <div bind-xclass="{hide:isOfficial||passengerList[1].isCalBirthdayCardType(), 'form-error':passengerList[1].showErrors.birthday, 'passenger-identity': passengerList[1].idCardType == 2 }"
-                                             class="form-line hide">
-                                            <div bind-xclass="{hide: passengerList[1].idCardType != 2}"
-                                                 class="form-item hide">
-                                                <div class="form-select">
-                                                    <div class="form-select-txt"><input type="text"
-                                                                                        style="cursor: pointer; border: none; width: 137px; overflow: hidden; color: #CCC;"
-                                                                                        c-countrycode-onselect="onSelectNationality(1)"
-                                                                                        class="c-countryCode_16" autocomplete="off"
-                                                                                        readonly="readonly" value="国籍（国家/地区）"> <i
-                                                            class="ico-caret-down"></i></div>
-                                                </div>
-                                            </div>
-                                            <div bind-xclass="{'form-item': passengerList[1].idCardType == 2}">
-                                                <input id="p_birthday_1" maxlength="10" autocomplete="nope"
-                                                       class="form-input c-input_1 c-datepicker_2 hasDatepicker"
-                                                       type="text" bind-value="<<passengerList[1].birthday>>"
-                                                       c-bind-blur="onBlurBirthday(passengerList[1])"
-                                                       c-bind-change="onBlurBirthday(passengerList[1])" value="">
-                                                <label for="p_birthday_1"
-                                                       class="form-input-hint">出生日期，YYYY-MM-DD</label>
-                                                <div class="form-error-msg hide"
-                                                     bind-xclass="{hide: !membersRegistereError.otherShow}"><i
-                                                        class="ico-error"></i> <span
-                                                        bind-text="<<#membersRegistereError.msg>>"></span></div>
-                                                <div class="form-warn-msg c-repeat_10"
-                                                     render-guid="1620891312881_50" style="display: none;"></div>
-                                                <div bind-xclass="{hide:!passengerList[1].showErrors.birthday}"
-                                                     class="form-error-msg hide c-errorstyle_15"><i
-                                                        class="ico-error"></i> <span
-                                                        bind-html="<<#passengerList[1].showErrors.birthday>>"></span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div bind-xclass="{hide:!passengerList[1].errors.nationality}"
-                                             class="form-error-msg hide c-errorstyle_15"><i class="ico-error"></i>
-                                            <span bind-html="<<#passengerList[1].errors.nationality>>"></span></div>
                                         <div class="form-line passenger-phone">
                                             <div class="form-item">
-                                                <div class="form-select">
-                                                    <div class="form-select-txt">
-                                                        <input type="text"
-                                                               style="cursor: pointer; border: none; width: 137px; overflow: hidden;"
-                                                               c-countrycode-onselect="onSelectCountryCode(1)"
-                                                               class="c-countryCode_16" autocomplete="off"
-                                                               readonly="readonly" value="中国区号 86"> <i
-                                                            class="ico-caret-down"></i> </div>
+                                                <div class="form-select c-dropdown_3">
+                                                    <div class="form-select-txt"><span>中国区号 86</span><i
+                                                            class="ico-caret-down"></i></div>
                                                 </div>
-                                            </div>
-                                            <div class="form-item phone-number">
-
-
-                                                <input name="user_tel"  id="p_cellphone_1" class="form-input c-input_1" >
-                                                <label for="p_cellphone_1" class="form-input-hint">
-                                                    乘机人手机号码（选填） </label>
-
-
-                                                <div class="form-error-msg hide"
-                                                     bind-xclass="{hide: !passengerList[1].mobilePhoneError.show}"><i
-                                                        class="ico-error"></i> <span
-                                                        bind-text="<<#passengerList[1].mobilePhoneError.msg>>"></span>
-                                                </div>
-                                            </div>
+                                            </div><div class="form-item phone-number">
+                                            <input name="user_tel"  id="p_cellphone_1" class="form-input c-input_1" >
+                                            <label for="p_cellphone_1" class="form-input-hint">
+                                                乘机人手机号码（选填） </label>
+                                        </div>
                                         </div>
                                     </div>
+
                                 </div><a
                                     class="delete c-ubt_11" onclick="$(this).parent().remove()"><i
                                     class="close">×</i><span bind-text="<<delText>>">删除</span></a>
-
-                                <div class="passenger-num"><i class="ico-num-2">2</i></div>
                             </div>
+
                             <div class="add-passenger" style="display:inline-block"><a style="cursor: pointer;"
                                                                                        c-ubt-data="[{event:'click',data:'addPassenger'}]"
-                                                                                       bind-xclass="{disabled:btnStatus!=BTN_STATUS.ENABLE}"
-                                                                                       class="button basic c-ubt_11" id="btn_add" onclick="$('.add-passenger').before($('#mycard').html())">+ 添加乘客</a></div>     <div
-                                bind-xclass="{hide:!errorTip}" class="form-error-msg hide c-errorstyle_15"
-                                style="display:inline-block"><i class="ico-error"></i><span
-                                bind-html="<<errorTip>>"></span></div>
+                                                                                       class="button basic c-ubt_11" id="btn_add" onclick="add()">+ 添加乘客</a>
+                            </div>     
+
                             <div id="passengerNameHover" style="display: none" class="c-tab_8">
                             </div>
                         </div>
@@ -1115,9 +881,6 @@
                                                                               bind-value="<<contact.Email>>" c-bind-blur="onBlurContactEmail()" value="">
                                 <label for="I_contact_mail" class="form-input-hint"
                                        bind-text="<<EmailLabel>>">Email(选填，接收航变信息）</label>
-                                <div class="form-error-msg hide c-errorstyle_15"
-                                     bind-xclass="{hide: !emailError.show}"><i class="ico-error"></i> <span
-                                        bind-text="<<emailError.msg>>">请填写正确的Email地址，格式：a@b.cd</span></div>
                             </div>
                         </div>
                     </div>
@@ -1161,65 +924,36 @@
                     <div class="cost-detail">
                         <div class="cost-row">
                             <div class="cost-tit"> <span>成人</span>
-                                <div id="X-TGTable_0_0" class="tooltip tooltip-table"
-                                     style="display:none;width:auto;font-size: 12px">
-                                    <div class="tab-cont" id="Section-Tab-0_0_0" style="display:block">
-                                        <div id="TGTable_0_0_0">
-                                            <div class="tab-cont" id="flightTGQ_0_0_0">
-                                                <table>
-                                                    <tbody>
-
-
-
-
-                                                    </tbody>
-                                                </table>
-                                                <table class="table-and">
-                                                    <tbody>
-                                                    <tr>
-                                                        <th class="tit">备注</th>
-                                                        <td>
-                                                            <div>舱位（S）：票面<dfn>¥</dfn>730/人。</div>
-                                                        </td>
-                                                    </tr>
-                                                    </tbody>
-                                                </table>
-
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="corner"><span class="price"><dfn>¥</dfn>730</span><span class="num">x
-										2</span></div>
                             </div>
-                            <div class="cost-row">
-                                <div class="cost-tit"> <span>机建</span>
-                                    <div id="X-TGTable_0_1" class="tooltip tooltip-table"
-                                         style="display:none;width:auto;font-size: 12px"> </div>
-                                </div>
-                                <div class="corner"><span class="price"><dfn>¥</dfn>50</span><span class="num">x
-										2</span></div>
-                            </div>
-                            <div class="cost-row">
-                                <div class="cost-tit"> <span>燃油税</span>
-                                    <div id="X-TGTable_0_2" class="tooltip tooltip-table"
-                                         style="display:none;width:auto;font-size: 12px"> </div>
-                                </div>
-                                <div class="corner">免费</div>
-                            </div>
+                            <div class="corner"><span class="price"><dfn>¥</dfn>730</span><span class="num">x
+									2</span></div>
                         </div>
-                        <div class="total-price"> <span jskit-key="order-price" jskit-type="txt"
-                                                        id="J_totalPrice"><dfn>¥</dfn>1560</span></div>
+                        <div class="cost-row">
+                            <div class="cost-tit"> <span>机建</span>
+                                <div id="X-TGTable_0_1" class="tooltip tooltip-table"
+                                     style="display:none;width:auto;font-size: 12px"> </div>
+                            </div>
+                            <div class="corner"><span class="price"><dfn>¥</dfn>50</span><span class="num">x
+									2</span></div>
+                        </div>
+                        <div class="cost-row">
+                            <div class="cost-tit"> <span>燃油税</span>
+                                <div id="X-TGTable_0_2" class="tooltip tooltip-table"
+                                     style="display:none;width:auto;font-size: 12px"> </div>
+                            </div>
+                            <div class="corner">免费</div>
+                        </div>
                     </div>
+                    <div class="total-price"> <span jskit-key="order-price" jskit-type="txt"
+                                                    id="J_totalPrice"><dfn>¥</dfn>1560</span></div>
                 </div>
-
             </div>
         </div><input id="fix_chrome_auto_fill" type="text"
                      style="position:fixed;opacity:0;width: 0;height:0;display: block;border: 0;" value="">
     </div>
 
 
-
+    <!-- 渐入渐出效果 -->
     <script>
         $(".txtb input").on("focus",function(){
             $(this).addClass("focus")
@@ -1229,65 +963,9 @@
             if($(this).val() == '')
                 $(this).removeClass("focus")
         })
-
     </script>
 
 
-
-    <script type="text/javascript">
-        function next(){
-            /*获取用户输入*/
-            var user_name=$('#p_name_1').val();
-            var passenger_id=$('#p_card_no_1').val();
-            var user_tel=$('#p_cellphone_1').val();
-
-            $.ajax({
-                type:'post',
-                url:'/book',
-                data:{
-                    'user_name':user_name,
-                    'passenger_id': passenger_id,
-                    'user_tel':user_tel
-                },
-                success:function(res){
-                    layer.msg('乘客添加成功！',{time: 1500,icon:6})
-                    if(res=="success"){
-                        alert('乘客添加成功！')
-                        //layer.msg('乘客添加成功！',{icon:6})
-                        setTimeout(function(){
-                            window.location.href='http://localhost:8080/payment';
-                        },1500);
-                    }else{
-                        alert('乘客信息已存在~')
-                        //layer.msg('乘客信息添加失败！',{icon:5})
-                    }
-                }
-            })
-
-
-
-
-/*            $("#submitAdd").click(function(){
-                //var targetUrl = $("#addForm").attr("action");
-                var data = $("#addForm").serialize();
-                $.ajax({
-                    type:'post',
-                    url:'http://localhost:8080/book',
-                    cache: false,
-                    data:data,  //重点必须为一个变量如：data
-                    dataType:'json',
-                    success:function(data){
-                        alert('success');
-                        window.location.href='http://localhost:8080/payment';
-                    },
-                    error:function(){
-                        alert("请求失败")
-                    }
-                })
-            })*/
-
-        }
-    </script>
 
     <script LANGUAGE="JavaScript">
         function getQueryString(name) {
