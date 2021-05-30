@@ -138,7 +138,8 @@ public class MineController {
         return u.getBirthday();
     }
 
-    @PostMapping("/insertInfo")
+    @RequestMapping("/insertInfo")
+    @ResponseBody
     public void updateInfo(String birthday, Integer sex, Principal principal){
         System.out.print(birthday);
         System.out.print(sex);
