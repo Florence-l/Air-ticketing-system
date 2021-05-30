@@ -18,5 +18,7 @@ public interface UserMapper {
 
     User selectUserByName(String username);
 
+    void updateInfo(String birthday,Integer sex,Integer userId);
+
     void resetPwd(User u);
 }

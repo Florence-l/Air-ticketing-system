@@ -1,50 +1,92 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>添加笔记</title>
+    <title>编辑信息</title>
     <link rel="stylesheet" th:href="@{layui/css/layui.css}">
-    <script type="text/javascript" src="@{/layui/layui.js}"></script>
+    <script type="text/javascript" src="/js/jquery-1.8.3.min.js"></script>
+    <script th:src="@{layui/layui.js}"></script>
+    <script src="//apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+    <script src="http://cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+    <style>
+    .title{
+        float: left;
+        width: 20%;
+        text-align: right;
+        padding-right: 15px;
+        margin-top: 30px;
+        font-weight: bold;
+        }
+    .inputStyle{
+        color: #888;
+        width: 70%;
+        padding: 0px 0px 0px 5px;
+        border: 1px solid #C5E2FF;
+        background: #FBFBFB;
+        outline: 0;
+        -webkit-box-shadow:inset 0px 1px 6px #ECF3F5;
+        box-shadow: inset 0px 1px 6px #ECF3F5;
+        font: 200 12px/25px Arial, Helvetica, sans-serif;
+        height: 30px;
+        line-height:15px;
+        margin: 2px 6px 16px 0px;
+        margin-top: 23px;
+        }
+    .buttonStyle{
+        padding: 10px 30px 10px 30px;
+        background: #66C1E4;
+        border: none;
+        color: #FFF;
+        box-shadow: 1px 1px 1px #4C6E91;
+        -webkit-box-shadow: 1px 1px 1px #4C6E91;
+        -moz-box-shadow: 1px 1px 1px #4C6E91;
+        text-shadow: 1px 1px 1px #5079A3;
+        }
+
+    </style>
 </head>
-<style>
-    body{margin: 10px;}
-    .demo-carousel{height: 200px; line-height: 200px; text-align: center;}
-  </style>
 <body>
-<div>
-    <form class="layui-form" action="">
-        <div class="layui-form-item">
-            <label class="layui-form-lable">昵称</label>
-            <div class="layui-input-block">
-                <input type="text" name="name" required lay-verify="required" autocomplete="off" class="layui-input">
-            </div>
+    <form action="" method="post" class="">
+        <div>
+            <span class="title">生日 :</span>
+            <input id="birthday" type="text" name="birthday" placeholder="生日" class="inputStyle"/>
         </div>
-        <div class="layui-form-item">
-            <label class="layui-form-lable">邮箱</label>
-            <div class="layui-input-block">
-                <input type="text" name="name" required lay-verify="required" autocomplete="off" class="layui-input">
-            </div>
+        <div>
+            <span class="title">性别 :</span>
+            <input id="man" type="radio" name="sex" value="male" style="margin-top: 34px;" >男
+            <input id="women" type="radio" name="sex" value="female" style="margin-top: 34px;">女
         </div>
-        <div class="layui-form-item">
-            <label class="layui-form-label">单选框</label>
-            <div class="layui-input-block">
-                <input type="radio" name="sex" value="男" title="男">
-                <input type="radio" name="sex" value="女" title="女" checked>
-            </div>
+        <div style="margin-top: 50px; margin-left: 70px; ">
+            <button class="buttonStyle" id="save">保存</button>
         </div>
     </form>
-</div>
-<script>
-//Demo
-layui.use('form', function(){
-  var form = layui.form;
 
-  //监听提交
-  form.on('submit(formDemo)', function(data){
-    layer.msg(JSON.stringify(data.field));
-    return false;
-  });
-});
+
+<script>
+
+$(function(){
+    $('#save').on("click",function () {
+        var birthday = $('#birthday').val();
+        console.log(birthday);
+        var sex = 0;
+        if($('#man').val().length == 0) sex = 0;
+        else sex = 1;
+        $.ajax({
+            type : 'POST',
+            url : '/insertInfo',
+            data: {
+                'birthday' : birthday,
+                'sex' : sex
+                },
+            dataType : "JSON",
+            success: function (data) {
+                console.log(data)
+            }
+            })
+    });
+    })
+
+
 </script>
 </body>
 </html>

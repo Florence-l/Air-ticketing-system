@@ -6,6 +6,8 @@
     <result column="username" jdbcType="VARCHAR" property="username" />
     <result column="password" jdbcType="VARCHAR" property="password" />
     <result column="email" jdbcType="VARCHAR" property="email" />
+    <result column="sex" jdbcType="INTEGER" property="sex" />
+    <result column="birthday" jdbcType="VARCHAR" property="birthday"/>
   </resultMap>
   <sql id="Base_Column_List">
     user_id, username, password, email
@@ -16,13 +18,17 @@
     values (#{userId,jdbcType=INTEGER}, #{username,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR},#{email,jdbcType=VARCHAR})
   </insert>
 
+  <update id="updateInfo" parameterType="com.example.demo2.bean.User">
+    update user set birthday = #{birthday}, sex = #{sex} where (user_id = #{userId});
+  </update>
+
   <select id="login" parameterType="com.example.demo2.bean.User" resultMap="BaseResultMap">
     select * from user where username= #{username} and password = #{password};
   </select>
 
-  <select id="userinfo" parameterType="com.example.demo2.bean.User">
-    select username,email from user where username= #{username}
-  </select>
+<!--  <select id="userinfo" parameterType="com.example.demo2.bean.User">-->
+<!--    select username,email from user where username= #{username}-->
+<!--  </select>-->
 
   <select id="selectUserByName" parameterType="com.example.demo2.bean.User">
     select * from user where username= #{username}

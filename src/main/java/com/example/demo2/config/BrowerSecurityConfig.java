@@ -86,6 +86,7 @@ public class BrowerSecurityConfig extends WebSecurityConfigurerAdapter {
 
                 .and()
                 .csrf().disable();
+        http.headers().frameOptions().sameOrigin();
     }
 
     @Override

@@ -14,6 +14,8 @@ public class User implements UserDetails {
     private String username;
     private String password;
     private String email;
+    private Integer sex;
+    private String birthday;
     private Boolean enabled;
     private Boolean locked;
     private Boolean expired;
@@ -28,6 +30,13 @@ public class User implements UserDetails {
         this.username=username;
         this.password=password;
         this.email=email;
+    }
+
+    public User(String username,String email,Integer sex,String birthday){
+        this.username = username;
+        this.email = email;
+        this.sex = sex;
+        this.birthday = birthday;
     }
 
     public Integer getUserId() { return userId; }
@@ -59,6 +68,14 @@ public class User implements UserDetails {
     public void setEmail(String username) {
         this.email = email == null ? null : email.trim();
     }
+
+    public Integer getSex(){return sex;}
+
+    public void setSex(Integer sex) {this.sex = sex;}
+
+    public String getBirthday(){return birthday;}
+
+    public void setBirthday(String birthday) {this.birthday = birthday;}
 
     @Override
     public boolean isAccountNonExpired() {

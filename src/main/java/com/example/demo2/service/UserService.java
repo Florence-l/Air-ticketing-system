@@ -113,4 +113,8 @@ public class UserService  implements UserDetailsService {
         return resultMap;
     }
 
+    public void insertInfo(String birthday,Integer sex,Integer userId){
+        userMapper.updateInfo(birthday,sex,userId);
+    }
+
 }
