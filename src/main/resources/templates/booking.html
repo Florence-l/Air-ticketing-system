@@ -112,7 +112,7 @@
             outline: none
         }
 
-        .form-input-focused+label,
+        /*.form-input-focused+label,
         .form-input-hasvalue+label,
         .form-input:focus+label {
             top: 3px;
@@ -123,14 +123,11 @@
             -moz-transform: scale(.85);
             -webkit-transform: scale(.85);
             -o-transform: scale(.85)
-        }
-
-
-
+        }*/
 
         .form-input-hint {
             position: absolute;
-            top: 20px;
+            top: 3px;
             left: 0;
             font-size: 14px;
             font-weight: 300;
@@ -160,7 +157,6 @@
             pointer-events: none
         }
 
-
         .form-select,
         :root .form-input-focused+label,
         :root .form-input-hasvalue+label,
@@ -179,13 +175,11 @@
             *zoom: 1
         }
 
-
         .form-hint-msg {
             position: relative;
             padding: 5px 0 0 17px;
             color: #849bab
         }
-
 
         .form-item {
             position: relative;
@@ -193,7 +187,6 @@
             *display: inline;
             *zoom: 1
         }
-
 
         .form-line {
             position: relative
@@ -206,7 +199,6 @@
             animation: shake .8s linear .1s both normal
         }
 
-
         label {
             cursor: pointer
         }
@@ -216,7 +208,6 @@
             font-size: 12px;
             font-weight: 300
         }
-
 
         .price {
             color: #ff7d13
@@ -471,7 +462,6 @@
             margin-top: 0
         }
 
-
         .flight-cost {
             padding: 10px 30px
         }
@@ -486,7 +476,6 @@
             border: none
         }
 
-
         .total-price {
             margin: 0 -30px;
             padding: 13px 30px 0;
@@ -496,8 +485,6 @@
             border-top: 1px solid #e0e5e7;
             margin-top: -1px
         }
-
-
 
         .passenger-box {
             position: relative;
@@ -689,9 +676,7 @@
             background-color: #eaf0f3 !important
         }
 
-
     </style>
-
     <style id="savepage-cssvariables">
         :root {
             --savepage-url-6: url();
@@ -855,16 +840,12 @@
                                                                          value="中国区号 86"> <i class="ico-caret-down"></i> </div>
                                 </div>
                                 <div c-dropdown-toggle="{trigger:'blur'}" style="display:inline-block"
-                                     class="c-dropdown_3"> <input id="I_contact_phone" c-formatter-on="useFormat"
-                                                                  c-formatter-options="{segments: [3, 4, 4],keepSeparators: true}" type="text"
+                                     class="c-dropdown_3"> <input id="I_contact_phone" type="text"
                                                                   maxlength="11" autocomplete="nope"
-                                                                  class="form-input c-formatter_4 c-input_1 form-input-hasvalue"
-                                                                  bind-value="<<contact.MobilePhone>>"
-                                                                  data-cformatter="{&quot;segments&quot;:[3,4,4],&quot;separator&quot;:&quot; &quot;,&quot;keepSeparators&quot;:true}"
+                                                                  class="form-input"
                                                                   c-bind-blur="onBlurContactMobile()" value=""> <label
                                         for="I_contact_phone" class="form-input-hint"
-                                        bind-xclass="{'force-show': confirmMobilePhoneTips.label}"
-                                        bind-html="<<confirmMobilePhoneTips.label||'手机号，接收航变信息'>>">手机号，接收航变信息</label>
+                                        bind-text="<<EmailLabel>>">手机号，接收航变信息</label>
                                 </div>
                                 <div class="form-error-msg hide c-errorstyle_15"
                                      bind-xclass="{hide: !mobilePhoneError.show}"><i class="ico-error"></i> <span
@@ -877,8 +858,7 @@
                             </div>
                             <div class="form-item contact-mail 12312"> <input id="I_contact_mail" type="text"
                                                                               maxlength="50" autocomplete="nope" class="form-input"
-                                                                              bind-xclass="{'form-input-hasvalue': contact.Email}"
-                                                                              bind-value="<<contact.Email>>" c-bind-blur="onBlurContactEmail()" value="">
+                                                                              c-bind-blur="onBlurContactEmail()" value="">
                                 <label for="I_contact_mail" class="form-input-hint"
                                        bind-text="<<EmailLabel>>">Email(选填，接收航变信息）</label>
                             </div>
@@ -912,7 +892,7 @@
                                     class="dot dot-end"></i></div>
                         </div>
                         <div class="flt-arrive"><span class="time" id="a_time"></span>
-                            <div id="arriveTime_1_1" style="display: none">到达时间为第2天，2021年05月14日 10时00分</div><span
+                            <div id="arriveTime_1_1" style="display: none"></div><span
                                     class="airport" id="a_port"></span>
                         </div>
                     </div>
@@ -923,18 +903,15 @@
                 <div class="flight-cost">
                     <div class="cost-detail">
                         <div class="cost-row">
-                            <div class="cost-tit"> <span>成人</span>
-                            </div>
-                            <div class="corner"><span class="price"><dfn>¥</dfn>730</span><span class="num">x
-									2</span></div>
+                            <div class="cost-tit"> <span>单人票价</span></div>
+                            <div class="corner"><dfn>¥</dfn><span class="price" id="p_price"></span></div>
                         </div>
                         <div class="cost-row">
-                            <div class="cost-tit"> <span>机建</span>
+                            <div class="cost-tit"> <span>单人机建</span>
                                 <div id="X-TGTable_0_1" class="tooltip tooltip-table"
                                      style="display:none;width:auto;font-size: 12px"> </div>
                             </div>
-                            <div class="corner"><span class="price"><dfn>¥</dfn>50</span><span class="num">x
-									2</span></div>
+                            <div class="corner"><dfn>¥</dfn><span class="price">50</span></div>
                         </div>
                         <div class="cost-row">
                             <div class="cost-tit"> <span>燃油税</span>
@@ -944,8 +921,8 @@
                             <div class="corner">免费</div>
                         </div>
                     </div>
-                    <div class="total-price"> <span jskit-key="order-price" jskit-type="txt"
-                                                    id="J_totalPrice"><dfn>¥</dfn>1560</span></div>
+                    <div class="total-price"><dfn>¥</dfn><span jskit-key="order-price" jskit-type="txt"
+                                                    id="J_totalPrice"></span></div>
                 </div>
             </div>
         </div><input id="fix_chrome_auto_fill" type="text"
@@ -953,20 +930,7 @@
     </div>
 
 
-    <!-- 渐入渐出效果 -->
-    <script>
-        $(".txtb input").on("focus",function(){
-            $(this).addClass("focus")
-        })
-
-        $(".txtb input").on("blur",function(){
-            if($(this).val() == '')
-                $(this).removeClass("focus")
-        })
-    </script>
-
-
-
+    <!-- 航班信息传输显示 -->
     <script LANGUAGE="JavaScript">
         function getQueryString(name) {
             var reg = new RegExp('(^|&)' + name + '=([^&]*)(&|$)', 'i');
@@ -983,7 +947,8 @@
         var arrivaltime = (unescape(getQueryString("book_arrivaltime"))).slice(0,-3);
         var arrival_airport = unescape(getQueryString("book_arrival_airport"));
         var departure_airport = unescape(getQueryString("book_departure_airport"));
-        var price=unescape(getQueryString("book_price"));
+        var price = unescape(getQueryString("book_price"));
+        var totalPrice = parseInt(price)+parseInt(50);
         document.getElementById('date').innerHTML = date;
         document.getElementById('d_city').innerHTML = departurecity;
         document.getElementById('a_city').innerHTML = arrivalcity;
@@ -992,6 +957,7 @@
         document.getElementById('d_port').innerHTML = departure_airport;
         document.getElementById('a_port').innerHTML = arrival_airport;
         document.getElementById('p_price').innerHTML = price;
+        document.getElementById('J_totalPrice').innerHTML = totalPrice ;
     </script>
 
 </form>

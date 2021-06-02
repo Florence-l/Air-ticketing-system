@@ -12,16 +12,16 @@
   </sql>
 
   <!--selectById:返回含有指定passenger_id数值的一条完整信息-->
-  <select id="selectById" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+  <select id="selectById" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
     <include refid="Base_Column_List" />
     from passenger_table
-    where passenger_id = #{passenger_id,jdbcType=INTEGER}
+    where passenger_id = #{passenger_id,jdbcType=VARCHAR}
   </select>
 
-  <delete id="deleteById" parameterType="java.lang.Integer" >
+  <delete id="deleteById" parameterType="java.lang.String" >
     delete from passenger_table
-    where passenger_id = #{passenger_id,jdbcType=INTEGER}
+    where passenger_id = #{passenger_id,jdbcType=VARCHAR}
   </delete>
 
 
@@ -29,7 +29,7 @@
   <insert id="insert" parameterType="com.example.demo2.bean.Passenger" >
     insert into passenger_table (passenger_id, user_name, user_tel
       )
-    values (#{passenger_id,jdbcType=INTEGER}, #{user_name,jdbcType=VARCHAR}, #{user_tel,jdbcType=INTEGER}
+    values (#{passenger_id,jdbcType=VARCHAR}, #{user_name,jdbcType=VARCHAR}, #{user_tel,jdbcType=VARCHAR}
       )
   </insert>
 
