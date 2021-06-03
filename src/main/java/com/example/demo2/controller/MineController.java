@@ -137,15 +137,27 @@ public class MineController {
         User u = userService.selectUserByName(principal.getName());
         return u.getBirthday();
     }
+    @RequestMapping("/usrimage")
+    @ResponseBody()
+    public String userimage(Principal principal){
+        User u = userService.selectUserByName(principal.getName());
+        return u.getImage();
+    }
 
     @RequestMapping("/insertInfo")
     @ResponseBody
     public void updateInfo(String birthday, Integer sex, Principal principal){
-        System.out.print(birthday);
-        System.out.print(sex);
         User u = userService.selectUserByName(principal.getName());
         Integer userId = u.getUserId();
         userService.insertInfo(birthday,sex,userId);
     }
+    @RequestMapping("/insertImage")
+    @ResponseBody
+    public void updateImage(String image, Principal principal){
+        User u = userService.selectUserByName(principal.getName());
+        Integer userId = u.getUserId();
+        userService.insertImage(image,userId);
+    }
+
 
 }

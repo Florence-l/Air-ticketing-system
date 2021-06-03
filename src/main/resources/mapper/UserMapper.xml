@@ -8,6 +8,7 @@
     <result column="email" jdbcType="VARCHAR" property="email" />
     <result column="sex" jdbcType="INTEGER" property="sex" />
     <result column="birthday" jdbcType="VARCHAR" property="birthday"/>
+    <result column="image" jdbcType="VARCHAR" property="image"/>
   </resultMap>
   <sql id="Base_Column_List">
     user_id, username, password, email
@@ -22,13 +23,13 @@
     update user set birthday = #{birthday}, sex = #{sex} where (user_id = #{userId});
   </update>
 
+  <update id="updateImage" parameterType="com.example.demo2.bean.User">
+    update user set image = #{image} where (user_id = #{userId});
+  </update>
+
   <select id="login" parameterType="com.example.demo2.bean.User" resultMap="BaseResultMap">
     select * from user where username= #{username} and password = #{password};
   </select>
-
-<!--  <select id="userinfo" parameterType="com.example.demo2.bean.User">-->
-<!--    select username,email from user where username= #{username}-->
-<!--  </select>-->
 
   <select id="selectUserByName" parameterType="com.example.demo2.bean.User">
     select * from user where username= #{username}

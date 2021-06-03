@@ -13,7 +13,39 @@
             }
         .title{
             color: #484891;
-            margin-right: 20px;}
+            margin-right: 20px;
+            }
+        .usrimage{
+            width: 100px;
+            height: 100px;
+            }
+        .file {
+            margin-left: 40px;
+            position: relative;
+            display: inline-block;
+            background: #D0EEFF;
+            border: 1px solid #99D3F5;
+            border-radius: 4px;
+            padding: 4px 12px;
+            overflow: hidden;
+            color: #1E88C7;
+            text-decoration: none;
+            text-indent: 0;
+            line-height: 20px;
+            }
+            .file input {
+                position: absolute;
+                font-size: 100px;
+                right: 0;
+                top: 0;
+                opacity: 0;
+            }
+            .file:hover {
+                background: #AADFFD;
+                border-color: #78C3F3;
+                color: #004974;
+                text-decoration: none;
+            }
     </style>
 </head>
 <body>
@@ -27,6 +59,10 @@
         <div class="layui-colla-item">
             <h2 class="layui-colla-title">个人信息设置</h2>
             <div class="layui-colla-content layui-show">
+                <div class="">
+                    <img  id="userimg" value='custom' alt="无头像" data-address='' title=""
+                            style="position: absolute;width: 100px;height: 100px;margin-top: 30px;margin-left: 15px;"/>
+                </div>
                 <div class="box">
                    <label class="title">邮箱：</label>
                    <span id="email"></span>
@@ -44,14 +80,26 @@
                     <span id="birthday">ha</span>
                 </div>
                 <div **id="layerDemo**">
-                    <button  id="update" type="button" class="layui-btn layui-btn-sm layui-btn-primary layui-border-green"
+                    <button  id="update" type="button" class="file"
                        style="margin-left: 190px;margin-top: 20px;" > 编辑 </button>
                 </div>
             </div>
         </div>
         <div class="layui-colla-item">
             <h2 class="layui-colla-title">头像设置</h2>
-            <div class="layui-colla-content layui-show">内容区域</div>
+            <div class="layui-colla-content layui-show">
+                <form class="container" enctype="multipart/form-data" method="get" id='formBox' name="form">
+                    <div class="file">上传头像
+                        <input type="file" name="file" id="userImage" style="opacity: 0;">
+                    </div>
+                    <button  id="save" type="button" class="file" style="position: absolute"> 保存 </button>
+                    <br>
+                    <!-- 用户头像  -->
+                    <img id="image_" class="usrimage" value='custom' alt="" data-address='' src="images/touxiang.jpg" title="头像"
+                         style="margin-left: 30px; margin-top:50px"/>
+
+                </form>
+            </div>
         </div>
     </div>
 
@@ -85,11 +133,11 @@
 		  content: 'userAdd.html',
 		    })
 
-	    });
     })
     </script>
     <script>
         $(function () {
+
             $.ajax({
                     type:"get",
                     url:"/usrname",
@@ -118,9 +166,24 @@
                     data:{},
                     async: false,
                     success:function (data){
-                        if(data.length == 0) $('#sex').html("未填写");
-                        else if(data == 1) $('#sex').html("女");
-                        else if(data == 0) $('#sex').html("男");
+                        if(data.length == 0)
+                        {
+                            $('#sex').html("未填写");
+                            var src = 'images/touxiang.jpg'
+                            $('#userimg').attr('src',src);
+                        }
+                        else if(data == 1)
+                        {
+                            $('#sex').html("女");
+                            var src = 'images/touxiangnv.jpg'
+                            $('#userimg').attr('src',src);
+                        }
+                        else if(data == 0)
+                        {
+                            $('#sex').html("男");
+                            var src = 'images/touxiangnan.jpg'
+                            $('#userimg').attr('src',src);
+                        }
                     }
                  });
 
@@ -135,12 +198,67 @@
                     }
 
                  });
+            $.ajax({
+                    type:"get",
+                    url:"/usrimage",
+                    data:{},
+                    async: false,
+                    success:function (data){
+                        if(data.length != 0){
+                        $('#userimg').attr('src',data);
+                        
+                        }
+                    }
+
+                 });
+
+        })
+
+    </script>
+    <script>
+        $('#userImage').on('change',function(){
+            var filePath = $(this).val();         //获取到input的value，里面是文件的路径
+            console.log(filePath);
+            var fileFormat = filePath.substring(filePath.lastIndexOf(".")).toLowerCase();
+            // 检查是否是图片
+            if( !fileFormat.match(/.png|.jpg|.jpeg/) ) {
+                error_prompt_alert('上传错误,文件格式必须为：png/jpg/jpeg');
+                return;
+            }
+            var src = window.URL.createObjectURL(this.files[0]); //转成可以在本地预览的格式
+            $('#image_').attr('src',src);
+
+            $.ajax({
+                type : 'GET',
+                url : '/insertImage',
+                data: {
+                    'image' : filePath,
+                    },
+                dataType : "JSON",
+                success: function (data) {
+                     alert("保存成功！");
+                }
+                })
 
         })
     </script>
-
-
-
+    <script>
+<!--        $('#save').on("click",function(){-->
+<!--        var filePath_ = $('#userImage').val();-->
+<!--        console.log(filePath_);-->
+<!--            $.ajax({-->
+<!--                type : 'GET',-->
+<!--                url : '/insertImage',-->
+<!--                data: {-->
+<!--                    'image' : filePath_,-->
+<!--                    },-->
+<!--                dataType : "JSON",-->
+<!--                success: function (data) {-->
+<!--                     alert("保存成功！");-->
+<!--                }-->
+<!--                })-->
+<!--	    })-->
+    </script>
 
 </body>
 </html>

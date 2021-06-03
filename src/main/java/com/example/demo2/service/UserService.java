@@ -116,5 +116,8 @@ public class UserService  implements UserDetailsService {
     public void insertInfo(String birthday,Integer sex,Integer userId){
         userMapper.updateInfo(birthday,sex,userId);
     }
+    public void insertImage(String image,Integer userId){
+        userMapper.updateImage(image,userId);
+    }
 
 }

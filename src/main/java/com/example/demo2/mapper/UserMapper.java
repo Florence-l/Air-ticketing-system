@@ -21,4 +21,6 @@ public interface UserMapper {
     void updateInfo(String birthday,Integer sex,Integer userId);
 
     void resetPwd(User u);
+
+    void updateImage(String image,Integer userId);
 }

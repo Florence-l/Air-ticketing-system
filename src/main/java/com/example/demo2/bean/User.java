@@ -20,6 +20,7 @@ public class User implements UserDetails {
     private Boolean locked;
     private Boolean expired;
     private Boolean credentialsexpire;
+    private String image;
 
     public User(String username, String password) {
             this.username=username;
@@ -76,6 +77,10 @@ public class User implements UserDetails {
     public String getBirthday(){return birthday;}
 
     public void setBirthday(String birthday) {this.birthday = birthday;}
+
+    public String getImage(){return image;}
+
+    public void setImage(String image) {this.image = image;}
 
     @Override
     public boolean isAccountNonExpired() {
