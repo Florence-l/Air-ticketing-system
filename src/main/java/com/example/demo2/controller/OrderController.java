@@ -1,27 +1,44 @@
 package com.example.demo2.controller;
 
 
+import com.example.demo2.bean.Order;
 import com.example.demo2.bean.User;
-import com.example.demo2.security.MD5Utils;
 import com.example.demo2.service.OrderService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import com.example.demo2.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.HashMap;
-import java.util.Map;
+import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
+import java.security.Principal;
 
 @Controller
 public class OrderController {
     @Autowired
     public OrderService orderService;
+    @Autowired
+    public UserService userService;
 
-    //private final Logger logger = LoggerFactory.getLogger(this.getClass());
+    @RequestMapping("/insertOrder")
+    @ResponseBody()
+    public String insertOrder(HttpServletRequest request, Principal principal) throws IOException{
+        User user = userService.selectUserByName(principal.getName());
+        Integer userid = user.getUserId();
+        String user_name = request.getParameter("user_name");
+        String passenger_id = request.getParameter("passenger_id");
+        Integer flght_id = Integer.valueOf(request.getParameter("flight_id"));
+        String orderTime = request.getParameter("orderTime");
+        Integer paymentStatus = Integer.valueOf(request.getParameter("paymentStatus"));
+        Float realPrice = Float.valueOf(request.getParameter("realPrice"));
+        String order_num = request.getParameter("order_num");
+        Order order = new Order(userid,user_name,passenger_id,flght_id,orderTime,paymentStatus,realPrice,order_num);
+        System.out.print(order);
+        orderService.insertOrder(order);
+        return "success";
+
+
+    }
 
 }

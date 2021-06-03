@@ -1,3 +1,32 @@
+ function getQueryString(name) {
+            var reg = new RegExp('(^|&)' + name + '=([^&]*)(&|$)', 'i');
+            var r = window.location.search.substr(1).match(reg);
+            if (r != null) {
+                return unescape(r[2]);
+            }
+            return null;
+        }
+ function init(){
+        var date = (unescape(getQueryString("book_date"))).slice(5);
+        var departurecity = unescape(getQueryString("book_departurecity"));
+        var arrivalcity = unescape(getQueryString("book_arrivalcity"));
+        var departuretime = (unescape(getQueryString("book_departuretime"))).slice(0,-3);
+        var arrivaltime = (unescape(getQueryString("book_arrivaltime"))).slice(0,-3);
+        var arrival_airport = unescape(getQueryString("book_arrival_airport"));
+        var flight_id = unescape(getQueryString("book_flight_id"));
+        var departure_airport = unescape(getQueryString("book_departure_airport"));
+        var price = unescape(getQueryString("book_price"));
+        var totalPrice = parseInt(price)+parseInt(50);
+        document.getElementById('date').innerHTML = date;
+        document.getElementById('d_city').innerHTML = departurecity;
+        document.getElementById('a_city').innerHTML = arrivalcity;
+        document.getElementById('d_time').innerHTML = departuretime;
+        document.getElementById('a_time').innerHTML = arrivaltime;
+        document.getElementById('d_port').innerHTML = departure_airport;
+        document.getElementById('a_port').innerHTML = arrival_airport;
+        document.getElementById('p_price').innerHTML = price;
+        document.getElementById('J_totalPrice').innerHTML = totalPrice ;
+        }
 <!-- 点击“添加乘客”按钮 触发add()事件 -->
 function add(){
     var nameArray = document.getElementsByName("user_name");
@@ -27,52 +56,83 @@ function add(){
     }
 }
 
+        <!-- 点击“下一步”按钮 触发next()事件 -->
+    function next(){
 
-<!-- 点击“下一步”按钮 触发next()事件 -->
-function next(){
-    //获取乘客信息表单并检查每个字段是否为空
-    var nameArray = document.getElementsByName("user_name");
-    var idArray = document.getElementsByName("passenger_id");
-    var telArray = document.getElementsByName("user_tel");
-    var length = nameArray.length;
+            //获取乘客信息表单并检查每个字段是否为空
+            var nameArray = document.getElementsByName("user_name");
+            var idArray = document.getElementsByName("passenger_id");
+            var telArray = document.getElementsByName("user_tel");
+            var length = nameArray.length;
+            var nowDate = new Date();
+            var orderTime = nowDate.getFullYear()+"."+(parseInt(nowDate.getMonth())+1)+"."+nowDate.getDate()
+            +" "+nowDate.getHours()+":"+nowDate.getMinutes()+":"+nowDate.getSeconds();
+            var price = unescape(getQueryString("book_price"));
+            var realPrice = parseInt(price)+parseInt(50);
+            var order_num = nowDate.getFullYear()+(parseInt(nowDate.getMonth())+1).toString()+nowDate.getDate()+nowDate.getHours()+nowDate.getMinutes()+nowDate.getSeconds();
+            var flight_id = unescape(getQueryString("book_flight_id"));
 
-    for(var i=1;i<length;i++) {
-        if (nameArray[i].value === "" || checkName(nameArray[i])===false){
-            alert("请正确填写姓名字段！")
-            return
-        }else{
-            if(idArray[i].value === "" || checkId(idArray[i])===false){
-                alert("请正确填写长度为15或18的身份证字段！")
-                return
-            }else{
-                if(telArray[i].value === "" || checkTel(telArray[i])===false){
-                    alert("请正确填写长度为11的号码字段！")
+
+            for(var i=1;i<length;i++) {
+                if (nameArray[i].value === "" || checkName(nameArray[i])===false){
+                    alert("请正确填写姓名字段！")
                     return
+                }else{
+                    if(idArray[i].value === "" || checkId(idArray[i])===false){
+                        alert("请正确填写长度为15或18的身份证字段！")
+                        return
+                    }else{
+                        if(telArray[i].value === "" || checkTel(telArray[i])===false){
+                            alert("请正确填写长度为11的号码字段！")
+                            return
+                        }
+                    }
                 }
             }
-        }
+
+            //将乘客信息录入数据库
+            for(var i=1; i<length; i++){
+                $.ajax({
+                    type:'post',
+                    url:'/book',
+                    data:{
+                        user_name: nameArray[i].value,
+                        passenger_id: idArray[i].value,
+                        user_tel: telArray[i].value
+                    },
+//                    success:function(res){
+//                        if(res==="success"){
+//                            setTimeout(function(){
+//                                window.location.href='http://localhost:8080/payment';
+//                            },1500);
+//                        }
+//                    }
+                })
+            }
+            for(var i=1; i<length; i++){
+                $.ajax({
+                    type:'post',
+                    url:'/insertOrder',
+                    data:{
+                        user_name: nameArray[i].value,
+                        passenger_id: idArray[i].value,
+                        flight_id: flight_id,
+                        orderTime: orderTime,
+                        paymentStatus: 0,
+                        realPrice: realPrice,
+                        order_num:order_num,
+
+                    },
+                    success:function(res){
+                        alert("ok");
+                    }
+
+                })
+            }
+
     }
 
-    //将乘客信息录入数据库
-    for(var i=1; i<length; i++){
-        $.ajax({
-            type:'post',
-            url:'/book',
-            data:{
-                user_name: nameArray[i].value,
-                passenger_id: idArray[i].value,
-                user_tel: telArray[i].value
-            },
-            success:function(res){
-                if(res==="success"){
-                    setTimeout(function(){
-                        window.location.href='http://localhost:8080/payment';
-                    },1500);
-                }
-            }
-        })
-    }
-}
+
 
 
 //用正则表达式验证姓名（中英文）格式
@@ -109,6 +169,10 @@ function checkTel(tel){
         return true;
     }
 }
+
+
+
+
 
 
 

@@ -3,7 +3,7 @@
 <mapper namespace="com.example.demo2.mapper.OrderMapper">
     <resultMap id="OrderResultMap" type="com.example.demo2.bean.Order">
         <id column="order_id" jdbcType="INTEGER" property="order_id" />
-        <result column="passenger_id" jdbcType="INTEGER" property="passenger_id" />
+        <result column="passenger_id" jdbcType="VARCHAR" property="passenger_id" />
 <!--        <result column="user_id" javaType="INTEGER" property="user_id" />-->
 <!--        <result column="flight_id" jdbcType="INTEGER" property="flight_id" />-->
 <!--        <result column="orderTime" jdbcType="VARCHAR" property="orderTime" />-->
@@ -64,11 +64,11 @@
     </select>
 
     <insert id="insertOrder" parameterType="com.example.demo2.bean.Order">
-        insert into order_table (order_id, user_id, passenger_id, flight_id,
-        orderTime, paymentStatus, paymentTime, seat_id, realPrice)
-        values (#{order_id,jdbcType=INTEGER}, #{user_id,jdbcType=INTEGER}, #{passenger_id,jdbcType=INTEGER},
-        #{flight_id,jdbcType=INTEGER},#{orderTime,jdbcType=VARCHAR}, #{paymentStatus,jdbcType=INTEGER}, #{seat_id,jdbcType=INTEGER},
-        #{realPrice,jdbcType=FLOAT})
+        insert into order_table (user_id, passenger_id, user_name, flight_id,
+        orderTime, paymentStatus, realPrice, order_num)
+        values (#{user_id,jdbcType=INTEGER}, #{passenger_id,jdbcType=VARCHAR}, #{user_name,jdbcType=VARCHAR},
+        #{flight_id,jdbcType=INTEGER},#{orderTime,jdbcType=VARCHAR}, #{paymentStatus,jdbcType=INTEGER},
+        #{realPrice,jdbcType=FLOAT},#{order_num,jdbcType=VARCHAR})
     </insert>
 <!--    <select id="findUnpayByid" resultType="com.example.demo2.bean.Order" resultMap="OrderResultMap" >-->
 <!--        select * from order_table where user_id = #{user_id} and paymentStatus = 0-->
