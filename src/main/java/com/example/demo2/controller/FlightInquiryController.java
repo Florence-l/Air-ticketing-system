@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
-import java.util.Random;
 
 @Controller
 public class FlightInquiryController {
@@ -37,10 +36,10 @@ public class FlightInquiryController {
         return "booking";
     }
 
-/*    @GetMapping("/booking")
+    @GetMapping("/test")
     public String booking(){
-        return "booking";
-    }*/
+        return "seatchooser";
+    }
 
     //航班推荐(随机)
     @RequestMapping("/index/re")
