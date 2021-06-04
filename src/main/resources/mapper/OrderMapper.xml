@@ -3,10 +3,11 @@
 <mapper namespace="com.example.demo2.mapper.OrderMapper">
     <resultMap id="OrderResultMap" type="com.example.demo2.bean.Order">
         <id column="order_id" jdbcType="INTEGER" property="order_id" />
-        <result column="passenger_id" jdbcType="VARCHAR" property="passenger_id" />
+        <result column="order_num" jdbcType="VARCHAR" property="order_num"/>
+        <result column="user_name" jdbcType="VARCHAR" property="user_name" />
 <!--        <result column="user_id" javaType="INTEGER" property="user_id" />-->
 <!--        <result column="flight_id" jdbcType="INTEGER" property="flight_id" />-->
-<!--        <result column="orderTime" jdbcType="VARCHAR" property="orderTime" />-->
+        <result column="orderTime" jdbcType="VARCHAR" property="orderTime" />
 <!--        <result column="paymentStatus" jdbcType="INTEGER" property="orderTime" />-->
         <result column="paymentTime" jdbcType="VARCHAR" property="paymentTime" />
         <result column="seat_id" jdbcType="INTEGER" property="seat_id" />
@@ -28,8 +29,9 @@
 
     <select id="findByid" resultMap="OrderResultMap">
         select
-        order_id,
-        passenger_id,
+        order_num,
+        user_name,
+        orderTime,
         paymentTime,
         seat_id,
         departurecity,
@@ -44,9 +46,9 @@
     </select>
     <select id="findUnpay" resultMap="OrderResultMap">
         select
-        order_id,
-        passenger_id,
-        paymentTime,
+        order_num,
+        user_name,
+        orderTime,
         seat_id,
         departurecity,
         arrivalcity,
