@@ -16,6 +16,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.security.Principal;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.HashMap;
@@ -52,6 +53,12 @@ public class UserController {
     @GetMapping(value={"/login"})
     public String login(){
         return "login";
+    }
+
+    //跳转到登录页面
+    @GetMapping(value={"/loginModal"})
+    public String login_(){
+        return "loginModal";
     }
 
     @RequestMapping("/index")
@@ -115,11 +122,9 @@ public class UserController {
         message.setText("【航空订票系统】你的验证码为："+code+"，有效时间为5分钟(若不是本人操作，可忽略该条邮件)");// 内容
         try {
             javaMailSender.send(message);
-            logger.info("文本邮件发送成功！");
             resultMap=userService.saveCode(code);
             return "success";
         }catch (MailSendException e){
-            logger.error("目标邮箱不存在");
             return "false";
         } catch (Exception e) {
             logger.error("文本邮件发送异常！", e);
@@ -170,5 +175,11 @@ public class UserController {
         }
         return "redirect:/reset";
     }
+
+    @RequestMapping("/modal")
+    public String modal(){
+        return "modal";
+    }
+
 
 }

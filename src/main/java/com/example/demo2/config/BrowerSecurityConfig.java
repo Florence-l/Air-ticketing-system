@@ -68,8 +68,8 @@ public class BrowerSecurityConfig extends WebSecurityConfigurerAdapter {
 
                 .and()
                 .authorizeRequests()
-                .antMatchers("/","/register","/login","/index","/sendEmail","/reset","/result","/selectOdByNum").permitAll()
-                .antMatchers("/css/**","/*.css","/js/*","/*.js","/layui/**","/index/re","/flight","/layui/**/**","/selectOdByNum").permitAll() // 在这里添加
+                .antMatchers("/","/register","/login","/loginModal","/index","/sendEmail","/reset","/result","/ifAuthentication","/selectOdByNum").permitAll()
+                .antMatchers("/css/**","/images/**","/*.css","/js/*","/*.js","/index/re","/flight","/layui/**/**","/font/**").permitAll() // 在这里添加
                 .anyRequest().authenticated()
 
                 //记住我功能
@@ -83,6 +83,9 @@ public class BrowerSecurityConfig extends WebSecurityConfigurerAdapter {
                 .logout()
                 .logoutUrl("/logout")
                 .logoutSuccessUrl("/index")
+
+                .and()
+                .headers().frameOptions().disable()
 
                 .and()
                 .csrf().disable();

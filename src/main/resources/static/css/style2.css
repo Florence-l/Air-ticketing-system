@@ -26,7 +26,7 @@ body {
 
 .container h1 {
     font-weight: bold;
-    margin: 30px;
+    margin: 0px;
 }
 .container p {
     font-size: 14px;
@@ -187,13 +187,20 @@ button.ghost {
 .sign-in-container .resetPwd{
     position: relative;
     left: 100px;
+    margin-bottom: 20px;
 }
 
 .sign-in-container label {
     width: 85%;
+    font-size: 15px;
     font-weight:lighter;
     text-align: left;
-    padding: 10px 0px;
+    padding: 10px 0px 0px 0px;
+}
+
+.base_label{
+    margin-top: 2px;
+    text-align: center;
 }
 
 .sign-up-container {

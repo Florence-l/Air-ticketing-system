@@ -73,66 +73,77 @@ function add(){
             var flight_id = unescape(getQueryString("book_flight_id"));
 
 
-            for(var i=1;i<length;i++) {
-                if (nameArray[i].value === "" || checkName(nameArray[i])===false){
-                    alert("请正确填写姓名字段！")
+    for(var i=1;i<length;i++) {
+        if (nameArray[i].value === "" || checkName(nameArray[i])===false){
+            alert("请正确填写姓名字段！")
+            return
+        }else{
+            if(idArray[i].value === "" || checkId(idArray[i])===false){
+                alert("请正确填写长度为15或18的身份证字段！")
+                return
+            }else{
+                if(telArray[i].value === "" || checkTel(telArray[i])===false){
+                    alert("请正确填写长度为11的号码字段！")
                     return
-                }else{
-                    if(idArray[i].value === "" || checkId(idArray[i])===false){
-                        alert("请正确填写长度为15或18的身份证字段！")
-                        return
-                    }else{
-                        if(telArray[i].value === "" || checkTel(telArray[i])===false){
-                            alert("请正确填写长度为11的号码字段！")
-                            return
-                        }
-                    }
                 }
             }
-
-            //将乘客信息录入数据库
-            for(var i=1; i<length; i++){
-                $.ajax({
-                    type:'post',
-                    url:'/book',
-                    data:{
-                        user_name: nameArray[i].value,
-                        passenger_id: idArray[i].value,
-                        user_tel: telArray[i].value
-                    },
-//                    success:function(res){
-//                        if(res==="success"){
-//                            setTimeout(function(){
-//                                window.location.href='http://localhost:8080/payment';
-//                            },1500);
-//                        }
-//                    }
-                })
-            }
-            for(var i=1; i<length; i++){
-                $.ajax({
-                    type:'post',
-                    url:'/insertOrder',
-                    data:{
-                        user_name: nameArray[i].value,
-                        passenger_id: idArray[i].value,
-                        flight_id: flight_id,
-                        orderTime: orderTime,
-                        paymentStatus: 0,
-                        realPrice: realPrice,
-                        order_num:order_num,
-
-                    },
-                    success:function(res){
-                        alert("ok");
-                    }
-
-                })
-            }
-
+        }
     }
 
+    var totalPrice=document.getElementById("J_totalPrice").innerHTML;
+    var des=document.getElementById('d_city').innerHTML;
+    var arrival=document.getElementById('a_city').innerHTML;
+    //将乘客信息录入数据库
+    for(var i=1; i<length; i++){
+        $.ajax({
+            type:'post',
+            url:'/book',
+            data:{
+                user_name: nameArray[i].value,
+                passenger_id: idArray[i].value,
+                user_tel: telArray[i].value
+            },
+            success:function(res){
+                if(res==="success"){
+                }
+            }
+        })
+    }
 
+    $.ajax({
+        async : false,
+        type:'post',
+        url:'/pay',
+        data:{
+            totalPrice: totalPrice,
+            subject: des+"-"+arrival
+        },
+        success: function(response) {
+            var newPage = window.open("about:blank", "_self");
+            newPage.document.write(response);
+
+        }
+    })
+
+        for(var i=1; i<length; i++){
+            $.ajax({
+                type:'post',
+                url:'/insertOrder',
+                data:{
+                    user_name: nameArray[i].value,
+                    passenger_id: idArray[i].value,
+                    flight_id: flight_id,
+                    orderTime: orderTime,
+                    paymentStatus: 0,
+                    realPrice: realPrice,
+                    order_num:order_num,
+                },
+                success:function(res){
+                    alert("ok");
+                }
+            })
+        }
+}
 
 
 //用正则表达式验证姓名（中英文）格式
@@ -169,10 +180,6 @@ function checkTel(tel){
         return true;
     }
 }
-
-
-
-
 
 
 

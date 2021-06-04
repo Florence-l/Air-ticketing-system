@@ -8,16 +8,19 @@
     <link rel="stylesheet" th:href="@{layui/css/layui.css}">
     <link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css" />
     <script src="//apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
-    <script src="http://cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+    <script src="/layui/layui.js"></script>
 </head>
 <body>
 <div class="mainContainer">
-<th:block th:include="common.html :: header"></th:block>
+<!--<th:block th:include="common.html :: header"></th:block>-->
 <div class="container" id="login-box">
     <div class="form-container sign-in-container">
-        <form action="/login" method="post">
+        <form action="/login" method="post" name="form">
             <h1>登录</h1>
-            <span class="help-block" style="color: red" th:text="${session.SPRING_SECURITY_LAST_EXCEPTION?.message}"></span>
+            <div >
+                <p id="msg" style="color: red" th:text="${msg}"></p>
+            </div>
+            <span id="errorMsg" class="help-block" style="color: red" th:text="${session.SPRING_SECURITY_LAST_EXCEPTION?.message}"></span>
             <div class="txtb">
                 <input name="username" required="required">
                 <span data-placeholder="用户名"></span>
@@ -26,12 +29,16 @@
                 <input type="password" name="password" required="required">
                 <span data-placeholder="密  码"></span>
             </div>
-            <label ><input  name="remember-me" type="checkbox">记住我</label>
-            <a class="resetPwd" id="resetPwd">找回密码</a>
-            <div>
-                <p id="msg" style="color: red" th:text="${msg}"></p>
+            <label><input  name="remember-me" type="checkbox">记住我</label>
+            <div class="resetPwd">
+                <a href="/register">前往注册</a>
+                <a id="resetPwd">找回密码</a>
             </div>
-            <button type="submit" >登录</button>
+            <button type="submit" id="loginBtn">登录</button>
+            <dd><label class="base_label">登录即同意
+                <a id="agreementUrl" target="_blank">《服务协议》</a>和<a id="policyUrl" target="_blank">《隐私政策》</a></label>
+            </dd>
+
         </form>
     </div>
 </div>
@@ -51,6 +58,22 @@
     $("#resetPwd").on("click",function(){
         $(window).attr('location',"/reset");
     })
+
+    $("#loginBtn").on("click",function () {
+    })
+
+    setTimeout(function (){
+        $.ajax({
+            type: 'GET',
+            url: '/ifAuthentication',
+            success: function (res) {
+                if(res!=="null"){
+                    var index=parent.layer.getFrameIndex(window.name);
+                    parent.layer.close(index);
+                }
+            }
+        })
+    },0)
 
 
 

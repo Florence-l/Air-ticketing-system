@@ -4990,7 +4990,7 @@ body .layui-util-face .layui-layer-content {
 }
 
 .layui-colorpicker-trigger-i.layui-icon-close {
-    color: #999
+    color: black;
 }
 
 .layui-colorpicker-main {

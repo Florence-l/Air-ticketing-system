@@ -6,11 +6,14 @@ import com.example.demo2.bean.Flight;
 import com.example.demo2.service.FlightService;
 import com.example.demo2.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.neo4j.Neo4jProperties;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.security.Principal;
 import java.util.List;
 
 @Controller
@@ -94,6 +97,24 @@ public class FlightInquiryController {
             return list;
         }
         return null;
+    }
+
+    @RequestMapping("/ifAuthentication")
+    @ResponseBody
+    public String ifAuthentication(Principal principal){
+        try {
+            if(principal.getName()==null){
+                System.out.printf("\nprincipal is null\n");
+                return "null";
+            }
+            else {
+                System.out.printf("\nprincipal is not null\n");
+                return "notnull";
+            }
+
+        }catch (Exception e) {
+            return "null";
+        }
     }
 
 

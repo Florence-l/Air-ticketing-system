@@ -71,7 +71,7 @@
 <th:block th:include="common.html :: footer"></th:block>
 
 <script type="text/html" id="toolbtn">
-    <button class="layui-btn layui-btn-xs layui-btn-radius layui-btn-primary" lay-event="book">预定</button>
+    <button id="book" class="layui-btn layui-btn-xs layui-btn-radius layui-btn-primary" lay-event="book" >预定</button>
 </script>
 
 
@@ -138,12 +138,26 @@
         var book_price=obj.data.price;
         var book_flight_id=obj.data.flight_id;
         if (obj.event === 'book') {
-            window.location.href="/book?book_departurecity="+escape(book_departurecity)+"&book_arrivalcity="
-            +escape(book_arrivalcity)+"&book_departuretime="+escape(book_departuretime)+"&book_arrivaltime="
-            +escape(book_arrivaltime)+"&book_arrival_airport="+escape(book_arrival_airport)+"&book_flight_id="
-            +escape(book_flight_id)+"&book_departure_airport="+escape(book_departure_airport)+"&book_date="+
-            escape(book_date)+"&book_price="+escape(book_price);
-
+            $.ajax({
+                type: 'GET',
+                url: '/ifAuthentication',
+                success: function (res) {
+                    if(res==="null") {
+                        layer.open({
+                            type: 2,
+                            area: ["800px", "600px"],
+                            closeBtn: 1,
+                            content: 'loginModal.html',
+                        });
+                    }
+                    else {
+                            window.location.href = "/book?book_departurecity=" + escape(book_departurecity) + "&book_arrivalcity="
+                                + escape(book_arrivalcity) + "&book_departuretime=" + escape(book_departuretime) + "&book_arrivaltime="
+                                + escape(book_arrivaltime) + "&book_arrival_airport=" + escape(book_arrival_airport) + "&book_departure_airport="
+                                + escape(book_departure_airport) + "&book_date=" + escape(book_date);
+                        }
+                }
+            })
           }
 
     });

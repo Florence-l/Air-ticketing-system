@@ -48,7 +48,7 @@
                     <p id="msg" style="color: red" th:text="${msg}"></p>
                 </div>
                 <button type="submit" id="register">注册</button>
-                <dd><label class="base_label">同意
+                <dd><label class="base_label">注册即同意
                     <a id="agreementUrl" target="_blank">《服务协议》</a>和<a id="policyUrl" target="_blank">《隐私政策》</a></label>
                 </dd>
             </form>
@@ -101,8 +101,10 @@
             beforeSend: function () {
                 loading = layer.msg('处理中', {icon: 16})
             },
-            success: function () {
+            success: function (res) {
                 layer.close(loading);
+                layer.msg(res,{time: 1500, icon: 5, shift: 6});
+
             }
         })
     });

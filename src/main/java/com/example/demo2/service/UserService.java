@@ -74,16 +74,18 @@ public class UserService  implements UserDetailsService {
         else return 3;
     }
 
+    //判断该邮箱是否已被使用
     public User selectUserByEmail(String email) {
         User u = userMapper.selectUserByEmail(email);
         return u;
     }
 
     public User selectUserByName(String name){
-        User u = userMapper.loadUserByUsername(name);
+        User u = userMapper.selectUserByName(name);
         return u;
     }
 
+    //重置密码
     public void resetPwd(User u) {
         userMapper.resetPwd(u);
     }

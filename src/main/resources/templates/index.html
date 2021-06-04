@@ -567,12 +567,26 @@
             var book_price=obj.data.price;
             var book_flight_id=obj.data.flight_id;
             if (obj.event === 'book') {
-                window.location.href="/book?book_departurecity="+escape(book_departurecity)+"&book_arrivalcity="
-                    +escape(book_arrivalcity)+"&book_departuretime="+escape(book_departuretime)+"&book_arrivaltime="
-                    +escape(book_arrivaltime)+"&book_arrival_airport="+escape(book_arrival_airport)+"&book_departure_airport="
-                    +escape(book_departure_airport)+"&book_date="+escape(book_date)+"&book_price="+escape(book_price)
-                    +"&book_flight_id="+escape(book_flight_id);
-
+                $.ajax({
+                    type: 'GET',
+                    url: '/ifAuthentication',
+                    success: function (res) {
+                        if (res === "null") {
+                            layer.open({
+                                type: 2,
+                                area: ["600px", "550px"],
+                                closeBtn: 1,
+                                content: '/loginModal',
+                            });
+                        } else {
+                            window.location.href="/book?book_departurecity="+escape(book_departurecity)+"&book_arrivalcity="
+                                +escape(book_arrivalcity)+"&book_departuretime="+escape(book_departuretime)+"&book_arrivaltime="
+                                +escape(book_arrivaltime)+"&book_arrival_airport="+escape(book_arrival_airport)+"&book_departure_airport="
+                                +escape(book_departure_airport)+"&book_date="+escape(book_date)+"&book_price="+escape(book_price)
+                                +"&book_flight_id="+escape(book_flight_id);
+                        }
+                    }
+                })
             }
 
         });
