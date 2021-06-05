@@ -344,6 +344,7 @@
                 <div>
                     <input type="button" onclick="os()" value="查询" class="otherButton">
                     <input type="hidden" name="order_id" id="order_id">
+                    <input type="hidden" name="paymentStatus" id="paymentStatus">
                 </div>
             </form>
             <div id="orderR" style="background:#eef3f7;margin-left:100px;display:none;">
@@ -393,8 +394,8 @@
                                 <div class="sc-lMZDC ibbBdg">
                                     <img src="images/feiji.jpg" alt="" class="sc-cdlubJ kMsWyy" style="width: 25px;">
                                     <p style="margin-top: 0px;">
-                                    <span> 中国联合航空</span>
-                                    <span> KN5992</span></p>
+                                    <span>&#12288 &#12288 &#12288 &#12288 &#12288 &#12288 &#12288</span>
+                                    <span>&#12288 &#12288 &#12288 &#12288 &#12288</span></p>
                                 </div>
                                     <input type="button" onclick="xz()" value="前去选座" class="otherButton2" ></button>
                             </div>
@@ -593,6 +594,19 @@
         function os(){
             var order_num = $('#orderNum').val();
             var passenger_id = $('#IDcard').val();
+            if(order_num.length === 0){
+                layui.use('layer', function(){
+                   var layer = layui.layer;
+                   layer.msg('请输入订单号');
+                    });
+            }
+            else if(passenger_id.length === 0){
+                layui.use('layer', function(){
+                   var layer = layui.layer;
+                   layer.msg('请输入身份证号');
+                    });
+            }
+            else{
             $.ajax({
                 type : 'post',
                 url : '/selectOdByNum',
@@ -601,6 +615,12 @@
                     'passenger_id' : passenger_id
                 },
                 success:function(res){
+                if(res === "error"){
+                   layui.use('layer', function(){
+                   var layer = layui.layer;
+                   layer.msg('未查询到相关订单');
+                    });
+                }
                 var obj = JSON.parse(res);
                 $('#departuretime').html((obj.flight.departuretime).slice(0,-3));
                 $('#arrivaltime').html((obj.flight.arrivaltime).slice(0,-3));
@@ -611,14 +631,23 @@
                 $('#arrival_airport').html(obj.flight.arrival_airport);
                 $('#user_name').html(obj.user_name);
                 $("#order_id").val(obj.order_id);
+                $("#paymentStatus").val(obj.paymentStatus);
                 $("#orderR").show();
                 }
                 })
+                }
 
      }
         function xz(){
                 var order_id = document.getElementById("order_id").value;
-                window.location.href='http://localhost:8080/result?order_id='+order_id;
+                var paymentStatus = document.getElementById("paymentStatus").value;
+                if(paymentStatus === "0"){
+                   layui.use('layer', function(){
+                   var layer = layui.layer;
+                   layer.msg('您未完成支付,不能进入选座服务');
+                    });
+                }
+                else {window.location.href='http://localhost:8080/result?order_id='+order_id;}
                 }
 
 

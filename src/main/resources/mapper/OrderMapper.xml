@@ -11,6 +11,7 @@
 <!--        <result column="paymentStatus" jdbcType="INTEGER" property="orderTime" />-->
         <result column="paymentTime" jdbcType="VARCHAR" property="paymentTime" />
         <result column="seat_id" jdbcType="INTEGER" property="seat_id" />
+        <result column="paymentStatus" property="paymentStatus"/>
         <result column="realPrice" jdbcType="FLOAT" property="realPrice" />
         <association property="flight" javaType="Flight">
             <id column="flight_id" property="flight_id" />
