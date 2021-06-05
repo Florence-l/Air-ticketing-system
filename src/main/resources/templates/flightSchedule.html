@@ -138,26 +138,27 @@
         var book_price=obj.data.price;
         var book_flight_id=obj.data.flight_id;
         if (obj.event === 'book') {
-            $.ajax({
-                type: 'GET',
-                url: '/ifAuthentication',
-                success: function (res) {
-                    if(res==="null") {
-                        layer.open({
-                            type: 2,
-                            area: ["800px", "600px"],
-                            closeBtn: 1,
-                            content: 'loginModal.html',
-                        });
-                    }
-                    else {
-                            window.location.href = "/book?book_departurecity=" + escape(book_departurecity) + "&book_arrivalcity="
-                                + escape(book_arrivalcity) + "&book_departuretime=" + escape(book_departuretime) + "&book_arrivaltime="
-                                + escape(book_arrivaltime) + "&book_arrival_airport=" + escape(book_arrival_airport) + "&book_departure_airport="
-                                + escape(book_departure_airport) + "&book_date=" + escape(book_date);
-                        }
-                }
-            })
+            // $.ajax({
+            //     type: 'GET',
+            //     url: '/ifAuthentication',
+            //     success: function (res) {
+            //         if(res==="null") {
+            //             layer.open({
+            //                 type: 2,
+            //                 area: ["800px", "600px"],
+            //                 closeBtn: 1,
+            //                 content: 'loginModal.html',
+            //             });
+            //         }
+            //         else {
+            //
+            //             }
+            //     }
+            // })
+            window.location.href = "/book?book_departurecity=" + escape(book_departurecity) + "&book_arrivalcity="
+                + escape(book_arrivalcity) + "&book_departuretime=" + escape(book_departuretime) + "&book_arrivaltime="
+                + escape(book_arrivaltime) + "&book_arrival_airport=" + escape(book_arrival_airport) + "&book_departure_airport="
+                + escape(book_departure_airport) + "&book_date=" + escape(book_date);
           }
 
     });
