@@ -8,9 +8,257 @@
     <script type="text/javascript" src="/js/jquery-1.8.3.min.js"></script>
     <link type="text/css" rel="stylesheet" href="/css/jqstyle.css"/>
     <link rel="stylesheet" href="/css/index.css"/>
-    <script type="text/javascript" src="/js/getUrl.js"></script>
+    <link rel="stylesheet" href="https://webresource.c-ctrip.com/ResH5FlightOnline/R1/3rdLib/ant_cus.css?v=2018103101">
+    <link rel="stylesheet" href="https://bd-s.tripcdn.cn/modules/flight/online-orderdetail/static/css/main-1ad016d6.css">
+    <style data-styled="active" data-styled-version="5.3.0"></style>
+    <link type="text/css" rel="stylesheet" href="//webresource.c-ctrip.com/ResUnionOnline/R3/float/css/pc_flaot.css">
+<!--    <script type="text/javascript" src="/js/getUrl.js"></script>-->
 </head>
 <style>
+    .iwmrPd {
+        padding: 24px;
+    }
+    .gQpdXV:first-child {
+    border-top: none;
+    padding-top: 0px;
+    margin-top: 0px;
+    }
+    .gQpdXV {
+    border-top: 1px dashed rgb(221, 221, 221);
+    padding-top: 24px;
+    margin-top: 24px;
+    }
+    .lbqFAR {
+    margin-bottom: 16px;
+    position: relative;
+    font-size: 16px;
+    display: flex;
+    flex-direction: row;
+    -webkit-box-align: center;
+    align-items: center;
+    }
+    .cPIGvg {
+    white-space: nowrap;
+    color: rgb(255, 255, 255);
+}
+    .hAQSL {
+    display: inline-block;
+    padding: 0px 8px;
+    font-weight: 600;
+    font-size: 16px;
+    position: relative;
+}
+    .kKNmtJ {
+        display: flex;
+        flex-direction: row;
+        width: 100%;
+    }
+    .fIGEpM {
+    width: 100%;
+    padding-right: 16px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+}
+.fIGEpM::before {
+    content: "";
+    position: absolute;
+    bottom: 10px;
+    top: 14px;
+    border-radius: 1px;
+    border: 3px solid rgb(221, 228, 237);
+    left: 78px;
+    height: 40px;
+}
+.dlxVRf {
+    position: relative;
+    font-size: 14px;
+    display: flex;
+}
+.kLZsdo {
+    margin-right: 40px;
+    margin-left: 12px;
+    width: 48px;
+    display: inline-block;
+    text-align: right;
+    color: rgb(51, 51, 51);
+    position: relative;
+    font-weight: 600;
+}
+.otherButton{
+    width: 110px;
+    height: 35px;
+    border: 1px solid #2196f3;
+    float: right;
+    cursor: pointer;
+    margin-top: 10px;
+    background: transparent;
+    outline: none;
+}
+.otherButton2{
+    position: absolute;
+    margin-left: 300px;
+    margin-top: 70px;
+    width: 110px;
+    height: 35px;
+    border: 1px solid #2196f3;
+    float: right;
+    cursor: pointer;
+    background: transparent;
+    outline: none;
+    }
+
+
+
+    .dlxVRf::before {
+    content: "";
+    position: absolute;
+    width: 8px;
+    bottom: 0px;
+    top: 8px;
+    background-color: transparent;
+    left: 76px;
+    }
+    .kLZsdo::before {
+    content: "";
+    position: absolute;
+    border-radius: 1px;
+    top: 6px;
+    left: 63px;
+    border: 2px solid rgb(255, 255, 255);
+    background-color: rgb(221, 228, 237);
+    width: 10px;
+    height: 10px;
+    box-sizing: border-box;
+    }
+    .bgPFhY {
+    margin-right: 8px;
+    flex: 1 1 0%;
+    color: rgb(51, 51, 51);
+}
+    .dlxVRf::after {
+    content: ".";
+    width: 0px;
+    height: 0px;
+    overflow: hidden;
+    display: block;
+    clear: both;
+    }
+    .gErMrf {
+    display: flex;
+    flex-direction: row;
+    -webkit-box-align: center;
+    align-items: center;
+    margin: 8px 0px;
+    }
+    .bDyGyM {
+    width: 60px;
+    text-align: right;
+    }
+    .ihbyqT {
+    color: rgb(153, 153, 153);
+    font-size: 12px;
+    }
+    .bGFtaP {
+    display: flex;
+    flex-direction: column;
+    flex: 1 1 0%;
+}
+    .hfjodw {
+        position: relative;
+        font-size: 14px;
+        display: flex;
+    }
+    .hfjodw::before {
+    content: "";
+    position: absolute;
+    width: 8px;
+    bottom: 0px;
+    top: 8px;
+    background-color: rgb(255, 255, 255);
+    left: 76px;
+}
+    .kLZsdo {
+    margin-right: 40px;
+    margin-left: 12px;
+    width: 48px;
+    display: inline-block;
+    text-align: right;
+    color: rgb(51, 51, 51);
+    position: relative;
+    font-weight: 600;
+}
+.kLZsdo::before {
+    content: "";
+    position: absolute;
+    border-radius: 1px;
+    top: 6px;
+    left: 63px;
+    border: 2px solid rgb(255, 255, 255);
+    background-color: rgb(221, 228, 237);
+    width: 10px;
+    height: 10px;
+    box-sizing: border-box;
+}
+.bgPFhY {
+    margin-right: 8px;
+    flex: 1 1 0%;
+    color: rgb(51, 51, 51);
+}
+.hfjodw::after {
+    content: ".";
+    width: 0px;
+    height: 0px;
+    overflow: hidden;
+    display: block;
+    clear: both;
+}
+.lbqFAR {
+    margin-bottom: 16px;
+    position: relative;
+    font-size: 16px;
+    display: flex;
+    flex-direction: row;
+    -webkit-box-align: center;
+    align-items: center;
+}
+.hAQSL {
+    display: inline-block;
+    padding: 0px 8px;
+    font-weight: 600;
+    font-size: 16px;
+    position: relative;
+}
+.ibbBdg {
+    width: 42%;
+    font-size: 14px;
+    display: inline-block;
+    position: relative;
+}
+.kMsWyy {
+    position: absolute;
+    width: 25px;
+    height: 25px;
+    left: 0px;
+}
+.gnrCxi {
+    font-size: 14px;
+    color: rgb(153, 153, 153);
+}
+.gnrCxi span::after {
+    content: "";
+    position: absolute;
+    width: 1px;
+    top: 4px;
+    bottom: 3px;
+    right: 0px;
+    background: rgb(221, 221, 221);
+}
+
+
+
+
+
     .containernew{
         display: flex;
         flex-wrap: wrap;
@@ -33,6 +281,11 @@
         border-radius: 10px;
         animation-name: shadow-show;
         animation-duration: 1.5s;
+    }
+    .title{
+        font-size:10px;
+        color: darksalmon;
+
     }
     hr{
         display: block;
@@ -81,15 +334,82 @@
             <div><img src="images/citypl2.jpg" style="width:400px;height:300px;border-radius: 50px 50px 50px 50px;margin-left: 200px"></div>
         </li>
         <li>
-            <h2>在线选座</h2>
-            <div>
-                <button><a href="">Look at all ></a></button>
+            <form id="orderInquiry" target="iframe2" method="post">
+                <div class="layui-form-item" style="font-size: 15px;color: #0C0C0C;font-family:'Microsoft YaHei'">
+                    <label class="layui-form-label" >订单号</label>
+                    <input id="orderNum" name="orderNum" th:text="${orderNum}" class="layui-input">
+                    <label class="layui-form-label">身份证</label>
+                    <input id="IDcard" name="IDcard" th:text="${IDcard}" class="layui-input">
+                </div>
+                <div>
+                    <input type="button" onclick="os()" value="查询" class="otherButton">
+                    <input type="hidden" name="order_id" id="order_id">
+                </div>
+            </form>
+            <div id="orderR" style="background:#eef3f7;margin-left:100px;display:none;">
+                <div style="margin-left: 0px;margin-top: 10px;">
+                    <label style="font-size:15px;color: cadetblue;font-weight: 900;">订单详情</label>
+                </div>
+                <div class="sc-knSFqH iwmrPd" style="margin-left: 1px;">
+                    <div class="sc-gmIBos gQpdXV" style="margin-left: 2px;">
+                        <div style="margin-left: 2px;">
+                            <div class="sc-jLDROR lbqFAR">
+                                <span class="sc-gLwjMs hAQSL" id="date"> </span>
+                            </div>
+                            <div class="sc-kQfVt0 kKNmtJ" style="margin-left: 2px;">
+                                <div class="sc-fDUjSr fIGEpM" style="margin-left: 1px;">
+                                    <div class="sc-fExJIe dlxVRf" style="margin-left: 1px;">
+                                        <strong id="departuretime" class="sc-jdtaiD kLZsdo">
+
+                                        </strong>
+                                        <span class="sc-fBFNFI bgPFhY">
+                                    <span id="departurecity"></span>
+                                    <span id="departure_airport"></span>
+                                </span>
+                                    </div>
+                                    <div class="sc-ektJcd gErMrf" style="margin-left: 1px;">
+                                        <div class="sc-eDdKWq bDyGyM">
+                                            <div class="sc-jaBegh ihbyqT">
+                                                <span></span>
+                                            </div>
+                                        </div>
+                                        <div class="sc-jaJIhW bGFtaP"></div>
+                                    </div>
+                                    <div class="sc-fExJIe hfjodw" style="margin-left: 1px;">
+                                        <strong class="sc-jdtaiD kLZsdo" id="arrivaltime">
+
+                                        </strong>
+                                        <span class="sc-fBFNFI bgPFhY">
+                                <span id="arrivalcity"></span>
+                                <span id="arrival_airport"></span>
+                            </span>
+                                    </div>
+                                    <br>
+                                    <div style="">
+                                        <label style="color: black;font-weight: 600;">出行人</label>
+                                        <span style="margin-left: 35px;color: rgb(51, 51, 51)" id="user_name"></span>
+                                    </div>
+                                </div>
+                                <div class="sc-lMZDC ibbBdg">
+                                    <img src="images/feiji.jpg" alt="" class="sc-cdlubJ kMsWyy" style="width: 25px;">
+                                    <p style="margin-top: 0px;">
+                                    <span> 中国联合航空</span>
+                                    <span> KN5992</span></p>
+                                </div>
+                                    <input type="button" onclick="xz()" value="前去选座" class="otherButton2" ></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+    <!--            <iframe id="iframe2" name="iframe2" style="display:none;"></iframe>-->
+                <!--            <div><img src="images/citypl2.jpg" style="width:400px;height:300px;border-radius: 50px 50px 50px 50px;margin-left: 200px"></div>-->
+
             </div>
         </li>
         <li>
             <h2>退票改签</h2>
             <div>
-                <button><a href="">Look at all></a></button>
+                <button>Look at all></button>
             </div>
         </li>
     </ul>
@@ -268,34 +588,41 @@
 
 </script>
 
-
-
 <script>
 
-    $(function () {
+        function os(){
+            var order_num = $('#orderNum').val();
+            var passenger_id = $('#IDcard').val();
+            $.ajax({
+                type : 'post',
+                url : '/selectOdByNum',
+                data: {
+                    'order_num' : order_num,
+                    'passenger_id' : passenger_id
+                },
+                success:function(res){
+                var obj = JSON.parse(res);
+                $('#departuretime').html((obj.flight.departuretime).slice(0,-3));
+                $('#arrivaltime').html((obj.flight.arrivaltime).slice(0,-3));
+                $('#date').html(obj.flight.date);
+                $('#departurecity').html(obj.flight.departurecity);
+                $('#arrivalcity').html(obj.flight.arrivalcity);
+                $('#departure_airport').html(obj.flight.departure_airport);
+                $('#arrival_airport').html(obj.flight.arrival_airport);
+                $('#user_name').html(obj.user_name);
+                $("#order_id").val(obj.order_id);
+                $("#orderR").show();
+                }
+                })
 
-        $.ajax({
-
-                type:"get",
-
-                url:"/index/re",
-
-                data:{},
-
-                async: false,
-
-                success:function (data) {
-
-                    $('#test11').html(data[0].departurecity);
-
+     }
+        function xz(){
+                var order_id = document.getElementById("order_id").value;
+                window.location.href='http://localhost:8080/result?order_id='+order_id;
                 }
 
 
 
-
-            });
-
-    })
 
 </script>
 

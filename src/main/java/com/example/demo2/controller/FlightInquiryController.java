@@ -3,13 +3,16 @@ package com.example.demo2.controller;
 import com.example.demo2.Util.LayuiTableResultUtil;
 import com.example.demo2.Util.RequiredUtil;
 import com.example.demo2.bean.Flight;
+import com.example.demo2.bean.Order;
 import com.example.demo2.service.FlightService;
+import com.example.demo2.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
 import java.util.List;
 
 @Controller
@@ -20,6 +23,8 @@ public class FlightInquiryController {
 
     @Autowired
     public FlightService flightService;
+    @Autowired
+    public OrderService orderService;
 
     @GetMapping("/result")
     public String showresult() {
@@ -48,6 +53,7 @@ public class FlightInquiryController {
         List<Flight> recommendlist=flightService.findByRandom();
         return recommendlist;
     }
+
 
     //航班查询
     @PostMapping("/index")

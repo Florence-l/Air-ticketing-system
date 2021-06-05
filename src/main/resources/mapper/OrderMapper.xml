@@ -17,13 +17,12 @@
             <result column="departurecity" property="departurecity"/>
             <result column="arrivalcity" property="arrivalcity"/>
             <result column="date" property="date"/>
+            <result column="departure_airport" property="departure_airport"/>
+            <result column="arrival_airport" property="arrival_airport"/>
             <result column="departuretime" property="departuretime"/>
             <result column="arrivaltime" property="arrivaltime"/>
         </association>
     </resultMap>
-<!--    <sql id="Base_Column_List">-->
-<!--        order_id, passenger_id, user_id, flight_id, orderTime, paymentStatus, paymentTime, seat_id, realPrice-->
-<!--    </sql>-->
 
 
 
@@ -72,9 +71,11 @@
         #{flight_id,jdbcType=INTEGER},#{orderTime,jdbcType=VARCHAR}, #{paymentStatus,jdbcType=INTEGER},
         #{realPrice,jdbcType=FLOAT},#{order_num,jdbcType=VARCHAR})
     </insert>
-<!--    <select id="findUnpayByid" resultType="com.example.demo2.bean.Order" resultMap="OrderResultMap" >-->
-<!--        select * from order_table where user_id = #{user_id} and paymentStatus = 0-->
-<!--    </select>-->
+
+    <select id="findByNum" resultMap="OrderResultMap">
+        select * from order_table inner join flight_table on order_table.flight_id = flight_table.flight_id where order_num = #{order_num} and passenger_id = #{passenger_id}
+    </select>
+
 
 
 

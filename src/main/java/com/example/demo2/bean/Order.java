@@ -148,10 +148,17 @@ public class Order {
     @Override
     public String toString() {
         return "Orderdetail{" +
+                "order_id" + order_id+
+                "user_id" + user_id+
+                "user_name" + user_name+
+                "passenger_id"+passenger_id+
                 "flightid=" + flight_id +
                 "orderTime=" + orderTime +
+                "paymentStatus" + paymentStatus +
+                "paymentTime" + paymentTime+
                 "seatid=" + seat_id +
                 "realPrice" + realPrice +
+                "order_num" + order_num+
                 '}';
     }
 }

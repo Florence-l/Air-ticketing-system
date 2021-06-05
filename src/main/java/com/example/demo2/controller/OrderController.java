@@ -5,6 +5,7 @@ import com.example.demo2.bean.Order;
 import com.example.demo2.bean.User;
 import com.example.demo2.service.OrderService;
 import com.example.demo2.service.UserService;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.security.Principal;
+import java.util.Map;
 
 @Controller
 public class OrderController {
@@ -37,8 +39,19 @@ public class OrderController {
         System.out.print(order);
         orderService.insertOrder(order);
         return "success";
-
-
     }
+
+    @RequestMapping("/selectOdByNum")
+    @ResponseBody()
+    public String selectOdByNum(HttpServletRequest request) throws IOException {
+        String order_num = request.getParameter("order_num");
+        String passenger_id = request.getParameter("passenger_id");
+//        System.out.println(orderService.findByNum(order_num,passenger_id));
+        ObjectMapper objectMapper = new ObjectMapper();
+        String orderJson = objectMapper.writeValueAsString(orderService.findByNum(order_num,passenger_id));
+        System.out.println(orderJson);
+        return orderJson;
+    }
+
 
 }

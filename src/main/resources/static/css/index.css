@@ -122,7 +122,6 @@ body {
 .tab_contents .tab_box li p {
     margin-top: 40px;
     line-height: 1.5em;
-    text-indent: 2em;
     overflow: hidden;
     text-overflow: ellipsis;
     display: -webkit-box;

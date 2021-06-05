@@ -27,6 +27,13 @@ public class OrderService {
         return null;
     }
 
+    public Order findByNum(String order_num,String passenger_id){
+        Order order = orderMapper.findByNum(order_num,passenger_id);
+        if(order != null){
+            return order;
+        }
+        return null;
+    }
 //    public User findUser(String username) {
 //        return userMapper.loadUserByUsername(username);
 //    }

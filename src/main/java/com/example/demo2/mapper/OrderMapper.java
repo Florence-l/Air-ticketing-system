@@ -16,4 +16,6 @@ public interface OrderMapper {
 
     int insertOrder(Order order);
 
+    Order findByNum(@Param("order_num") String order_num,@Param("passenger_id") String passenger_id);
+
 }
