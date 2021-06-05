@@ -25,6 +25,10 @@ public class Flight {
 
     private Integer price;
 
+    private String seat_status;
+
+    private Integer type;
+
     public Integer getFlight_id() {
         return flight_id;
     }
@@ -112,4 +116,19 @@ public class Flight {
         this.price = price;
     }
 
+    public String getSeat_status() {
+        return seat_status;
+    }
+
+    public void setSeat_status(String seat_status) {
+        this.seat_status = seat_status;
+    }
+
+    public Integer getType() {
+        return type;
+    }
+
+    public void setType(Integer type) {
+        this.type = type;
+    }
 }

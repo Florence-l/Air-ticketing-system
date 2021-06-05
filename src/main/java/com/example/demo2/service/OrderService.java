@@ -60,6 +60,11 @@ public class OrderService {
         return 1;
     }
 
+    public int updateSeat(Integer seat_id,Integer order_id){
+        orderMapper.updateSeat(seat_id,order_id);
+        return 1;
+    }
+
 //    @Override
 //    public List<Order> findUnpayByid(Integer userid) {
 //        return orderMapper.findUnpayByid(userid);

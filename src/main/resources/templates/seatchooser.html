@@ -1,10 +1,14 @@
 <!doctype html>
-<html>
+<html xmlns="http://www.w3.org/1999/html">
 <head>
   <title>在线选座</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" type="text/css" href="css/jquery.seat-charts.css">
   <link rel="stylesheet" type="text/css" href="css/seatchooser.css">
+  <script type="text/javascript" src="/js/jquery-1.8.3.min.js"></script>
+  <script type="text/javascript" src="/js/getUrl.js"></script>
+  <script src="js/jquery-1.11.0.min.js"></script>
+  <script src="js/jquery.seat-charts.min.js"></script>
 </head>
 <body>
 <div class="wrapper">
@@ -17,22 +21,65 @@
       <ul id="selected-seats">
       </ul>
       <p>总价: <b>$<span id="total">0</span></b></p>
-      <p><button class="checkout-button">结算</button></p>
+      <p><button action="/update" method="post" onclick="setseat()">确定</button></p>
       <div id="legend"></div>
     </div>
   </div>
 </div>
-<script src="js/jquery-1.11.0.min.js"></script>
-<script src="js/jquery.seat-charts.min.js?id=12"></script>
+
 <script>
   var firstSeatLabel = 1;
-
+  var seat_id=0;
+  var time=0;
   $(document).ready(function() {
     var $cart = $('#selected-seats'),
             $counter = $('#counter'),
             $total = $('#total'),
             sc = $('#seat-map').seatCharts({
               map: [
+                // '_ff__f__ff_',
+                // '_ff__f__ff_',
+                // '_ff__f__ff_',
+                // 'eee_eee_eee',
+                // 'eee_eee_eee',
+                // 'eee_eee_eee',
+                // 'eee_eee_eee',
+                // 'eee_eee_eee',
+                // 'eee_eee_eee',
+                // 'eee_eee_eee',
+                // 'eee_eee_eee',
+                // 'eee_eee_eee',
+                // 'eee_eee_eee',
+                // 'eee_eee_eee',
+                // 'eee_eee_eee',
+                // 'eee_eee_eee',
+                // 'eee_eee_eee',
+                // 'eee_eee_eee',
+                //
+                // '_ff__ff__ff_',
+                // '_ff__ff__ff_',
+                // '_ff__ff__ff_',
+                // '_ff__ff__ff_',
+                // '_ff__ff__ff_',
+                // 'eee_eeee_eee',
+                // 'eee_eeee_eee',
+                // 'eee_eeee_eee',
+                // 'eee_eeee_eee',
+                // 'eee_eeee_eee',
+                // 'eee_eeee_eee',
+                // 'eee_eeee_eee',
+                // 'eee_eeee_eee',
+                // 'eee_eeee_eee',
+                // 'eee_eeee_eee',
+                // 'eee_eeee_eee',
+                // 'eee_eeee_eee',
+                // 'eee_eeee_eee',
+                // 'eee_eeee_eee',
+                // 'eee_eeee_eee',
+                // 'eee_eeee_eee',
+                // 'eee_eeee_eee',
+                // 'eee_eeee_eee',
+
                 'f___f___f',
                 'f___f___f',
                 'ee_eee_ee',
@@ -51,19 +98,18 @@
               seats: {
                 f: {
                   price   : 100,
-                  classes : 'first-class', //your custom CSS class
+                  classes : 'first-class',
                   category: '头等舱'
                 },
                 e: {
                   price   : 40,
-                  classes : 'economy-class', //your custom CSS class
+                  classes : 'economy-class',
                   category: '经济舱'
                 }
 
               },
               naming : {
                 top : false,
-                column:['1','2','A','3','4','5','B','7','8'],
                 getLabel : function (character, row, column) {
                   return firstSeatLabel++;
                 },
@@ -86,23 +132,19 @@
                           .attr('id','cart-item-'+this.settings.id)
                           .data('seatId', this.settings.id)
                           .appendTo($cart);
+                  seat_id=this.settings.label;
                   $counter.text(sc.find('selected').length+1);
                   $total.text(recalculateTotal(sc)+this.data().price);
-
+                  time++;
                   return 'selected';
                 } else if (this.status() == 'selected') {
-                  //update the counter
                   $counter.text(sc.find('selected').length-1);
-                  //and total
                   $total.text(recalculateTotal(sc)-this.data().price);
 
-                  //remove the item from our cart
                   $('#cart-item-'+this.settings.id).remove();
-
-                  //seat has been vacated
+                  time--;
                   return 'available';
                 } else if (this.status() == 'unavailable') {
-                  //seat has been already booked
                   return 'unavailable';
                 } else {
                   return this.style();
@@ -110,168 +152,63 @@
               }
             });
 
-    //this will handle "[cancel]" link clicks
+
     $('#selected-seats').on('click', '.cancel-cart-item', function () {
-      //let's just trigger Click event on the appropriate seat, so we don't have to repeat the logic here
       sc.get($(this).parents('li:first').data('seatId')).click();
     });
 
-    //let's pretend some seats have already been booked
-    //sc.get(['1_2', '4_1', '7_1', '7_2']).status('unavailable');
+    //sc.get(['1_2', '4_1', '7_1']).status('unavailable');
 
   });
 
   function recalculateTotal(sc) {
     var total = 0;
 
-    //basically find every selected seat and sum its price
     sc.find('selected').each(function () {
       total += this.data().price;
     });
 
     return total;
   }
+</script>
+
+<script>
+  (function ($) {
+    $.getUrlParam = function (name) {
+      var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+      var r = window.location.search.substr(1).match(reg);
+      if (r != null) return decodeURIComponent(r[2]); return null;
+    }
+  })(jQuery);
+
+  function setseat() {
+    var order_id = $.getUrlParam("order_id");
+    var flight_id= $.getUrlParam("flight_id");
+    if(time==0){
+      alert('请选择座位');
+    }
+    else {
+      $.ajax({
+        type: 'post', // 以post方式发起请求
+        url: "/setseat", // 你的请求链接
+        data: { // 提交数据
+          "order_id": order_id,
+          "seat_id": seat_id,
+          "flight_id":flight_id,
+        },
+        success(data) {
+        }
+      })
+    }
+    window.location.href='http://localhost:8080/orderdetail';
+  }
+
+
 
 </script>
+
 <div align="center" style="clear:both;font-size:12px;color:#666;font:normal 14px/24px 'MicroSoft YaHei';">
 
 </div>
 </body>
 </html>
-
-<!--<!DOCTYPE html>-->
-<!--<html>-->
-<!--<head>-->
-<!--  <meta charset="utf-8">-->
-<!--  <title>在线选座</title>-->
-
-<!--<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />-->
-<!--  <link rel="stylesheet" type="text/css" href="/css/jquery.seat-charts.css">-->
-<!--  <link rel="stylesheet" type="text/css" href="/css/seatchooser.css">-->
-<!--  <script type="text/javascript" src="/js/jquery-1.11.0.min.js"></script>-->
-<!--  <script type="text/javascript" src="/js/jquery.seat-charts.min.js"></script>-->
-<!--</head>-->
-<!--<body>-->
-<!--<div class="wrapper">-->
-<!--  <div class="container">-->
-<!--    <div id="seat-map">-->
-<!--      <div class="front-indicator">机头</div>-->
-<!--    </div>-->
-<!--    <div class="booking-details">-->
-<!--      <h3>已选中的座位 (<span id="counter">0</span>):</h3>-->
-<!--      <ul id="selected-seats">-->
-<!--      </ul>-->
-<!--      <p>总价: <b>$<span id="total">0</span></b></p>-->
-<!--      <p><button class="checkout-button">结算</button></p>-->
-<!--      <div id="legend"></div>-->
-<!--    </div>-->
-<!--  </div>-->
-<!--</div>-->
-
-<!--<script>-->
-<!--			var firstSeatLabel = 1;-->
-
-<!--			$(document).ready(function() {-->
-<!--				var $cart = $('#selected-seats'),-->
-<!--					$counter = $('#counter'),-->
-<!--					$total = $('#total'),-->
-<!--					sc = $('#seat-map').seatCharts({-->
-<!--					map: [-->
-<!--						'f_f_f_f_f_f',-->
-<!--						'f_f_f_f_f_f',-->
-<!--						'eee_eee_eee',-->
-<!--						'eee_eee_eee',-->
-<!--						'__e_eee_ee_',-->
-<!--						'eee_eee_eee',-->
-<!--						'eee_eee_eee',-->
-<!--						'eee_eee_eee',-->
-<!--						'eee_eee_eee',-->
-<!--						'eee_eee_eee',-->
-<!--                        'eee_eee_eee',-->
-<!--                        'eee_eee_eee',-->
-<!--                        'eee_eee_eee',-->
-<!--                        'eee_eee_eee',-->
-<!--                        'eee_eee_eee',-->
-<!--                        'eee_eee_eee',-->
-
-<!--                    ],-->
-<!--					seats: {-->
-<!--						f: {-->
-<!--							price   : 100,-->
-<!--							classes : 'first-class', //your custom CSS class-->
-<!--							category: '头等舱'-->
-<!--						},-->
-<!--						e: {-->
-<!--							price   : 50,-->
-<!--							classes : 'economy-class', //your custom CSS class-->
-<!--							category: '经济舱'-->
-<!--						}-->
-
-<!--					},-->
-<!--					naming : {-->
-<!--						top : true,-->
-<!--                        left: true,-->
-<!--                        row:['1','2','3'],-->
-<!--                        columns: ['1','2','3','A','4','5','6','B','7','8','9'],-->
-<!--                        // getId:function(character,low,column){-->
-<!--						//   return row+column;-->
-<!--                        // },-->
-
-<!--						getLabel : function (character, row, column) {-->
-<!--                           //return row+column;-->
-<!--							return firstSeatLabel++;-->
-<!--						},-->
-<!--					},-->
-<!--					legend : {-->
-<!--						node : $('#legend'),-->
-<!--					    items : [-->
-<!--							[ 'f', 'available',   '头等舱' ],-->
-<!--							[ 'e', 'available',   '经济舱'],-->
-<!--							[ 'f', 'unavailable', '已预定']-->
-<!--					    ]-->
-<!--					},-->
-<!--					click: function () {-->
-<!--						if (this.status() == 'available') {-->
-<!--							$('<li>'+this.data().category+this.settings.label+'号座位'+'：<br/>价格：<b>$'+this.data().price+'</b> <a href="#" class="cancel-cart-item">[删除]</a></li>')-->
-<!--								.attr('id','cart-item-'+this.settings.id)-->
-<!--								.data('seatId', this.settings.id)-->
-<!--								.appendTo($cart);-->
-<!--							$counter.text(sc.find('selected').length+1);-->
-<!--							$total.text(recalculateTotal(sc)+this.data().price);-->
-
-<!--							return 'selected';-->
-<!--						} else if (this.status() == 'selected') {-->
-<!--							$counter.text(sc.find('selected').length-1);-->
-<!--							$total.text(recalculateTotal(sc)-this.data().price);-->
-<!--							$('#cart-item-'+this.settings.id).remove();-->
-<!--							return 'available';-->
-<!--						} else if (this.status() == 'unavailable') {-->
-<!--							return 'unavailable';-->
-<!--						} else {-->
-<!--							return this.style();-->
-<!--						}-->
-<!--					}-->
-<!--				});-->
-
-
-<!--				$('#selected-seats').on('click', '.cancel-cart-item', function () {-->
-<!--                  sc.get($(this).parents('li:first').data('seatId')).click();-->
-<!--				});-->
-<!--				// sc.get(['1_2', '4_1', '7_1', '7_2']).status('unavailable');-->
-<!--                //-->
-<!--		});-->
-
-<!--		function recalculateTotal(sc) {-->
-<!--			var total = 0;-->
-<!--			sc.find('selected').each(function () {-->
-<!--				total += this.data().price;-->
-<!--			});-->
-<!--			return total;-->
-<!--		}-->
-
-<!--		</script>-->
-<!--<div align="center" style="clear:both;font-size:12px;color:#666;font:normal 14px/24px 'MicroSoft YaHei';">-->
-
-<!--</div>-->
-<!--</body>-->
-<!--</html>-->

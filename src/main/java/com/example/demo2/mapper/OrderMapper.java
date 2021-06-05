@@ -18,4 +18,6 @@ public interface OrderMapper {
 
     Order findByNum(@Param("order_num") String order_num,@Param("passenger_id") String passenger_id);
 
+    int updateSeat(@Param("seat_id") Integer seat_id,@Param("order_id")Integer order_id );
+
 }

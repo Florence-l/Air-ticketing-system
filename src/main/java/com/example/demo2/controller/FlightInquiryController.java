@@ -3,7 +3,6 @@ package com.example.demo2.controller;
 import com.example.demo2.Util.LayuiTableResultUtil;
 import com.example.demo2.Util.RequiredUtil;
 import com.example.demo2.bean.Flight;
-import com.example.demo2.bean.Order;
 import com.example.demo2.service.FlightService;
 import com.example.demo2.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +11,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
-import java.io.IOException;
 import java.util.List;
 
 @Controller
@@ -41,18 +39,22 @@ public class FlightInquiryController {
         return "booking";
     }
 
-    @GetMapping("/test")
-    public String booking(){
-        return "seatchooser";
-    }
 
     //航班推荐(随机)
     @RequestMapping("/index/re")
     @ResponseBody()
-    public List<Flight> recommend(Flight flight){
+    public List<Flight> recommend( Flight flight){
         List<Flight> recommendlist=flightService.findByRandom();
         return recommendlist;
     }
+
+
+//    @RequestMapping("/index/pr")
+//    @ResponseBody()
+//    public List<Flight> price(Flight flight){
+//        List<Flight> pricelist=flightService.findByPrice();
+//        return pricelist;
+//    }
 
 
     //航班查询

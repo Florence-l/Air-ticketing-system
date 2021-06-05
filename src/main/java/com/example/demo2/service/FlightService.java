@@ -37,12 +37,8 @@ public class FlightService implements FlightMapper{
     }
 
     @Override
-    public List<Flight> findByid(Integer flight_id) {
-        List<Flight> list = flightMapper.findByid(flight_id);
-        if(list!=null){
-            return list;
-        }
-        return null;
+    public String findByid(Integer flight_id) {
+       return flightMapper.findByid(flight_id);
     }
 
     @Override
@@ -54,6 +50,20 @@ public class FlightService implements FlightMapper{
         return null;
     }
 
+    @Override
+    public List<Flight> findByPrice(){
+        List<Flight> list = flightMapper.findByPrice();
+        if(list!=null){
+            return list;
+        }
+        return null;
+    }
+
+    @Override
+    public int updateSeatStatus(Integer flight_id,String seat_status){
+        flightMapper.updateSeatStatus(flight_id,seat_status);
+        return 1;
+    }
     /**
      * 计算航班价格(直接调用次函数)
      * @param seattype 舱位类型 经济舱 0  商务舱 1

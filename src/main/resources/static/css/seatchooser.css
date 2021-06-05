@@ -5,7 +5,7 @@ a {
 	color: #b71a4c;
 }
 .front-indicator {
-	width: 145px;
+	width: 300px;
 	margin: 5px 32px 15px 32px;
 	background-color: #f6f6f6;
 	color: #adadad;
@@ -48,9 +48,10 @@ div.seatCharts-cell {
 div.seatCharts-seat {
 	color: #FFFFFF;
 	cursor: pointer;
+	font-size: 10px;
 }
 div.seatCharts-row {
-	height: 35px;
+	height: 32px;
 }
 div.seatCharts-seat.available {
 	/*background-color: #B9DEA0;*/
@@ -87,7 +88,7 @@ div.seatCharts-seat.unavailable {
 }
 div.seatCharts-container {
 	border-right: 1px dotted #adadad;
-	width: 500px;
+	/*width: 500px;*/
 	padding: 20px;
 	float: left;
 }

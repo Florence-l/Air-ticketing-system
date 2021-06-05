@@ -78,6 +78,17 @@
     </select>
 
 
+    <update id="updateSeat" parameterType="com.example.demo2.bean.Order">
+        update order_table
+        set seat_id=#{seat_id}
+        where order_id=#{order_id}
+    </update>
+
+
+    <!--    <select id="findUnpayByid" resultType="com.example.demo2.bean.Order" resultMap="OrderResultMap" >-->
+<!--        select * from order_table where user_id = #{user_id} and paymentStatus = 0-->
+<!--    </select>-->
+
 
 
 </mapper>

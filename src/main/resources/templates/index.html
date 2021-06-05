@@ -256,9 +256,6 @@
 }
 
 
-
-
-
     .containernew{
         display: flex;
         flex-wrap: wrap;
@@ -345,6 +342,8 @@
                     <input type="button" onclick="os()" value="查询" class="otherButton">
                     <input type="hidden" name="order_id" id="order_id">
                     <input type="hidden" name="paymentStatus" id="paymentStatus">
+                    <input type="hidden" name="flight_id" id="flight_id">
+                    <input type="hidden" name="seat_id" id="seat_id">
                 </div>
             </form>
             <div id="orderR" style="background:#eef3f7;margin-left:100px;display:none;">
@@ -542,14 +541,60 @@
             }
             ,done: function (res, curr, count) {
                 $('th').hide();
-                //更改颜色
-                var that = this.elem.next(); res.data.forEach(function (item, index) {
-                    if (index % 2 == 0) {
-                        //var tr = that.find(".layui-table-box tbody tr[data-index='" + index + "']").css('background-color', 'rgba(236,237,255,0.85)').addClass('addclass');
-                    } else {
-                       // var tr = that.find(".layui-table-box tbody tr[data-index='" + index + "']").css('background-color', 'rgba(231,242,246,0.7)').addClass('addclass');
-                    }
-                })
+            }
+
+            ,cols: [[ //表头5
+                 {field: 'photo',templet:function (d) {return '<div><img src="images/logo.jpg"></div>'}}
+                ,{title: '出发城市', width: 80,templet:function (d){
+                        return  '<span style="color: #000000;font-size: 16px;font-weight: bold">'+d.departurecity+'</span></br><span style="color:#999999;font-size: 13px">'+d.departuretime;
+                    }}
+                ,{title: '到达城市', width: 80,templet:function (d){
+                        return  '<span style="color: #000000;font-size: 16px;font-weight: bold">'+d.arrivalcity + '</span></br><span style="color:#999999;font-size: 13px">' + d.arrivaltime;
+                    }}
+                ,{field: 'price', title: '价格',width:120, templet:function (d) {return '<span style="color:#23a9de;font-size: 16px;font-weight: bold">'+"￥"+d.price;}}
+                ,{fixed: '', title:'操作', toolbar: "#toolbtn", width:80}
+            ]]
+
+        });
+        table.on('tool(test)', function (obj)  {
+            var book_date = obj.data.date;
+            var book_departurecity = obj.data.departurecity;
+            var book_arrivalcity = obj.data.arrivalcity;
+            var book_departuretime = obj.data.departuretime;
+            var book_arrivaltime = obj.data.arrivaltime;
+            var book_arrival_airport = obj.data.arrival_airport;
+            var book_departure_airport = obj.data.departure_airport;
+            var book_price=obj.data.price;
+            var book_flight_id=obj.data.flight_id;
+            if (obj.event === 'book') {
+                window.location.href="/book?book_departurecity="+escape(book_departurecity)+"&book_arrivalcity="
+                    +escape(book_arrivalcity)+"&book_departuretime="+escape(book_departuretime)+"&book_arrivaltime="
+                    +escape(book_arrivaltime)+"&book_arrival_airport="+escape(book_arrival_airport)+"&book_departure_airport="
+                    +escape(book_departure_airport)+"&book_date="+escape(book_date)+"&book_price="+escape(book_price)
+                    +"&book_flight_id="+escape(book_flight_id);
+
+            }
+
+        });
+    });
+    layui.use(['table'], function(){
+        var table = layui.table;//使用数据表格
+        table.render({
+            elem: '#pricelist'
+            ,url: '/index/pr' //数据接口
+            ,skin:'line'
+            ,size:'lg'
+            ,parseData:function (res) {
+                console.log(res);
+                return {
+                    "code": 0,
+                    "msg": "",
+                    "count": 1000,
+                    data: res,
+                }
+            }
+            ,done: function (res, curr, count) {
+                $('th').hide();
             }
 
             ,cols: [[ //表头5
@@ -622,6 +667,7 @@
                     });
                 }
                 var obj = JSON.parse(res);
+
                 $('#departuretime').html((obj.flight.departuretime).slice(0,-3));
                 $('#arrivaltime').html((obj.flight.arrivaltime).slice(0,-3));
                 $('#date').html(obj.flight.date);
@@ -632,6 +678,8 @@
                 $('#user_name').html(obj.user_name);
                 $("#order_id").val(obj.order_id);
                 $("#paymentStatus").val(obj.paymentStatus);
+                $("#flight_id").val(obj.flight.flight_id);
+                $("#seat_id").val(obj.seat_id);
                 $("#orderR").show();
                 }
                 })
@@ -641,13 +689,21 @@
         function xz(){
                 var order_id = document.getElementById("order_id").value;
                 var paymentStatus = document.getElementById("paymentStatus").value;
+                var flight_id=document.getElementById("flight_id").value;
+                var seat_id=document.getElementById("seat_id").value;
                 if(paymentStatus === "0"){
                    layui.use('layer', function(){
                    var layer = layui.layer;
                    layer.msg('您未完成支付,不能进入选座服务');
                     });
                 }
-                else {window.location.href='http://localhost:8080/result?order_id='+order_id;}
+                else if(seat_id>0){
+                    layui.use('layer', function(){
+                        var layer = layui.layer;
+                        layer.msg('您已完成选座');
+                    });
+                }
+                else {window.location.href='http://localhost:8080/seatchooser?order_id='+order_id+"&flight_id="+flight_id;}
                 }
 
 

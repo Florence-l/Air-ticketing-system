@@ -13,11 +13,13 @@
     <result column="departure_airport" jdbcType="VARCHAR" property="departure_airport" />
     <result column="passby_city" jdbcType="VARCHAR" property="passby_city" />
     <result column="price" jdbcType="INTEGER" property="price"/>
+    <result column="seat_status" jdbcType="VARCHAR" property="seat_status"/>
+    <result column="type" jdbcType="INTEGER" property="type"/>
   </resultMap>
 
   <sql id="Base_Column_List">
     flight_id, airplane_id, departurecity, arrivalcity, departuretime, arrivaltime, date,
-    arrival_airport, departure_airport, passby_city ,price
+    arrival_airport, departure_airport, passby_city ,price,seat_status,type
   </sql>
 
   <select id="findByRequired" resultMap="FlightResultMap" resultType="com.example.demo2.bean.Flight" >
@@ -25,8 +27,8 @@
 
   </select>
 
-  <select id="findByid" resultType="com.example.demo2.bean.Flight" resultMap="FlightResultMap">
-    select * from flight_table where flight_id = #{flight_id}
+  <select id="findByid" resultType="String">
+    select seat_status from flight_table where flight_id = #{flight_id}
   </select>
 
   <select id="countAllFlight" resultType="int">
@@ -36,5 +38,18 @@
   <select id="findByRandom" resultType="com.example.demo2.bean.Flight" resultMap="FlightResultMap">
     select * from flight_table order by rand() limit 5
   </select>
+
+  <select id="findByPrice" resultType="com.example.demo2.bean.Flight" resultMap="FlightResultMap">
+    select * from flight_table order by price limit 5
+  </select>
+
+  <update id="updateSeatStatus" parameterType="com.example.demo2.bean.Order">
+    update flight_table
+    set seat_status=#{seat_status}
+    where flight_id=#{flight_id}
+  </update>
+
+
+
 
 </mapper>
