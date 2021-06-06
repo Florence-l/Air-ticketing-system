@@ -55,6 +55,14 @@ public class OrderService {
         return null;
     }
 
+    public List<Order> findByoNum(String order_num){
+        List<Order> list = orderMapper.findByoNum(order_num);
+        if(list != null){
+            return list;
+        }
+        return null;
+    }
+
     public int insertOrder(Order order){
         orderMapper.insertOrder(order);
         return 1;

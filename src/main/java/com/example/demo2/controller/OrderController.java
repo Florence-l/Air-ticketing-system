@@ -8,6 +8,7 @@ import com.example.demo2.service.UserService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -22,6 +23,10 @@ public class OrderController {
     public OrderService orderService;
     @Autowired
     public UserService userService;
+
+    @GetMapping("/hahaha")
+    public String orderDetail(){ return "orderDetail";}
+
 
     @RequestMapping("/insertOrder")
     @ResponseBody()
@@ -41,6 +46,8 @@ public class OrderController {
         return "success";
     }
 
+
+
     @RequestMapping("/selectOdByNum")
     @ResponseBody()
     public String selectOdByNum(HttpServletRequest request) throws IOException {
@@ -51,10 +58,20 @@ public class OrderController {
         if (order != null) {
             ObjectMapper objectMapper = new ObjectMapper();
             String orderJson = objectMapper.writeValueAsString(order);
-            System.out.println(orderJson);
+
             return orderJson;
         }
         else return "error";
+    }
+
+    @RequestMapping("/findByoNum")
+    @ResponseBody()
+    public String findByoNum(HttpServletRequest request) throws IOException{
+        String order_num = request.getParameter("order_num");
+        ObjectMapper objectMapper = new ObjectMapper();
+        String strObject = objectMapper.writeValueAsString(orderService.findByoNum(order_num));
+        System.out.println(strObject);
+        return strObject;
     }
 
 

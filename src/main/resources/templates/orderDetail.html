@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>订单详情</title>
+    <link rel="stylesheet" th:href="@{layui/css/layui.css}">
+    <link rel="stylesheet" th:href="@{css/orderDetail.css}">
+    <script type="text/javascript" src="/js/jquery-1.8.3.min.js"></script>
+    <link rel="stylesheet" href="https://webresource.c-ctrip.com/ResH5FlightOnline/R1/3rdLib/ant_cus.css?v=2018103101">
+    <link rel="stylesheet" href="https://bd-s.tripcdn.cn/modules/flight/online-orderdetail/static/css/main-1ad016d6.css">
+    <style data-styled="active" data-styled-version="5.3.0"></style>
+    <link type="text/css" rel="stylesheet" href="//webresource.c-ctrip.com/ResUnionOnline/R3/float/css/pc_flaot.css">
+</head>
+<body>
+<th:block th:include="common.html :: header"></th:block>
+<div class="sc-hxyAeK hIpCju">
+    <div class="sc-gggoXN byiTzm">
+<div class="sc-hLyimJ eVcwMi">
+    <div class="sc-knSFqH iwmrPd">
+    <div class="sc-bVhZDa dWBRTa">
+        <div>
+            <div class="sc-fudqdz jBVZdE">支付成功</div>
+            <div class="sc-ijByYY gEhAFQ">
+                <div class="sc-tbgaB dkpyjO">已为您完成本次预订服务
+                </div>
+            </div>
+        </div>
+        <div>
+            <div class="sc-dhtNOG iBMwaq" id="order_num"></div>
+        </div>
+    </div>
+    </div>
+</div>
+<div id="u-trips" data-readyobserve="orderDetail" class="sc-hLyimJ eVcwMi">
+    <div class="sc-cQDFzS jKWGHJ">
+        <div class="sc-kSCemg OGHxE">
+            <span id="city">
+
+            </span>
+        </div>
+    </div>
+    <div class="sc-knSFqH iwmrPd">
+        <div class="sc-gmIBos gQpdXV">
+            <div class="sc-jLDROR lbqFAR">
+                <div class="sc-gSiFqf cPIGvg">
+                    <span>单程</span>
+                </div>
+                <span class="sc-gLwjMs hAQSL" id="date"> </span>
+            </div>
+            <div>
+                <div class="sc-kQfVtO kKNmtJ">
+                    <div class="sc-fDUjSr fIGEpM">
+                        <div class="sc-fExJIe dlxVRf">
+                            <strong class="sc-jdtaiD kLZsdo" id="departuretime"></strong>
+                            <span class="sc-fBFNFI bgPFhY">
+                                <span id="departurecity_"></span>
+                                <span id="departure_airport"></span>
+                            </span>
+                        </div>
+                        <div class="sc-ektJcd gErMrf">
+                            <div class="sc-eDdKWq bDyGyM">
+                                <div class="sc-jaBegh ihbyqT">
+                                    <span>&#12288 &#12288</span>
+                                </div>
+                            </div>
+                            <div class="sc-jaJIhW bGFtaP"></div>
+                        </div>
+                        <div class="sc-fExJIe hfjodw">
+                            <strong class="sc-jdtaiD kLZsdo" id="arrivaltime"></strong>
+                            <span class="sc-fBFNFI bgPFhY">
+                                <span id="arrivalcity_"></span>
+                                <span id="arrival_airport"></span>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="sc-lMZDC ibbBdg">
+                        <p>
+                            <span> &#12288 &#12288 &#12288 &#12288 &#12288 &#12288 &#12288</span>
+                            <span> &#12288 &#12288 &#12288 &#12288 &#12288 &#12288 &#12288</span>
+                        </p>
+                        </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+<div id="u-passengers" class="sc-hLyimJ eVcwMi" style="padding-bottom: 24px;">
+    <div class="sc-cQDFzS jKWGHJ">出行人信息</div>
+    <div style="display:none;"id="passenger1">
+        <div class="sc-knSFqH iwmrPd">
+        <div class="sc-dRDboV cnsbKB" style="float: left; margin-top: 0px;">
+            <div class="sc-HvCEC diNWkT" id="user_name"></div>
+            <div class="sc-ddIsst gjcLUR">
+                <span class="sc-ieKCvr hZYpCo">身份证:</span>
+                <span class="sc-gVPcaA dbdPny" id="passenger_id"></span>
+            </div><div class="sc-ddIsst gjcLUR">
+            <span class="sc-ieKCvr hZYpCo"> </span>
+            <span class="sc-gVPcaA dbdPny"> </span>
+        </div>
+            <div class="sc-ddIsst gjcLUR">
+                <span class="sc-ieKCvr hZYpCo"> </span>
+                <span class="sc-gVPcaA dbdPny"> </span>
+            </div>
+            <div class="sc-ddIsst gjcLUR">
+            <span class="sc-ieKCvr hZYpCo"> </span>
+                <span class="sc-gVPcaA dbdPny">
+                    <span></span>
+                </span>
+            </div>
+        </div>
+    </div>
+    </div>
+    <div style="display:none;"id="passenger2">
+        <div class="sc-knSFqH iwmrPd">
+            <div class="sc-dRDboV cnsbKB" style="float: left; margin-top: 0px;">
+                <div class="sc-HvCEC diNWkT" id="user_name2"></div>
+                <div class="sc-ddIsst gjcLUR">
+                    <span class="sc-ieKCvr hZYpCo">身份证:</span>
+                    <span class="sc-gVPcaA dbdPny" id="passenger_id2"></span>
+                </div><div class="sc-ddIsst gjcLUR">
+                <span class="sc-ieKCvr hZYpCo"> </span>
+                <span class="sc-gVPcaA dbdPny"> </span>
+            </div>
+                <div class="sc-ddIsst gjcLUR">
+                    <span class="sc-ieKCvr hZYpCo"> </span>
+                    <span class="sc-gVPcaA dbdPny"> </span>
+                </div>
+                <div class="sc-ddIsst gjcLUR">
+                    <span class="sc-ieKCvr hZYpCo"> </span>
+                    <span class="sc-gVPcaA dbdPny">
+                    <span></span>
+                </span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div style="display:none;"id="passenger3">
+        <div class="sc-knSFqH iwmrPd">
+            <div class="sc-dRDboV cnsbKB" style="float: left; margin-top: 0px;">
+                <div class="sc-HvCEC diNWkT" id="user_name3"></div>
+                <div class="sc-ddIsst gjcLUR">
+                    <span class="sc-ieKCvr hZYpCo">身份证:</span>
+                    <span class="sc-gVPcaA dbdPny" id="passenger_id3"></span>
+                </div><div class="sc-ddIsst gjcLUR">
+                <span class="sc-ieKCvr hZYpCo"> </span>
+                <span class="sc-gVPcaA dbdPny"> </span>
+            </div>
+                <div class="sc-ddIsst gjcLUR">
+                    <span class="sc-ieKCvr hZYpCo"> </span>
+                    <span class="sc-gVPcaA dbdPny"> </span>
+                </div>
+                <div class="sc-ddIsst gjcLUR">
+                    <span class="sc-ieKCvr hZYpCo"> </span>
+                    <span class="sc-gVPcaA dbdPny">
+                    <span></span>
+                </span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div style="display:none;"id="passenger4">
+        <div class="sc-knSFqH iwmrPd">
+            <div class="sc-dRDboV cnsbKB" style="float: left; margin-top: 0px;">
+                <div class="sc-HvCEC diNWkT" id="user_name4"></div>
+                <div class="sc-ddIsst gjcLUR">
+                    <span class="sc-ieKCvr hZYpCo">身份证:</span>
+                    <span class="sc-gVPcaA dbdPny" id="passenger_id4"></span>
+                </div><div class="sc-ddIsst gjcLUR">
+                <span class="sc-ieKCvr hZYpCo"> </span>
+                <span class="sc-gVPcaA dbdPny"> </span>
+            </div>
+                <div class="sc-ddIsst gjcLUR">
+                    <span class="sc-ieKCvr hZYpCo"> </span>
+                    <span class="sc-gVPcaA dbdPny"> </span>
+                </div>
+                <div class="sc-ddIsst gjcLUR">
+                    <span class="sc-ieKCvr hZYpCo"> </span>
+                    <span class="sc-gVPcaA dbdPny">
+                    <span></span>
+                </span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div style="display:none;"id="passenger5">
+        <div class="sc-knSFqH iwmrPd">
+            <div class="sc-dRDboV cnsbKB" style="float: left; margin-top: 0px;">
+                <div class="sc-HvCEC diNWkT" id="user_name5"></div>
+                <div class="sc-ddIsst gjcLUR">
+                    <span class="sc-ieKCvr hZYpCo">身份证:</span>
+                    <span class="sc-gVPcaA dbdPny" id="passenger_id5"></span>
+                </div><div class="sc-ddIsst gjcLUR">
+                <span class="sc-ieKCvr hZYpCo"> </span>
+                <span class="sc-gVPcaA dbdPny"> </span>
+            </div>
+                <div class="sc-ddIsst gjcLUR">
+                    <span class="sc-ieKCvr hZYpCo"> </span>
+                    <span class="sc-gVPcaA dbdPny"> </span>
+                </div>
+                <div class="sc-ddIsst gjcLUR">
+                    <span class="sc-ieKCvr hZYpCo"> </span>
+                    <span class="sc-gVPcaA dbdPny">
+                    <span></span>
+                </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="u-contactinfo" class="sc-hLyimJ eVcwMi" style="overflow: visible;">
+    <div class="sc-cQDFzS jKWGHJ">联系信息</div>
+    <div class="sc-knSFqH iwmrPd">
+        <div class="sc-iiKPOH gZulok">
+            <span class="sc-hzyZDe fScNWU">手机号:</span>
+            <span class="sc-LvPXS kjLjHl">
+                <div>
+                    <span class="">+86 151****6250</span>
+                </div>
+            </span>
+        </div>
+    </div>
+</div>
+</div>
+
+    <div class="sc-hcmsbg iHLBIg">
+        <div class="sc-hLyimJ eVcwMi">
+            <div class="sc-knSFqH iwmrPd">
+                <div class="sc-dqFsfS bmFkzh">订单支付明细</div>
+                <div class="sc-bhrzfF bPHARW">
+                    <ul class="sc-cdxCiY kIrTuc">
+                        <li class="point">
+                            <div class="line">
+                                <div class="bgcolor"></div>
+                            </div>
+                            <div class="sc-bgRGxW dransz">
+                                <span></span>
+                                <span class="sc-fIkgrG guGlFy">
+                                    <dfn>¥</dfn><span id="realPrice"></span></span>
+                            </div><div class="sc-kLDuD gxAqPO">
+                            <h5>下单金额</h5>
+                            <p id="orderTime"></p>
+                        </div>
+                            <div class="sc-bQdwJz jVXKbk">
+                                <div class="sc-evcquM kJwJYF">
+                                    <ul class="price-list-item">
+                                        <li class="order-title">
+                                            <div class="item-pay-info">
+                                                <div class="item-name">出行人</div>
+                                                <div class="item-price">
+                                                    <dfn></dfn></div>
+                                                <div class="item-count"><span id="passenger_num">
+                                                    <dfn></dfn></span>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div class="item-pay-info">
+                                                <div class="item-name">机票价</div>
+                                                <div class="item-price">
+                                                    <dfn>¥</dfn><span id="price_be"></span></div>
+                                                <div class="item-count">
+                                                    <span><dfn>×</dfn><span id="passenger_num1"></span></span></div>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div class="item-pay-info"><div class="item-name">机建</div>
+                                                <div class="item-price">
+                                                    <dfn>¥</dfn>50</div>
+                                                <div class="item-count">
+                                                    <span>
+                                                        <dfn>×</dfn><span id="passenger_num2"></span>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div class="item-pay-info">
+                                                <div class="item-name">燃油</div>
+                                                <div class="item-price">
+                                                    <dfn>¥</dfn>0
+                                                </div>
+                                                <div class="item-count">
+                                                    <span>
+                                                        <dfn>×</dfn><span id="passenger_num3"></span></span>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="sc-CVGMF jGnAEF">
+                                    <ul>
+                                        <li>
+                                            <div>支付方式</div>
+                                            <div class="pay-way">移动版支付宝(<dfn>¥</dfn><span id="realPrice1"></span>)</div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <input type="button" value="返回首页" class="otherButton">
+        <input type="button" value="前往选座" class="otherButton2">
+    </div>
+</div>
+
+<script>
+    $(function() {
+   　　 $.ajax({
+                type : 'GET',
+                url : '/getOd_num',
+                async : false,
+                data: {},
+                dataType : "JSON",
+                success: function (data) {
+                     $.ajax({
+                        type : 'POST',
+                        url : '/findByoNum',
+                        data : {'order_num' : data},
+                        success: function(res){
+                            var obj = JSON.parse(res);
+                            var count = 0;
+                            for (x in obj){
+                                count++;
+                            }
+
+                            switch(count){
+                                case 1:
+                                    $('#user_name').html(obj[0].user_name);
+                                    $('#passenger_id').html((obj[0].passenger_id).slice(0,5)+"**********"+(obj[0].passenger_id).slice(16));
+                                    $("#passenger1").show();
+                                    break;
+                                case 2:
+                                    $('#user_name').html(obj[0].user_name);
+                                    $('#passenger_id').html((obj[0].passenger_id).slice(0,5)+"**********"+(obj[0].passenger_id).slice(16));
+                                    $("#passenger1").show();
+                                    $('#user_name2').html(obj[1].user_name);
+                                    $('#passenger_id2').html((obj[1].passenger_id).slice(0,5)+"**********"+(obj[0].passenger_id).slice(16));
+                                    $("#passenger2").show();
+                                    break;
+                                case 3:
+                                    $('#user_name').html(obj[0].user_name);
+                                    $('#passenger_id').html((obj[0].passenger_id).slice(0,5)+"**********"+(obj[0].passenger_id).slice(16));
+                                    $("#passenger1").show();
+                                    $('#user_name2').html(obj[1].user_name);
+                                    $('#passenger_id2').html((obj[1].passenger_id).slice(0,5)+"**********"+(obj[1].passenger_id).slice(16));
+                                    $("#passenger2").show();
+                                    $('#user_name3').html(obj[2].user_name);
+                                    $('#passenger_id3').html((obj[2].passenger_id).slice(0,5)+"**********"+(obj[2].passenger_id).slice(16));
+                                    $("#passenger3").show();
+                                    break;
+                                case 4:
+                                    $('#user_name').html(obj[0].user_name);
+                                    $('#passenger_id').html((obj[0].passenger_id).slice(0,5)+"**********"+(obj[0].passenger_id).slice(16));
+                                    $("#passenger1").show();
+                                    $('#user_name2').html(obj[1].user_name);
+                                    $('#passenger_id2').html((obj[1].passenger_id).slice(0,5)+"**********"+(obj[1].passenger_id).slice(16));
+                                    $("#passenger2").show();
+                                    $('#user_name3').html(obj[2].user_name);
+                                    $('#passenger_id3').html((obj[2].passenger_id).slice(0,5)+"**********"+(obj[2].passenger_id).slice(16));
+                                    $("#passenger3").show();
+                                    $('#user_name4').html(obj[3].user_name);
+                                    $('#passenger_id4').html((obj[3].passenger_id).slice(0,5)+"**********"+(obj[3].passenger_id).slice(16));
+                                    $("#passenger4").show();
+                                    break;
+                                case 5:
+                                    $('#user_name').html(obj[0].user_name);
+                                    $('#passenger_id').html((obj[0].passenger_id).slice(0,5)+"**********"+(obj[0].passenger_id).slice(16));
+                                    $("#passenger1").show();
+                                    $('#user_name2').html(obj[1].user_name);
+                                    $('#passenger_id2').html((obj[1].passenger_id).slice(0,5)+"**********"+(obj[1].passenger_id).slice(16));
+                                    $("#passenger2").show();
+                                    $('#user_name3').html(obj[2].user_name);
+                                    $('#passenger_id3').html((obj[2].passenger_id).slice(0,5)+"**********"+(obj[2].passenger_id).slice(16));
+                                    $("#passenger3").show();
+                                    $('#user_name4').html(obj[3].user_name);
+                                    $('#passenger_id4').html((obj[3].passenger_id).slice(0,5)+"**********"+(obj[3].passenger_id).slice(16));
+                                    $("#passenger4").show();
+                                    $('#user_name5').html(obj[4].user_name);
+                                    $('#passenger_id5').html((obj[4].passenger_id).slice(0,5)+"**********"+(obj[4].passenger_id).slice(16));
+                                    $("#passenger5").show();
+                                    break;
+
+                            }
+                            $('#city').html(obj[0].flight.departurecity+"  ➡️  "+obj[0].flight.arrivalcity);
+                            $('#departurecity_').html(obj[0].flight.departurecity);
+                            $('#arrivalcity_').html(obj[0].flight.arrivalcity);
+                            $('#date').html(obj[0].flight.date);
+                            $('#departuretime').html((obj[0].flight.departuretime).slice(0,-3));
+                            $('#arrivaltime').html((obj[0].flight.arrivaltime).slice(0,-3));
+                            $('#departure_airport').html(obj[0].flight.departure_airport);
+                            $('#arrival_airport').html(obj[0].flight.arrival_airport);
+                            $('#order_num').html("订单号： " + obj[0].order_num);
+                            $('#orderTime').html((obj[0].orderTime).slice(0,-3));
+                            $('#realPrice').html(obj[0].realPrice);
+                            $('#realPrice1').html(obj[0].realPrice);
+                            $('#price_be').html((parseInt(obj[0].realPrice)-50*count).toString());
+                            $('#passenger_num').html(count.toString()+"人");
+                            $('#passenger_num1').html(count.toString()+"人");
+                            $('#passenger_num2').html(count.toString()+"人");
+                            $('#passenger_num3').html(count.toString()+"人");
+
+
+                        }
+
+                     })
+                }
+                })
+　　});
+</script>
+
+</body>
+</html>

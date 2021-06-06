@@ -5,6 +5,7 @@
         <id column="order_id" jdbcType="INTEGER" property="order_id" />
         <result column="order_num" jdbcType="VARCHAR" property="order_num"/>
         <result column="user_name" jdbcType="VARCHAR" property="user_name" />
+        <result column="passenger_id" property="passenger_id"/>
 <!--        <result column="user_id" javaType="INTEGER" property="user_id" />-->
 <!--        <result column="flight_id" jdbcType="INTEGER" property="flight_id" />-->
         <result column="orderTime" jdbcType="VARCHAR" property="orderTime" />
@@ -79,6 +80,10 @@
 
     <select id="findByNum" resultMap="OrderResultMap">
         select * from order_table inner join flight_table on order_table.flight_id = flight_table.flight_id where order_num = #{order_num} and passenger_id = #{passenger_id}
+    </select>
+
+    <select id="findByoNum" resultMap="OrderResultMap">
+        select * from order_table inner join flight_table on order_table.flight_id = flight_table.flight_id where order_num = #{order_num}
     </select>
 
 

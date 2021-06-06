@@ -4,6 +4,7 @@ import com.alipay.api.AlipayApiException;
 import com.alipay.api.internal.util.AlipaySignature;
 import com.example.demo2.config.AlipayConfig;
 import com.example.demo2.service.PayService;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -12,15 +13,15 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
+import java.util.*;
 
 @Controller
 public class PayController {
     @Autowired
     private PayService payService;
 
+    private String order_num_;
+    private String telP_;
     /**
      * web端订单支付
      * @param totalPrice
@@ -30,9 +31,26 @@ public class PayController {
      */
     @RequestMapping("/pay")
     @ResponseBody
-    public void payController(String totalPrice,String subject,HttpServletResponse response)throws IOException{
+    public void payController(String totalPrice,String subject,String order_num,String telP,HttpServletResponse response)throws IOException{
+        order_num_ = order_num;
+        telP_ = telP;
+        System.out.println(order_num_);
         payService.pay(totalPrice,subject,response);
     }
+
+    @RequestMapping("/getOd_num")
+    @ResponseBody()
+    public String getOd_num(){
+//        List<String> list = new ArrayList<String>();
+//        list.add("order_num_");
+//        list.add("telP_");
+//        JSONArray array = new JSONArray();  array.add(list);     
+        return order_num_;
+
+
+
+    }
+
 
     //同步通知
     @RequestMapping("/payReturn")
@@ -70,7 +88,7 @@ public class PayController {
             System.out.println("****************** 支付宝同步通知成功   ******************");
             System.out.println("同步通知返回参数：" + params.toString());
             System.out.println("****************** 支付宝同步通知成功   ******************");
-            return "payback";
+            return "orderDetail";
         } else {
             System.out.println("支付, 验签失败...");
             return "booking";
@@ -140,13 +158,13 @@ public class PayController {
                 // 5. 判断该笔订单是否在商户网站中已经做过处理
                 // 6. 如果没有做过处理，根据订单号（out_trade_no）在商户网站的订单系统中查到该笔订单的详细，并执行商户的业务程序，修改订单状态
                 // 7. 如果有做过处理，不执行商户的业务程序
-                return "payback";
+                return "orderDetail";
             }
 
         } else {
             System.out.println("支付, 验签失败...");
             return "booking";
         }
-        return "payback";
+        return "orderDetail";
     }
 }

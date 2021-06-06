@@ -63,6 +63,10 @@ function add(){
             var nameArray = document.getElementsByName("user_name");
             var idArray = document.getElementsByName("passenger_id");
             var telArray = document.getElementsByName("user_tel");
+            var telP = "未填写"
+            if(document.getElementsByName("I_contact_phone").length != 0)  telP = document.getElementsByName("I_contact_phone");
+
+
             var length = nameArray.length;
             var nowDate = new Date();
             var orderTime = nowDate.getFullYear()+"."+(parseInt(nowDate.getMonth())+1)+"."+nowDate.getDate()
@@ -110,20 +114,6 @@ function add(){
         })
     }
 
-    $.ajax({
-        async : false,
-        type:'post',
-        url:'/pay',
-        data:{
-            totalPrice: totalPrice,
-            subject: des+"-"+arrival
-        },
-        success: function(response) {
-            var newPage = window.open("about:blank", "_self");
-            newPage.document.write(response);
-
-        }
-    })
 
         for(var i=1; i<length; i++){
             $.ajax({
@@ -139,10 +129,26 @@ function add(){
                     order_num:order_num,
                 },
                 success:function(res){
-                    alert("ok");
                 }
             })
         }
+        $.ajax({
+                async : false,
+                type:'post',
+                url:'/pay',
+                data:{
+                    totalPrice: totalPrice,
+                    subject: des+"-"+arrival,
+                    order_num: order_num,
+                    I_contact_phone ：telP,
+
+                },
+                success: function(response) {
+                    var newPage = window.open("about:blank", "_self");
+                    newPage.document.write(response);
+
+                }
+            })
 }
 
 
