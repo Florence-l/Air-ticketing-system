@@ -21,7 +21,6 @@ public class PayController {
     private PayService payService;
 
     private String order_num_;
-    private String telP_;
     /**
      * web端订单支付
      * @param totalPrice
@@ -31,9 +30,8 @@ public class PayController {
      */
     @RequestMapping("/pay")
     @ResponseBody
-    public void payController(String totalPrice,String subject,String order_num,String telP,HttpServletResponse response)throws IOException{
+    public void payController(String totalPrice,String subject,String order_num,HttpServletResponse response)throws IOException{
         order_num_ = order_num;
-        telP_ = telP;
         System.out.println(order_num_);
         payService.pay(totalPrice,subject,response);
     }
@@ -41,14 +39,7 @@ public class PayController {
     @RequestMapping("/getOd_num")
     @ResponseBody()
     public String getOd_num(){
-//        List<String> list = new ArrayList<String>();
-//        list.add("order_num_");
-//        list.add("telP_");
-//        JSONArray array = new JSONArray();  array.add(list);     
         return order_num_;
-
-
-
     }
 
 

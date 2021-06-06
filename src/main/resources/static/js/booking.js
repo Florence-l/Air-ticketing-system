@@ -66,8 +66,7 @@ function add(){
             var nameArray = document.getElementsByName("user_name");
             var idArray = document.getElementsByName("passenger_id");
             var telArray = document.getElementsByName("user_tel");
-            var telP = "未填写"
-            if(document.getElementsByName("I_contact_phone").length != 0)  telP = document.getElementsByName("I_contact_phone");
+
 
 
             var length = nameArray.length;
@@ -132,6 +131,7 @@ function add(){
                     order_num:order_num,
                 },
                 success:function(res){
+                    alert("ok");
                 }
             })
         }
@@ -142,9 +142,7 @@ function add(){
                 data:{
                     totalPrice: totalPrice,
                     subject: des+"-"+arrival,
-                    order_num: order_num,
-//                    I_contact_phone ：telP,
-
+                    order_num: order_num
                 },
                 success: function(response) {
                     var newPage = window.open("about:blank", "_self");
