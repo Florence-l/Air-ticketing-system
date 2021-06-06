@@ -8,6 +8,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Objects;
 
 public class User implements UserDetails {
     private Integer userId;
@@ -123,5 +124,19 @@ public class User implements UserDetails {
 
     public void setCredentialsexpire(Boolean credentialsexpire) {
         this.credentialsexpire = credentialsexpire;
+    }
+
+    @Override
+    public boolean equals(Object rhs){
+        if(rhs instanceof User){
+            System.out.printf("\n"+ username.equals(((User) rhs).username));
+            return username.equals(((User) rhs).username);
+        }
+        return false;
+    }
+
+    @Override
+    public int hashCode(){
+        return username.hashCode();
     }
 }

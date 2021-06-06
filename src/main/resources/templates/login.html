@@ -12,7 +12,7 @@
 </head>
 <body>
 <div class="mainContainer">
-<!--<th:block th:include="common.html :: header"></th:block>-->
+<th:block th:include="common.html :: header"></th:block>
 <div class="container" id="login-box">
     <div class="form-container sign-in-container">
         <form action="/login" method="post" name="form">
@@ -61,19 +61,6 @@
 
     $("#loginBtn").on("click",function () {
     })
-
-    setTimeout(function (){
-        $.ajax({
-            type: 'GET',
-            url: '/ifAuthentication',
-            success: function (res) {
-                if(res!=="null"){
-                    var index=parent.layer.getFrameIndex(window.name);
-                    parent.layer.close(index);
-                }
-            }
-        })
-    },0)
 
 
 

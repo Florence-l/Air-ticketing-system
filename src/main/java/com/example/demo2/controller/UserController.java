@@ -4,6 +4,7 @@ import com.example.demo2.bean.User;
 import com.example.demo2.security.MD5Utils;
 import com.example.demo2.service.UserService;
 
+import com.google.gson.JsonObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,17 +12,22 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.MailSendException;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.web.savedrequest.HttpSessionRequestCache;
+import org.springframework.security.web.savedrequest.RequestCache;
+import org.springframework.security.web.savedrequest.SavedRequest;
 import org.springframework.stereotype.Controller;
 
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.security.Principal;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Random;
 
 @Controller
 public class UserController {
@@ -40,7 +46,7 @@ public class UserController {
 
     @RequestMapping("/")
     public String start() {
-        return "/index";
+        return "index";
     }
 
     //跳转到注册页面
@@ -174,11 +180,6 @@ public class UserController {
             }
         }
         return "redirect:/reset";
-    }
-
-    @RequestMapping("/modal")
-    public String modal(){
-        return "modal";
     }
 
 

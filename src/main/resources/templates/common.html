@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -16,13 +16,15 @@
     <div class="layui-logo layui-hide-xs layui-bg-cyan">logo</div>
     <!-- logo区 -->
     <ul class="layui-nav layui-layout-right layui-bg-cyan">
+      <!--用户登录后隐藏登录和注册-->
+      <span id="username"  style="display:none;"  th:text="${session.SPRING_SECURITY_CONTEXT?.authentication?.principal?.username}"></span>
       <!-- 移动端显示 -->
       <li class="layui-nav-item layui-show-xs-inline-block layui-hide-sm" lay-header-event="menuLeft">
         <i class="layui-icon layui-icon-spread-left"></i>
       </li>
       <li class="layui-nav-item layui-hide-xs"><a href="/index">首页</a></li>
-      <li class="layui-nav-item layui-hide-xs"><a href="/register">注册</a></li>
-      <li class="layui-nav-item layui-hide-xs"><a href="/login">登录</a></li>
+      <li class="layui-nav-item layui-hide-xs" id="registerBtn"><a href="/register">注册</a></li>
+      <li class="layui-nav-item layui-hide-xs" id="loginBtn"><a href="/login">登录</a></li>
       <li class="layui-nav-item">
         <a href="/orderdetail">订单</a>
         <dl class="layui-nav-child">
@@ -58,6 +60,15 @@
       util.event('lay-header-event', {});
 
     });
+
+    var registerBtn=document.getElementById("registerBtn");
+    var loginBtn=document.getElementById("loginBtn");
+    var username=$('#username').html();
+    if(username!=''){//已登录，隐藏注册和登录
+      registerBtn.remove();
+      loginBtn.remove();
+    }
+
   </script>
 </div>
 

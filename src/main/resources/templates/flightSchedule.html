@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -28,6 +28,10 @@
 
 
 <th:block th:include="common.html :: header"></th:block>
+
+<!--判断用户是否已经登录-->
+<span id="username"  style="display:none;"  th:text="${session.SPRING_SECURITY_CONTEXT?.authentication?.principal?.username}"></span>
+
 <div class="wrapper">
     <div class="container">
         <article class="part card-details">
@@ -135,32 +139,31 @@
         var book_arrivaltime = obj.data.arrivaltime;
         var book_arrival_airport = obj.data.arrival_airport;
         var book_departure_airport = obj.data.departure_airport;
-        var book_price = obj.data.price;
+        var book_price=obj.data.price;
         var book_flight_id=obj.data.flight_id;
         if (obj.event === 'book') {
-            // $.ajax({
-            //     type: 'GET',
-            //     url: '/ifAuthentication',
-            //     success: function (res) {
-            //         if(res==="null") {
-            //             layer.open({
-            //                 type: 2,
-            //                 area: ["800px", "600px"],
-            //                 closeBtn: 1,
-            //                 content: 'loginModal.html',
-            //             });
-            //         }
-            //         else {
-            //
-            //             }
-            //     }
-            // })
-            window.location.href = "/book?book_departurecity=" + escape(book_departurecity) + "&book_arrivalcity="
-                + escape(book_arrivalcity) + "&book_departuretime=" + escape(book_departuretime) + "&book_arrivaltime="
-                + escape(book_arrivaltime) + "&book_arrival_airport=" + escape(book_arrival_airport) + "&book_departure_airport="
-                + escape(book_departure_airport) + "&book_date=" + escape(book_date) + "&book_price=" + escape(book_price);
-          }
-
+            var username=$('#username').html();
+            if(username!=''){
+                window.location.href = "/book?book_departurecity=" + escape(book_departurecity) + "&book_arrivalcity="
+                    + escape(book_arrivalcity) + "&book_departuretime=" + escape(book_departuretime) + "&book_arrivaltime="
+                    + escape(book_arrivaltime) + "&book_arrival_airport=" + escape(book_arrival_airport) + "&book_departure_airport="
+                    + escape(book_departure_airport) + "&book_date=" + escape(book_date) + "&book_price=" + escape(book_price)
+                    + "&book_flight_id=" + escape(book_flight_id);
+            }
+            else {
+                layer.open({
+                    type: 2,
+                    area: ["500px", "600px"],
+                    title:"请先登录",
+                    closeBtn: 1,
+                    content: "/loginModal?book_departurecity=" + escape(book_departurecity) + "&book_arrivalcity="
+                        + escape(book_arrivalcity) + "&book_departuretime=" + escape(book_departuretime) + "&book_arrivaltime="
+                        + escape(book_arrivaltime) + "&book_arrival_airport=" + escape(book_arrival_airport) + "&book_departure_airport="
+                        + escape(book_departure_airport) + "&book_date=" + escape(book_date) + "&book_price=" + escape(book_price)
+                        + "&book_flight_id=" + escape(book_flight_id),
+                });
+            }
+        }
     });
 
     });
