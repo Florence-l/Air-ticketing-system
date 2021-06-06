@@ -6,6 +6,9 @@
             }
             return null;
         }
+ function test(){
+    alert("test");
+    }
  function init(){
         var date = (unescape(getQueryString("book_date"))).slice(5);
         var departurecity = unescape(getQueryString("book_departurecity"));
@@ -140,7 +143,7 @@ function add(){
                     totalPrice: totalPrice,
                     subject: des+"-"+arrival,
                     order_num: order_num,
-                    I_contact_phone ：telP,
+//                    I_contact_phone ：telP,
 
                 },
                 success: function(response) {
