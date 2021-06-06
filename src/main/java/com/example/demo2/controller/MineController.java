@@ -127,8 +127,14 @@ public class MineController {
     @RequestMapping("/usrsex")
     @ResponseBody()
     public String usersex(Principal principal){
-        User u = userService.selectUserByName(principal.getName());
-        return u.getSex().toString();
+        try{
+            User u = userService.selectUserByName(principal.getName());
+            return u.getSex().toString();
+        } catch (Exception e) {
+            System.out.printf("\n sex 为空\n");
+            return "";
+        }
+
     }
 
     @RequestMapping("/usrbirth")
