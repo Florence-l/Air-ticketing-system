@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <title>index</title>
     <link rel="stylesheet" th:href="@{css/layui.css}">
+    <script th:src="@{layui/layui.js}"></script>
     <script type="text/javascript" src="/js/jquery-1.8.3.min.js"></script>
     <link type="text/css" rel="stylesheet" href="/css/jqstyle.css"/>
     <link rel="stylesheet" href="/css/index.css"/>
@@ -320,11 +321,11 @@
             <form id="flightInquiry" action="/index" method="post" target="iframe">
                 <div class="layui-form-item" style="font-size: 15px;color: #0C0C0C;font-family:'Microsoft YaHei'">
                     <label class="layui-form-label" >出发地</label>
-                    <input id="dc" name="departurecity" th:text="${departurecity}" type="text" required="required" class="layui-input">
+                    <input id="dc" name="departurecity" th:text="${departurecity}" type="text" class="layui-input">
                     <label class="layui-form-label">目的地</label>
-                    <input id="ac" name="arrivalcity" th:text="${arrivalcity}" type="text" required="required" class="layui-input">
+                    <input id="ac" name="arrivalcity" th:text="${arrivalcity}" type="text" class="layui-input">
                     <label class="layui-form-label">日期</label>
-                    <input id="da" name="date" th:text="${date}" type="text" required="required" class="layui-input" placeholder="格式如：yyyy.mm.dd">
+                    <input id="da" name="date" th:text="${date}" type="text" class="layui-input" placeholder="格式如：yyyy.mm.dd">
                 </div>
                 <div>
                     <button id="bt" type="submit" onclick="getid()">查询</button>
@@ -440,95 +441,42 @@
 <th:block th:include="common.html :: footer"></th:block>
 
 <script>
-    layui.use(['carousel', 'form'], function(){
-        var carousel = layui.carousel
-            ,form = layui.form;
-        //常规轮播
-        carousel.render({
-            elem: '#test1'
-            ,arrow: 'always'
-        });
-        //改变下时间间隔、动画类型、高度
-        carousel.render({
-            elem: '#test2'
-            ,interval: 1800
-            ,anim: 'fade'
-            ,height: '120px'
-        });
-        //设定各种参数
-        var ins3 = carousel.render({
-            elem: '#test3'
-        });
-        //图片轮播
-        carousel.render({
-            elem: '#test10'
-            ,width: '100%'
-            ,height: '300px'
-            ,interval: 3000
-        });
-        //事件
-        carousel.on('change(test4)', function(res){
-            console.log(res)
-        });
-        var $ = layui.$, active = {
-            set: function(othis){
-                var THIS = 'layui-bg-normal'
-                    ,key = othis.data('key')
-                    ,options = {};
-                othis.css('background-color', '#5FB878').siblings().removeAttr('style');
-                options[key] = othis.data('value');
-                ins3.reload(options);
-            }
-        };
-        //监听开关
-        form.on('switch(autoplay)', function(){
-            ins3.reload({
-                autoplay: this.checked
-            });
-        });
-        $('.demoSet').on('keyup', function(){
-            var value = this.value
-                ,options = {};
-            if(!/^\d+$/.test(value)) return;
-            options[this.name] = value;
-            ins3.reload(options);
-        });
-        //其它示例
-        $('.demoTest .layui-btn').on('click', function(){
-            var othis = $(this), type = othis.data('type');
-            active[type] ? active[type].call(this, othis) : '';
-        });
-    });
-    let tabNavItem = document.querySelectorAll(".tab_nav>li");
-    let tabBoxItem = document.querySelectorAll(".tab_box>li");
-    /*选中部分*/
-    let tabNavActive = document.querySelector(".tabNav_active");
-    let tabBoxActive = document.querySelector(".tabBox_active");
-    /*
-    思路:
-    循环遍历导航条
-    点击导航条切换类名控制显示与隐藏
-    */
-    tabNavItem.forEach(function (item, index) {
-        item.onmouseenter = function () {
-            tabNavActive.className = "";
-            this.className = "tabNav_active";
-            tabNavActive = this;
-            tabBoxActive.className = "";
-            tabBoxItem[index].className = "tabBox_active";
-            tabBoxActive = tabBoxItem[index];
-        }
-    })
-</script>
-<script th:src="@{layui/layui.js}"></script>
-<script type="text/javascript">
-    getid=function (){
+    function getid(){
         document.getElementById("flightInquiry").submit();
         var a = document.getElementById("dc").value;
         var b = document.getElementById("ac").value;
         var c = document.getElementById("da").value;
+        if(a.length==0||b.length==0||c.length==0){
+            layui.use('layer', function(){
+                var layer = layui.layer;
+                layer.msg('请输入查询信息');
+            });
+        }
+        else if(/^[\u4e00-\u9fa5]+$/.test(a)==false||/^[\u4e00-\u9fa5]+$/.test(b)==false){
+            layui.use('layer', function(){
+                var layer = layui.layer;
+                layer.msg('请输入中文');
+            });
+        }
+        else if(isvalidate(c)==false){
+            layui.use('layer', function(){
+                var layer = layui.layer;
+                layer.msg('请输入正确格式的日期');
+            });
+        }
+        else{
         window.location.href='http://localhost:8080/result?departurecity='+a+'&arrivalcity='+b+'&date='+c;
-}
+        }
+    }
+    function isvalidate(str)
+    {
+        var r = str.match(/^(\d{1,4})(.|\/)(\d{1,2})\2(\d{1,2})$/);
+        if(r==null)return false;
+        var d= new Date(r[1], r[3]-1, r[4]);
+        if(r[3].length!=2||r[4].length!=2) return false;
+        return (d.getFullYear()==r[1]&&(d.getMonth()+1)==r[3]&&d.getDate()==r[4]);
+    }
+3
 </script>
 <script type="text/html" id="toolbtn">
     <button class="layui-btn layui-btn-xs layui-btn-radius layui-btn-primary" lay-event="book">预定</button>
@@ -631,48 +579,11 @@
                 ,{field: 'price', title: '价格',width:120, templet:function (d) {return '<span style="color:#23a9de;font-size: 16px;font-weight: bold">'+"￥"+d.price;}}
                 ,{fixed: '', title:'操作', toolbar: "#toolbtn", width:80}
             ]]
-
-        });
-        table.on('tool(test)', function (obj)  {
-            var book_date = obj.data.date;
-            var book_departurecity = obj.data.departurecity;
-            var book_arrivalcity = obj.data.arrivalcity;
-            var book_departuretime = obj.data.departuretime;
-            var book_arrivaltime = obj.data.arrivaltime;
-            var book_arrival_airport = obj.data.arrival_airport;
-            var book_departure_airport = obj.data.departure_airport;
-            var book_price=obj.data.price;
-            var book_flight_id=obj.data.flight_id;
-            if (obj.event === 'book') {
-                var username=$('#username').html();
-                if(username!=''){
-                    window.location.href = "/book?book_departurecity=" + escape(book_departurecity) + "&book_arrivalcity="
-                        + escape(book_arrivalcity) + "&book_departuretime=" + escape(book_departuretime) + "&book_arrivaltime="
-                        + escape(book_arrivaltime) + "&book_arrival_airport=" + escape(book_arrival_airport) + "&book_departure_airport="
-                        + escape(book_departure_airport) + "&book_date=" + escape(book_date) + "&book_price=" + escape(book_price)
-                        + "&book_flight_id=" + escape(book_flight_id);
-                }
-                else {
-                    layer.open({
-                        type: 2,
-                        area: ["500px", "600px"],
-                        title:"请先登录",
-                        closeBtn: 1,
-                        content: "/loginModal?book_departurecity=" + escape(book_departurecity) + "&book_arrivalcity="
-                            + escape(book_arrivalcity) + "&book_departuretime=" + escape(book_departuretime) + "&book_arrivaltime="
-                            + escape(book_arrivaltime) + "&book_arrival_airport=" + escape(book_arrival_airport) + "&book_departure_airport="
-                            + escape(book_departure_airport) + "&book_date=" + escape(book_date) + "&book_price=" + escape(book_price)
-                            + "&book_flight_id=" + escape(book_flight_id),
-                    });
-                }
-            }
         });
         });
-
 </script>
 
 <script>
-
         function os(){
             var order_num = $('#orderNum').val();
             var passenger_id = $('#IDcard').val();
@@ -752,7 +663,6 @@
                                 "flight_id":flight_id,
                             },
                             success(res) {
-
                                 obj = JSON.parse(res);
                                 un=obj.unset;
                                 localStorage.removeItem('un')
@@ -762,10 +672,87 @@
                         })
                 }
                 }
-
-
-
-
+</script>
+<script>
+    layui.use(['carousel', 'form'], function(){
+        var carousel = layui.carousel
+            ,form = layui.form;
+        //常规轮播
+        carousel.render({
+            elem: '#test1'
+            ,arrow: 'always'
+        });
+        //改变下时间间隔、动画类型、高度
+        carousel.render({
+            elem: '#test2'
+            ,interval: 1800
+            ,anim: 'fade'
+            ,height: '120px'
+        });
+        //设定各种参数
+        var ins3 = carousel.render({
+            elem: '#test3'
+        });
+        //图片轮播
+        carousel.render({
+            elem: '#test10'
+            ,width: '100%'
+            ,height: '300px'
+            ,interval: 3000
+        });
+        //事件
+        carousel.on('change(test4)', function(res){
+            console.log(res)
+        });
+        var $ = layui.$, active = {
+            set: function(othis){
+                var THIS = 'layui-bg-normal'
+                    ,key = othis.data('key')
+                    ,options = {};
+                othis.css('background-color', '#5FB878').siblings().removeAttr('style');
+                options[key] = othis.data('value');
+                ins3.reload(options);
+            }
+        };
+        //监听开关
+        form.on('switch(autoplay)', function(){
+            ins3.reload({
+                autoplay: this.checked
+            });
+        });
+        $('.demoSet').on('keyup', function(){
+            var value = this.value
+                ,options = {};
+            if(!/^\d+$/.test(value)) return;
+            options[this.name] = value;
+            ins3.reload(options);
+        });
+        //其它示例
+        $('.demoTest .layui-btn').on('click', function(){
+            var othis = $(this), type = othis.data('type');
+            active[type] ? active[type].call(this, othis) : '';
+        });
+    });
+    let tabNavItem = document.querySelectorAll(".tab_nav>li");
+    let tabBoxItem = document.querySelectorAll(".tab_box>li");
+    /*选中部分*/
+    let tabNavActive = document.querySelector(".tabNav_active");
+    let tabBoxActive = document.querySelector(".tabBox_active");
+    /*
+    思路:
+    循环遍历导航条
+    点击导航条切换类名控制显示与隐藏
+    */
+    tabNavItem.forEach(function (item, index) {
+        item.onmouseenter = function () {
+            tabNavActive.className = "";
+            this.className = "tabNav_active";
+            tabNavActive = this;
+            tabBoxActive.className = "";
+            tabBoxItem[index].className = "tabBox_active";
+            tabBoxActive = tabBoxItem[index];
+        }
+    })
 </script>
 
 </body>

@@ -85,9 +85,37 @@
         var a = document.getElementById("gdeparturecity").value;
         var b= document.getElementById("garrivalcity").value;
         var c = document.getElementById("gdate").value;
-
-        window.location.href='http://localhost:8080/result?departurecity='+a+'&arrivalcity='+b+'&date='+c;
+        if(a.length==0||b.length==0||c.length==0){
+            layui.use('layer', function(){
+                var layer = layui.layer;
+                layer.msg('请输入查询信息');
+            });
+        }
+        else if(/^[\u4e00-\u9fa5]+$/.test(a)==false||/^[\u4e00-\u9fa5]+$/.test(b)==false){
+            layui.use('layer', function(){
+                var layer = layui.layer;
+                layer.msg('请输入中文');
+            });
+        }
+        else if(isvalidate(c)==false){
+            layui.use('layer', function(){
+                var layer = layui.layer;
+                layer.msg('请输入正确格式的日期');
+            });
+        }
+        else {
+            window.location.href = 'http://localhost:8080/result?departurecity=' + a + '&arrivalcity=' + b + '&date=' + c;
+        }
     }
+    function isvalidate(str)
+    {
+        var r = str.match(/^(\d{1,4})(.|\/)(\d{1,2})\2(\d{1,2})$/);
+        if(r==null)return false;
+        var d= new Date(r[1], r[3]-1, r[4]);
+        if(r[3].length!=2||r[4].length!=2) return false;
+        return (d.getFullYear()==r[1]&&(d.getMonth()+1)==r[3]&&d.getDate()==r[4]);
+    }
+
 </script>
 
 
@@ -143,32 +171,45 @@
         var book_flight_id=obj.data.flight_id;
         if (obj.event === 'book') {
             var username=$('#username').html();
-            if(username!=''){
-                window.location.href = "/book?book_departurecity=" + escape(book_departurecity) + "&book_arrivalcity="
-                    + escape(book_arrivalcity) + "&book_departuretime=" + escape(book_departuretime) + "&book_arrivaltime="
-                    + escape(book_arrivaltime) + "&book_arrival_airport=" + escape(book_arrival_airport) + "&book_departure_airport="
-                    + escape(book_departure_airport) + "&book_date=" + escape(book_date) + "&book_price=" + escape(book_price)
-                    + "&book_flight_id=" + escape(book_flight_id);
-            }
-            else {
-                layer.open({
-                    type: 2,
-                    area: ["500px", "600px"],
-                    title:"请先登录",
-                    closeBtn: 1,
-                    content: "/loginModal?book_departurecity=" + escape(book_departurecity) + "&book_arrivalcity="
+            if(compareNow(book_date)==false){
+                layui.use('layer', function(){
+                    var layer = layui.layer;
+                    layer.msg('当前日期无法预定！');
+                });
+            }else {
+                if (username != '') {
+                    window.location.href = "/book?book_departurecity=" + escape(book_departurecity) + "&book_arrivalcity="
                         + escape(book_arrivalcity) + "&book_departuretime=" + escape(book_departuretime) + "&book_arrivaltime="
                         + escape(book_arrivaltime) + "&book_arrival_airport=" + escape(book_arrival_airport) + "&book_departure_airport="
                         + escape(book_departure_airport) + "&book_date=" + escape(book_date) + "&book_price=" + escape(book_price)
-                        + "&book_flight_id=" + escape(book_flight_id),
-                });
+                        + "&book_flight_id=" + escape(book_flight_id);
+                } else {
+                    layer.open({
+                        type: 2,
+                        area: ["500px", "600px"],
+                        title: "请先登录",
+                        closeBtn: 1,
+                        content: "/loginModal?book_departurecity=" + escape(book_departurecity) + "&book_arrivalcity="
+                            + escape(book_arrivalcity) + "&book_departuretime=" + escape(book_departuretime) + "&book_arrivaltime="
+                            + escape(book_arrivaltime) + "&book_arrival_airport=" + escape(book_arrival_airport) + "&book_departure_airport="
+                            + escape(book_departure_airport) + "&book_date=" + escape(book_date) + "&book_price=" + escape(book_price)
+                            + "&book_flight_id=" + escape(book_flight_id),
+                    });
+                }
             }
         }
     });
 
     });
-
-
+var now= new Date();
+    function compareNow(str)
+    {   var nowDate = new Date(now.getFullYear()+'/'+(now.getMonth()+1)+'/'+now.getDate());
+        var r = str.match(/^(\d{1,4})(.|\/)(\d{1,2})\2(\d{1,2})$/);
+        var queryDate= new Date(r[1], r[3]-1, r[4]);
+        console.log(nowDate);
+        console.log(queryDate);
+        if(queryDate<nowDate) return false;
+    }
 </script>
 
 </body>
