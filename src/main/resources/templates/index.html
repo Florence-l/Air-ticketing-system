@@ -273,7 +273,7 @@
         flex-direction: column;
         padding: 20px;
         margin: 5px;
-        box-shadow: -20px -20px 0px 0px rgba(241, 218, 98, 0.52);
+        box-shadow: 11px 10px 3px 8px #7191b49c;
         border-radius: 10px;
         animation-name: shadow-show;
         animation-duration: 1.5s;
@@ -327,7 +327,7 @@
                 </div>
             </form>
             <iframe id="iframe" name="iframe" style="display:none;"></iframe>
-            <div><img src="images/citypl2.jpg" style="width:400px;height:300px;border-radius: 50px 50px 50px 50px;margin-left: 200px"></div>
+            <div><img src="images/citypl2.jpg" style="width:380px;height:280px;border-radius: 50px 50px 50px 50px;margin-left: 300px"></div>
         </li>
         <li>
             <form id="orderInquiry" target="iframe2" method="post">
@@ -413,8 +413,8 @@
     </ul>
 </div>
 <br>
-<span>
-<div class="containernew center" style="margin-top: 100px;">
+<div id="main" style="width:80%;">
+<div id="left" style="width:50%;float:left;margin-top: 100px;margin-bottom: 100px" class="containernew center">
     <div class="cardnew">
         <h2>航班推荐</h2>
         <hr/>
@@ -423,7 +423,7 @@
         </div>
     </div>
 </div>
-<div class="containernew center" style="margin-top: 100px;">
+<div id="right" style="width:50%;float:left;margin-top: 100px;margin-bottom: 100px"class="containernew center">
     <div class="cardnew">
         <h2>低价航班</h2>
         <hr/>
@@ -432,7 +432,7 @@
         </div>
     </div>
 </div>
-</span>
+</div>
 <th:block th:include="common.html :: footer"></th:block>
 
 <script>
