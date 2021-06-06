@@ -12,7 +12,6 @@
     <link rel="stylesheet" href="https://bd-s.tripcdn.cn/modules/flight/online-orderdetail/static/css/main-1ad016d6.css">
     <style data-styled="active" data-styled-version="5.3.0"></style>
     <link type="text/css" rel="stylesheet" href="//webresource.c-ctrip.com/ResUnionOnline/R3/float/css/pc_flaot.css">
-<!--    <script type="text/javascript" src="/js/getUrl.js"></script>-->
 </head>
 <style>
     .iwmrPd {
@@ -292,7 +291,7 @@
         margin: 0px;
     }
 </style>
-<body style="text-align: center">
+<body style="text-align: center;background-color: rgba(206, 215, 229, 0.33);">
 
 <th:block th:include="common.html :: header"></th:block>
 <div class="layui-carousel" id="test10">
@@ -344,6 +343,7 @@
                     <input type="hidden" name="paymentStatus" id="paymentStatus">
                     <input type="hidden" name="flight_id" id="flight_id">
                     <input type="hidden" name="seat_id" id="seat_id">
+                    <input type="hidden" name="type" id="type">
                 </div>
             </form>
             <div id="orderR" style="background:#eef3f7;margin-left:100px;display:none;">
@@ -396,13 +396,11 @@
                                     <span>&#12288 &#12288 &#12288 &#12288 &#12288 &#12288 &#12288</span>
                                     <span>&#12288 &#12288 &#12288 &#12288 &#12288</span></p>
                                 </div>
-                                    <input type="button" onclick="xz()" value="前去选座" class="otherButton2" ></button>
+                                <button method="post" onclick="xz()" class="otherButton">前去选座</button>
                             </div>
                         </div>
                     </div>
                 </div>
-    <!--            <iframe id="iframe2" name="iframe2" style="display:none;"></iframe>-->
-                <!--            <div><img src="images/citypl2.jpg" style="width:400px;height:300px;border-radius: 50px 50px 50px 50px;margin-left: 200px"></div>-->
 
             </div>
         </li>
@@ -415,7 +413,7 @@
     </ul>
 </div>
 <br>
-
+<span>
 <div class="containernew center" style="margin-top: 100px;">
     <div class="cardnew">
         <h2>航班推荐</h2>
@@ -425,7 +423,16 @@
         </div>
     </div>
 </div>
-
+<div class="containernew center" style="margin-top: 100px;">
+    <div class="cardnew">
+        <h2>低价航班</h2>
+        <hr/>
+        <div class="tab_box">
+            <table class="layui-hide" id="pricelist" lay-filter="test"></table>
+        </div>
+    </div>
+</div>
+</span>
 <th:block th:include="common.html :: footer"></th:block>
 
 <script>
@@ -567,22 +574,6 @@
             var book_price=obj.data.price;
             var book_flight_id=obj.data.flight_id;
             if (obj.event === 'book') {
-                // $.ajax({
-                //     type: 'GET',
-                //     url: '/ifAuthentication',
-                //     success: function (res) {
-                //         if (res === "null") {
-                //             layer.open({
-                //                 type: 2,
-                //                 area: ["600px", "550px"],
-                //                 closeBtn: 1,
-                //                 content: '/loginModal',
-                //             });
-                //         } else {
-                //
-                //         }
-                //     }
-                // })
                 window.location.href = "/book?book_departurecity=" + escape(book_departurecity) + "&book_arrivalcity="
                     + escape(book_arrivalcity) + "&book_departuretime=" + escape(book_departuretime) + "&book_arrivaltime="
                     + escape(book_arrivaltime) + "&book_arrival_airport=" + escape(book_arrival_airport) + "&book_departure_airport="
@@ -591,9 +582,7 @@
 
             }
         });
-    });
-    layui.use(['table'], function(){
-        var table = layui.table;//使用数据表格
+
         table.render({
             elem: '#pricelist'
             ,url: '/index/pr' //数据接口
@@ -611,7 +600,6 @@
             ,done: function (res, curr, count) {
                 $('th').hide();
             }
-
             ,cols: [[ //表头5
                  {field: 'photo',templet:function (d) {return '<div><img src="images/logo.jpg"></div>'}}
                 ,{title: '出发城市', width: 80,templet:function (d){
@@ -623,30 +611,8 @@
                 ,{field: 'price', title: '价格',width:120, templet:function (d) {return '<span style="color:#23a9de;font-size: 16px;font-weight: bold">'+"￥"+d.price;}}
                 ,{fixed: '', title:'操作', toolbar: "#toolbtn", width:80}
             ]]
-
         });
-        table.on('tool(test)', function (obj)  {
-            var book_date = obj.data.date;
-            var book_departurecity = obj.data.departurecity;
-            var book_arrivalcity = obj.data.arrivalcity;
-            var book_departuretime = obj.data.departuretime;
-            var book_arrivaltime = obj.data.arrivaltime;
-            var book_arrival_airport = obj.data.arrival_airport;
-            var book_departure_airport = obj.data.departure_airport;
-            var book_price=obj.data.price;
-            var book_flight_id=obj.data.flight_id;
-            if (obj.event === 'book') {
-                window.location.href="/book?book_departurecity="+escape(book_departurecity)+"&book_arrivalcity="
-                    +escape(book_arrivalcity)+"&book_departuretime="+escape(book_departuretime)+"&book_arrivaltime="
-                    +escape(book_arrivaltime)+"&book_arrival_airport="+escape(book_arrival_airport)+"&book_departure_airport="
-                    +escape(book_departure_airport)+"&book_date="+escape(book_date)+"&book_price="+escape(book_price)
-                    +"&book_flight_id="+escape(book_flight_id);
-
-            }
-
-            }
         });
-    });
 
 </script>
 
@@ -695,6 +661,7 @@
                 $("#order_id").val(obj.order_id);
                 $("#paymentStatus").val(obj.paymentStatus);
                 $("#flight_id").val(obj.flight.flight_id);
+                $("#type").val(obj.flight.type);
                 $("#seat_id").val(obj.seat_id);
                 $("#orderR").show();
                 }
@@ -707,6 +674,7 @@
                 var paymentStatus = document.getElementById("paymentStatus").value;
                 var flight_id=document.getElementById("flight_id").value;
                 var seat_id=document.getElementById("seat_id").value;
+                var type=document.getElementById("type").value;
                 if(paymentStatus === "0"){
                    layui.use('layer', function(){
                    var layer = layui.layer;
@@ -719,7 +687,25 @@
                         layer.msg('您已完成选座');
                     });
                 }
-                else {window.location.href='http://localhost:8080/seatchooser?order_id='+order_id+"&flight_id="+flight_id;}
+                else {
+                    var obj;
+                    var un;
+                        $.ajax({
+                            type: 'post',
+                            url: '/choosing',
+                            data: { // 提交数据
+                                "flight_id":flight_id,
+                            },
+                            success(res) {
+
+                                obj = JSON.parse(res);
+                                un=obj.unset;
+                                localStorage.removeItem('un')
+                                localStorage.setItem('un',JSON.stringify(un));
+                                window.location.href='http://localhost:8080/seatchooser?order_id='+order_id+"&flight_id="+flight_id+"&type="+type;
+                            }
+                        })
+                }
                 }
 
 

@@ -27,7 +27,7 @@
 
   </select>
 
-  <select id="findByid" resultType="String">
+  <select id="findSeatId" resultType="String">
     select seat_status from flight_table where flight_id = #{flight_id}
   </select>
 

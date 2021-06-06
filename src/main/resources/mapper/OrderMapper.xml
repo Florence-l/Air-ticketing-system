@@ -22,6 +22,8 @@
             <result column="arrival_airport" property="arrival_airport"/>
             <result column="departuretime" property="departuretime"/>
             <result column="arrivaltime" property="arrivaltime"/>
+            <result column="seat_status" property="seat_status"/>
+            <result column="type" property="type"/>
         </association>
     </resultMap>
 
@@ -39,6 +41,8 @@
         date,
         departuretime,
         arrivaltime,
+        seat_status,
+        type,
         realPrice
         from order_table
         inner join flight_table  on order_table.flight_id = flight_table.flight_id
