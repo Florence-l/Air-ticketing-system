@@ -423,7 +423,7 @@
                             $('#orderTime').html((obj[0].orderTime).slice(0,-3));
                             $('#realPrice').html(obj[0].realPrice);
                             $('#realPrice1').html(obj[0].realPrice);
-                            $('#price_be').html(parseInt(obj[0].realPrice)-50*count);
+                            $('#price_be').html(((parseInt(obj[0].realPrice)-50*count)/count).toString());
                             $('#passenger_num').html(count.toString()+"人");
                             $('#passenger_num1').html(count.toString()+"人");
                             $('#passenger_num2').html(count.toString()+"人");

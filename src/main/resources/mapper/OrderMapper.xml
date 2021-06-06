@@ -86,6 +86,10 @@
         select * from order_table inner join flight_table on order_table.flight_id = flight_table.flight_id where order_num = #{order_num}
     </select>
 
+    <select id="findById" resultMap="OrderResultMap">
+        select * from order_table inner join flight_table on order_table.flight_id = flight_table.flight_id where order_id = #{order_id}
+    </select>
+
 
     <update id="updateSeat" parameterType="com.example.demo2.bean.Order">
         update order_table

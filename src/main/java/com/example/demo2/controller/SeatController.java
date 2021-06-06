@@ -27,6 +27,9 @@ public class SeatController {
         return "seatchooser";
     }
 
+    @GetMapping("/seatchooseBack")
+    public String seatchooseBack(){ return "seatchooseBack";}
+
 
     @RequestMapping("/setseat")
     @ResponseBody()

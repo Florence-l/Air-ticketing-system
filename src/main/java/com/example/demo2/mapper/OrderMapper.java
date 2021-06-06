@@ -22,4 +22,6 @@ public interface OrderMapper {
 
     List<Order> findByoNum(@Param("order_num") String order_num);
 
+    Order findById(@Param("order_id") Integer order_id);
+
 }

@@ -34,6 +34,15 @@ public class OrderService {
         }
         return null;
     }
+
+    public Order findById(Integer order_id){
+        Order order = orderMapper.findById(order_id);
+        if(order != null){
+            return order;
+        }
+        return null;
+
+    }
 //    public User findUser(String username) {
 //        return userMapper.loadUserByUsername(username);
 //    }
@@ -64,6 +73,7 @@ public class OrderService {
     }
 
     public int insertOrder(Order order){
+
         orderMapper.insertOrder(order);
         return 1;
     }
