@@ -41,7 +41,7 @@
           <dd><a href="/passengerdetail">乘客信息</a></dd>
           <dd><a href="/mine">个人信息</a></dd>
           <hr>
-          <dd style="text-align: center;"><a href="">退出</a></dd>
+          <dd style="text-align: center;" ><a href="/logout" id="logout">退出</a></dd>
         </dl>
       </li>
     </ul>
@@ -68,6 +68,15 @@
       registerBtn.remove();
       loginBtn.remove();
     }
+
+    $('#logout').on("click",function () {
+      if(username==''){//未登录
+        layer.msg("请先登录",{time: 1500, icon: 5, shift: 6});
+        return false;
+      }
+    })
+
+
 
   </script>
 </div>
