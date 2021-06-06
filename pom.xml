@@ -149,10 +149,10 @@
                     <include>**/*.css</include>
                     <include>**/*.jpg</include>
                     <include>**/*.png</include>
-
                 </includes>
                 <filtering>false</filtering>
             </resource>
+
             <resource>
                 <directory>src/main/resources</directory>
                 <includes>
@@ -165,17 +165,9 @@
                     <include>**/*.jpg</include>
                     <include>**/*.ico</include>
                     <include>**/*.png</include>
-                </includes>
-                <filtering>false</filtering>
-            </resource>
-            <resource>
-                <directory>src/main/resources/static/layui</directory>
-                <includes>
                     <include>**/*.woff</include>
                     <include>**/*.woff2</include>
                     <include>**/*.ttf</include>
-                    <include>**/*.eot</include>
-                    <include>**/*.svg</include>
                 </includes>
                 <filtering>false</filtering>
             </resource>
