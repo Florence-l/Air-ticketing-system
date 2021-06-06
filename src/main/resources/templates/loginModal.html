@@ -15,15 +15,15 @@
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            margin: 30px;
             background: #fff;
             border-radius: 10px;
             box-shadow: 0 14px 28px rgba(0, 0, 0, .25), 0 10px 10px rgba(0, 0, 0, .22);
             position: relative;
             overflow: hidden;
-            width: 600px;
+            width: 450px;
+            height: 500px;
             max-width: 100%;
-            min-height: 400px;
+            min-height: 450px;
         }
     </style>
 </head>
@@ -32,12 +32,11 @@
     <!--<th:block th:include="common.html :: header"></th:block>-->
     <div class="container" id="login-box">
         <div class="form-container sign-in-container">
-            <form action="/login" method="post" name="form">
+            <form action="" method="post" name="form" id="loginForm">
                 <h1>登录</h1>
-                <div >
-                    <p id="msg" style="color: red" th:text="${msg}"></p>
+                <div>
+                    <p id="msg" style="color: red"></p>
                 </div>
-                <span id="errorMsg" class="help-block" style="color: red" th:text="${session.SPRING_SECURITY_LAST_EXCEPTION?.message}"></span>
                 <div class="txtb">
                     <input name="username" required="required" placeholder="用户名">
                 </div>
@@ -45,7 +44,7 @@
                     <input type="password" name="password" required="required" placeholder="密  码">
                 </div>
                 <label><input  name="remember-me" type="checkbox">记住我</label>
-                <button type="submit" id="loginBtn">登录</button>
+                <button type="button" id="loginBtn">登录</button>
                 <dd><label class="base_label">登录即同意
                     <a id="agreementUrl" target="_blank">《服务协议》</a>和<a id="policyUrl" target="_blank">《隐私政策》</a></label>
                 </dd>
@@ -56,21 +55,33 @@
 </div>
 </body>
 <script>
+    var url;
     $('#loginBtn').on("click",function () {
-        setTimeout(new function (){
             $.ajax({
-                type: 'post',
-                url: '/login',
-                success: function (res) {
-                    var errorMsg=$(res).find('#msg').text();
-                    alert(errorMsg);
-                    if(res.getElementById("errorMsg")){
+                type: "post",
+                url: "/login",
+                dataType: "json",
+                data: $("#loginForm").serialize(),
+                success: function (data) {
+                    var status=data.status;
+                    if(status==="true"){
+                        //关闭弹窗
                         var index=parent.layer.getFrameIndex(window.name);
                         parent.layer.close(index);
+                        //跳转页面
+                        url=window.location.search;
+                        window.parent.location.href = "/book"+url;
+                        console.log("/book"+url);
                     }
+                    else{
+                        document.getElementById("msg").innerText=data.msg;
+                        console.log(data.msg);
+                    }
+                },
+                error:function (data) {
+                    console.log(data);
                 }
             })
-        },1000)
     });
 
 </script>

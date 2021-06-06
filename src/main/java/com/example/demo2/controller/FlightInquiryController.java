@@ -49,12 +49,12 @@ public class FlightInquiryController {
         return recommendlist;
     }
 
-//    @RequestMapping("/index/pr")
-//    @ResponseBody()
-//    public List<Flight> price(Flight flight){
-//        List<Flight> pricelist=flightService.findByPrice();
-//        return pricelist;
-//    }
+    @RequestMapping("/index/pr")
+    @ResponseBody()
+    public List<Flight> price(Flight flight){
+        List<Flight> pricelist=flightService.findByPrice();
+        return pricelist;
+    }
 
 
     //航班查询

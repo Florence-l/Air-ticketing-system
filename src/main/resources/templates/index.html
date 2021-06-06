@@ -273,7 +273,7 @@
         flex-direction: column;
         padding: 20px;
         margin: 5px;
-        box-shadow: -20px -20px 0px 0px rgba(241, 218, 98, 0.52);
+        box-shadow: 11px 10px 3px 8px #7191b49c;
         border-radius: 10px;
         animation-name: shadow-show;
         animation-duration: 1.5s;
@@ -294,6 +294,10 @@
 <body style="text-align: center;background-color: rgba(206, 215, 229, 0.33);">
 
 <th:block th:include="common.html :: header"></th:block>
+
+<!--判断用户是否已经登录-->
+<span id="username"  style="display:none;"  th:text="${session.SPRING_SECURITY_CONTEXT?.authentication?.principal?.username}"></span>
+
 <div class="layui-carousel" id="test10">
     <div carousel-item="">
         <div><img src="images/plane1.jpg" style="width: 100%;height:100%"></div>
@@ -327,7 +331,7 @@
                 </div>
             </form>
             <iframe id="iframe" name="iframe" style="display:none;"></iframe>
-            <div><img src="images/citypl2.jpg" style="width:400px;height:300px;border-radius: 50px 50px 50px 50px;margin-left: 200px"></div>
+            <div><img src="images/citypl2.jpg" style="width:380px;height:280px;border-radius: 50px 50px 50px 50px;margin-left: 300px"></div>
         </li>
         <li>
             <form id="orderInquiry" target="iframe2" method="post">
@@ -413,8 +417,8 @@
     </ul>
 </div>
 <br>
-<span>
-<div class="containernew center" style="margin-top: 100px;">
+<div id="main" style="width:80%;">
+<div id="left" style="width:50%;float:left;margin-top: 100px;margin-bottom: 100px" class="containernew center">
     <div class="cardnew">
         <h2>航班推荐</h2>
         <hr/>
@@ -423,7 +427,7 @@
         </div>
     </div>
 </div>
-<div class="containernew center" style="margin-top: 100px;">
+<div id="right" style="width:50%;float:left;margin-top: 100px;margin-bottom: 100px"class="containernew center">
     <div class="cardnew">
         <h2>低价航班</h2>
         <hr/>
@@ -432,7 +436,7 @@
         </div>
     </div>
 </div>
-</span>
+</div>
 <th:block th:include="common.html :: footer"></th:block>
 
 <script>
@@ -574,12 +578,27 @@
             var book_price=obj.data.price;
             var book_flight_id=obj.data.flight_id;
             if (obj.event === 'book') {
-                window.location.href = "/book?book_departurecity=" + escape(book_departurecity) + "&book_arrivalcity="
-                    + escape(book_arrivalcity) + "&book_departuretime=" + escape(book_departuretime) + "&book_arrivaltime="
-                    + escape(book_arrivaltime) + "&book_arrival_airport=" + escape(book_arrival_airport) + "&book_departure_airport="
-                    + escape(book_departure_airport) + "&book_date=" + escape(book_date) + "&book_price=" + escape(book_price)
-                    + "&book_flight_id=" + escape(book_flight_id);
-
+                var username=$('#username').html();
+                if(username!=''){
+                    window.location.href = "/book?book_departurecity=" + escape(book_departurecity) + "&book_arrivalcity="
+                        + escape(book_arrivalcity) + "&book_departuretime=" + escape(book_departuretime) + "&book_arrivaltime="
+                        + escape(book_arrivaltime) + "&book_arrival_airport=" + escape(book_arrival_airport) + "&book_departure_airport="
+                        + escape(book_departure_airport) + "&book_date=" + escape(book_date) + "&book_price=" + escape(book_price)
+                        + "&book_flight_id=" + escape(book_flight_id);
+                }
+                else {
+                    layer.open({
+                        type: 2,
+                        area: ["500px", "600px"],
+                        title:"请先登录",
+                        closeBtn: 1,
+                        content: "/loginModal?book_departurecity=" + escape(book_departurecity) + "&book_arrivalcity="
+                            + escape(book_arrivalcity) + "&book_departuretime=" + escape(book_departuretime) + "&book_arrivaltime="
+                            + escape(book_arrivaltime) + "&book_arrival_airport=" + escape(book_arrival_airport) + "&book_departure_airport="
+                            + escape(book_departure_airport) + "&book_date=" + escape(book_date) + "&book_price=" + escape(book_price)
+                            + "&book_flight_id=" + escape(book_flight_id),
+                    });
+                }
             }
         });
 
@@ -600,6 +619,7 @@
             ,done: function (res, curr, count) {
                 $('th').hide();
             }
+
             ,cols: [[ //表头5
                  {field: 'photo',templet:function (d) {return '<div><img src="images/logo.jpg"></div>'}}
                 ,{title: '出发城市', width: 80,templet:function (d){
@@ -611,6 +631,41 @@
                 ,{field: 'price', title: '价格',width:120, templet:function (d) {return '<span style="color:#23a9de;font-size: 16px;font-weight: bold">'+"￥"+d.price;}}
                 ,{fixed: '', title:'操作', toolbar: "#toolbtn", width:80}
             ]]
+
+        });
+        table.on('tool(test)', function (obj)  {
+            var book_date = obj.data.date;
+            var book_departurecity = obj.data.departurecity;
+            var book_arrivalcity = obj.data.arrivalcity;
+            var book_departuretime = obj.data.departuretime;
+            var book_arrivaltime = obj.data.arrivaltime;
+            var book_arrival_airport = obj.data.arrival_airport;
+            var book_departure_airport = obj.data.departure_airport;
+            var book_price=obj.data.price;
+            var book_flight_id=obj.data.flight_id;
+            if (obj.event === 'book') {
+                var username=$('#username').html();
+                if(username!=''){
+                    window.location.href = "/book?book_departurecity=" + escape(book_departurecity) + "&book_arrivalcity="
+                        + escape(book_arrivalcity) + "&book_departuretime=" + escape(book_departuretime) + "&book_arrivaltime="
+                        + escape(book_arrivaltime) + "&book_arrival_airport=" + escape(book_arrival_airport) + "&book_departure_airport="
+                        + escape(book_departure_airport) + "&book_date=" + escape(book_date) + "&book_price=" + escape(book_price)
+                        + "&book_flight_id=" + escape(book_flight_id);
+                }
+                else {
+                    layer.open({
+                        type: 2,
+                        area: ["500px", "600px"],
+                        title:"请先登录",
+                        closeBtn: 1,
+                        content: "/loginModal?book_departurecity=" + escape(book_departurecity) + "&book_arrivalcity="
+                            + escape(book_arrivalcity) + "&book_departuretime=" + escape(book_departuretime) + "&book_arrivaltime="
+                            + escape(book_arrivaltime) + "&book_arrival_airport=" + escape(book_arrival_airport) + "&book_departure_airport="
+                            + escape(book_departure_airport) + "&book_date=" + escape(book_date) + "&book_price=" + escape(book_price)
+                            + "&book_flight_id=" + escape(book_flight_id),
+                    });
+                }
+            }
         });
         });
 

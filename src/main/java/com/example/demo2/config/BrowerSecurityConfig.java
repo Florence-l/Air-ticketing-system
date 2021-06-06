@@ -10,6 +10,8 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.session.SessionRegistry;
+import org.springframework.security.core.session.SessionRegistryImpl;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.RememberMeServices;
@@ -40,6 +42,15 @@ public class BrowerSecurityConfig extends WebSecurityConfigurerAdapter {
         return new BCryptPasswordEncoder();
     }
 
+    @Resource
+    private SessionRegistry sessionRegistry;
+
+    @Bean
+    public SessionRegistry sessionRegistry() {
+        return new SessionRegistryImpl();
+    }
+
+
     //记住我功能实现
     @Autowired
     DataSource dataSource;
@@ -55,13 +66,19 @@ public class BrowerSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+        //防止重复登录
+        http
+                .sessionManagement()
+                .maximumSessions(1)
+                .expiredUrl("/login")
+                .sessionRegistry(sessionRegistry);
+
         http
                 .formLogin()
                 .loginPage("/login")
                 .loginProcessingUrl("/login")
                 .usernameParameter("username")
                 .passwordParameter("password")
-                .failureUrl("/login")
                 .failureHandler(myAuthenticationFailureHandler)
                 .successHandler(myAuthenticationSuccessHandler)
                 .permitAll()
@@ -69,7 +86,7 @@ public class BrowerSecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .authorizeRequests()
                 .antMatchers("/","/register","/login","/loginModal","/index","/sendEmail","/reset","/result","/ifAuthentication","/selectOdByNum").permitAll()
-                .antMatchers("/css/**","/images/**","/*.css","/js/*","/*.js","/index/re","/flight","/layui/**/**","/font/**").permitAll() // 在这里添加
+                .antMatchers("/css/**","/images/**","/*.css","/js/*","/*.js","/index/re","/index/pr","/flight","/layui/**/**","/font/**").permitAll() // 在这里添加
                 .anyRequest().authenticated()
 
                 //记住我功能
@@ -78,17 +95,21 @@ public class BrowerSecurityConfig extends WebSecurityConfigurerAdapter {
                 .rememberMeServices(rememberMeServices())
                 .tokenValiditySeconds(2 * 24 * 60 * 60)
                 .key("INTERNAL_SECRET_KEY")
+
                 //登出功能
                 .and()
                 .logout()
                 .logoutUrl("/logout")
                 .logoutSuccessUrl("/index")
+                .permitAll()
 
-                .and()
-                .headers().frameOptions().disable()
+//                .and()
+//                .headers().frameOptions().disable()
 
                 .and()
                 .csrf().disable();
+
+        //防止iframe拦截
         http.headers().frameOptions().sameOrigin();
     }
 
