@@ -349,6 +349,7 @@
                     <input type="hidden" name="flight_id" id="flight_id">
                     <input type="hidden" name="seat_id" id="seat_id">
                     <input type="hidden" name="type" id="type">
+
                 </div>
             </form>
             <div id="orderR" style="background:#eef3f7;margin-left:100px;display:none;">
@@ -629,6 +630,7 @@
                 $("#flight_id").val(obj.flight.flight_id);
                 $("#type").val(obj.flight.type);
                 $("#seat_id").val(obj.seat_id);
+
                 $("#orderR").show();
                 }
                 })
@@ -641,6 +643,7 @@
                 var flight_id=document.getElementById("flight_id").value;
                 var seat_id=document.getElementById("seat_id").value;
                 var type=document.getElementById("type").value;
+            //var 类型
                 if(paymentStatus === "0"){
                    layui.use('layer', function(){
                    var layer = layui.layer;
@@ -667,7 +670,7 @@
                                 un=obj.unset;
                                 localStorage.removeItem('un')
                                 localStorage.setItem('un',JSON.stringify(un));
-                                window.location.href='http://localhost:8080/seatchooser?order_id='+order_id+"&flight_id="+flight_id+"&type="+type;
+                                window.location.href='http://localhost:8080/seatchooser?order_id='+order_id+"&flight_id="+flight_id+"&type="+type+"&classid="+0;
                             }
                         })
                 }

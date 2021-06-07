@@ -1,9 +1,8 @@
 <!doctype html>
-<html xmlns:th="http://www.w3.org/1999/xhtml">
+<html xmlns:th="http://www.w3.org/1999/xhtml" xmlns="http://www.w3.org/1999/html">
 <head>
   <title>在线选座</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-  <link rel="stylesheet" th:href="@{css/layui.css}">
   <link rel="stylesheet" type="text/css" href="css/jquery.seat-charts.css">
   <link rel="stylesheet" type="text/css" href="css/seatchooser.css">
   <script type="text/javascript" src="/js/jquery-1.8.3.min.js"></script>
@@ -13,20 +12,28 @@
   <script src="js/jquery.seat-charts.min.js"></script>
 </head>
 <body>
+
 <div class="wrapper">
   <div class="container">
     <div id="seat-map">
       <div class="front-indicator">机头</div>
 
     </div>
-    <div class="booking-details">
+    <div class="booking-details"style="margin-top: 50px">
+
+      <div id="legend" style="margin-bottom:50px "></div>
       <h3>已选中的座位 (<span id="counter">0</span>):</h3>
       <ul id="selected-seats">
       </ul>
-      <p>总价: <b>$<span id="total">0</span></b></p>
-      <p><button action="/update" method="post" onclick="setseat()">确定</button></p>
-      <div id="legend"></div>
+      <button action="/update" method="post" onclick="setseat()" class="button">确定</button>
+
     </div>
+<!--    <div class="paper blue">-->
+<!--      <div class="top-tape"></div>-->
+
+<!--    </div>-->
+
+
   </div>
 </div>
 
@@ -45,7 +52,8 @@
   var time=0;
   var order_id = $.getUrlParam("order_id");
   var flight_id= $.getUrlParam("flight_id");
-  var type= $.getUrlParam("type");
+  var type = $.getUrlParam("type");
+  var classid = $.getUrlParam("classid");
   var maptype;
   if(type==1){
     maptype=[
@@ -122,12 +130,10 @@
               map:maptype,
               seats: {
                 f: {
-                  price   : 100,
                   classes : 'first-class',
-                  category: '头等舱'
+                  category: '商务舱'
                 },
                 e: {
-                  price   : 40,
                   classes : 'economy-class',
                   category: '经济舱'
                 }
@@ -146,9 +152,9 @@
               legend : {
                 node : $('#legend'),
                 items : [
-                  [ 'f', 'available',   '头等舱' ],
+                  [ 'f', 'available',   '商务舱' ],
                   [ 'e', 'available',   '经济舱'],
-                  [ 'f', 'unavailable', '已预定']
+                  [ 'f', 'unavailable', '不可选']
                 ]
               },
               click: function () {
@@ -157,7 +163,7 @@
                     alert('一个订单只能选'+ sc.find('selected').length + '次');
                     return 'available';
                   }
-                  $('<li>'+this.data().category+this.settings.label+'号座位'+'：<br/>价格：<b>$'+this.data().price+'</b> <a href="#" class="cancel-cart-item">[删除]</a></li>')
+                  $('<li>'+this.data().category+this.settings.label+'号座位'+'：<a href="#" class="cancel-cart-item">删除</a></li>')
                           .attr('id','cart-item-'+this.settings.id)
                           .data('seatId', this.settings.id)
                           .appendTo($cart);
@@ -187,6 +193,21 @@
     });
 
      sc.get(list).status('unavailable');
+     if(type==1&&classid==1){
+       for(let i=1;i<=6;i++){sc.get([i]).status('unavailable');}
+     }else if(type==2&&classid==1){
+       for(let i=1;i<=15;i++){sc.get([i]).status('unavailable');}
+     }else if(type==3&&classid==1){
+       for(let i=1;i<=30;i++){sc.get([i]).status('unavailable');}
+     }else if(type==1&&classid==0){
+       for(let i=7;i<=90;i++){sc.get([i]).status('unavailable');}
+     }else if(type==2&&classid==0){
+       for(let i=16;i<=150;i++){sc.get([i]).status('unavailable');}
+     }else if(type==3&&classid==0){
+       for(let i=31;i<=210;i++){sc.get([i]).status('unavailable');}
+     }
+
+
 
   });
 
@@ -216,7 +237,8 @@
           "order_id": order_id,
           "seat_id": seat_id,
           "flight_id":flight_id,
-          "type":type,
+          "classid":classid
+
         },
         success(data) {
           window.location.href='http://localhost:8080/seatchooseBack?order_id='+order_id;

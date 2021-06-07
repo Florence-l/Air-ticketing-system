@@ -25,6 +25,9 @@
             <result column="arrivaltime" property="arrivaltime"/>
             <result column="seat_status" property="seat_status"/>
             <result column="type" property="type"/>
+            <result column="bc_remaining" property="bc_remaining"/>
+            <result column="ec_remaining" property="ec_remaining"/>
+
         </association>
     </resultMap>
 
@@ -44,6 +47,8 @@
         arrivaltime,
         seat_status,
         type,
+        bc_remaining,
+        ec_remaining,
         realPrice
         from order_table
         inner join flight_table  on order_table.flight_id = flight_table.flight_id

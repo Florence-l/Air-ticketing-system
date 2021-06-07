@@ -47,6 +47,16 @@ public class FlightService implements FlightMapper{
     }
 
     @Override
+    public int updateBC(Integer flight_id){
+        return flightMapper.updateBC(flight_id);
+    }
+
+    @Override
+    public int updateEC(Integer flight_id){
+        return flightMapper.updateEC(flight_id);
+    }
+
+    @Override
     public List<Flight> findByRandom(){
         List<Flight> list = flightMapper.findByRandom();
         if(list!=null){

@@ -55,12 +55,12 @@ public class OrderController {
     public String selectOdByNum(HttpServletRequest request) throws IOException {
         String order_num = request.getParameter("order_num");
         String passenger_id = request.getParameter("passenger_id");
-//        System.out.println(orderService.findByNum(order_num,passenger_id));
+        //System.out.println(orderService.findByNum(order_num,passenger_id));
         Order order = orderService.findByNum(order_num, passenger_id);
         if (order != null) {
             ObjectMapper objectMapper = new ObjectMapper();
             String orderJson = objectMapper.writeValueAsString(order);
-
+            System.out.println(orderJson);
             return orderJson;
         }
         else return "error";
