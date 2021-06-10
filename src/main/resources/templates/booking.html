@@ -742,10 +742,10 @@
                                                                     class="ico-caret-down"></i></div>
                                                         </div>
                                                     </div> <div class="form-item">
-                                                    <input name="passenger_id" id="p_card_no_0" maxlength="18"
-                                                           class="form-input J_input text-transform-uppercase c-formatter_4 c-input_1">
-                                                    <label id="cardNoTip_0" for="p_card_no_0"
-                                                           class="form-input-hint">登机证件号码</label>
+                                                    <input name="passenger_id" id="p_card_no_0"
+                                                           class="form-input J_input text-transform-uppercase c-formatter_4 c-input_1"
+                                                           oninput="liveShow(this.parentElement.parentElement.parentElement.parentElement.parentElement.childNodes[4].childNodes[1])">
+                                                    <label for="p_card_no_1" class="form-input-hint">登机证件号码</label>
                                                 </div>
                                                 </div>
 
@@ -761,10 +761,38 @@
                                                         乘机人手机号码（选填） </label>
                                                 </div>
                                                 </div>
+
+                                                <div class="form-line passenger-phone">
+                                                    <div class="form-item">
+                                                        <div class="form-select c-dropdown_3">
+                                                            <div class="form-select-txt"><span>选择舱位</span><i
+                                                                    class="ico-caret-down"></i></div>
+                                                        </div>
+                                                    </div><div class="form-item phone-number">
+                                                    <div class="checkbox">
+                                                        <br>
+                                                        <input type="radio" name="seatType" value="1" oninput="liveShow(this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.childNodes[4].childNodes[1])"/>商务舱<br/>
+                                                        <input type="radio" name="seatType" value="2" checked oninput="liveShow(this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.childNodes[4].childNodes[1])"/>经济舱<br/>
+                                                    </div>
+                                                </div>
+                                                </div>
+
+
                                             </div>
                                         </div><a
                                             class="delete c-ubt_11" onclick="$(this).parent().remove()"><i
                                             class="close">×</i><span bind-text="<<delText>>">删除</span></a>
+
+                                        <div style="
+                                        color: #ff7d13;
+                                        top: 10px;
+                                        font-size: 35px;
+                                        font-weight: 700;
+                                        text-align: right;height:0px;
+                                        "><dfn style="position: relative; top:-100px;
+                                        ">¥</dfn><span class="realPrice" style="position: relative; top:-100px;
+                                        "></span></div>
+
                                     </div>
                                 </div>
                             </div>
@@ -788,7 +816,8 @@
                                                 </div>
                                             </div> <div class="form-item">
                                             <input name="passenger_id" id="p_card_no_1"
-                                                   class="form-input J_input text-transform-uppercase c-formatter_4 c-input_1">
+                                                   class="form-input J_input text-transform-uppercase c-formatter_4 c-input_1"
+                                                   oninput="liveShow(this.parentElement.parentElement.parentElement.parentElement.parentElement.childNodes[4].childNodes[1])">
                                             <label for="p_card_no_1" class="form-input-hint">登机证件号码</label>
                                         </div>
                                         </div>
@@ -805,11 +834,37 @@
                                                 乘机人手机号码 </label>
                                         </div>
                                         </div>
-                                    </div>
 
+                                        <div class="form-line passenger-phone">
+                                            <div class="form-item">
+                                                <div class="form-select c-dropdown_3">
+                                                    <div class="form-select-txt"><span>选择舱位</span><i
+                                                            class="ico-caret-down"></i></div>
+                                                </div>
+                                            </div><div class="form-item phone-number">
+                                            <div class="checkbox">
+                                                <br>
+                                                <input type="radio" name="seatType" value="1" oninput="liveShow(this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.childNodes[4].childNodes[1])"/>商务舱<br/>
+                                                <input type="radio" name="seatType" value="2" checked oninput="liveShow(this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.childNodes[4].childNodes[1])"/>经济舱<br/>
+                                            </div>
+                                        </div>
+                                        </div>
+
+                                    </div>
                                 </div><a
                                     class="delete c-ubt_11" onclick="$(this).parent().remove()"><i
                                     class="close">×</i><span bind-text="<<delText>>">删除</span></a>
+
+                                <div style="
+                                        color: #ff7d13;
+                                        top: 10px;
+                                        font-size: 35px;
+                                        font-weight: 700;
+                                        text-align: right;height:0px;
+                                        "><dfn style="position: relative; top:-100px;
+                                        ">¥</dfn><span class="realPrice" style="position: relative; top:-100px;
+                                        "></span></div>
+
                             </div>
 
                             <div class="add-passenger" style="display:inline-block"><a style="cursor: pointer;"
@@ -903,7 +958,7 @@
                 <div class="flight-cost">
                     <div class="cost-detail">
                         <div class="cost-row">
-                            <div class="cost-tit"> <span>单人票价</span></div>
+                            <div class="cost-tit"> <span>单人折前票价</span></div>
                             <div class="corner"><dfn>¥</dfn><span class="price" id="p_price"></span></div>
                         </div>
                         <div class="cost-row">
@@ -928,8 +983,6 @@
         </div><input id="fix_chrome_auto_fill" type="text"
                      style="position:fixed;opacity:0;width: 0;height:0;display: block;border: 0;" value="">
     </div>
-
-
 </form>
 </body>
 

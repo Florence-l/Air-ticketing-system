@@ -37,17 +37,19 @@ public class OrderController {
         Integer userid = user.getUserId();
         String user_name = request.getParameter("user_name");
         String passenger_id = request.getParameter("passenger_id");
+        System.out.print(passenger_id);
         Integer flight_id = Integer.valueOf(request.getParameter("flight_id"));
+        String seat_type = request.getParameter("seat_type");
+        System.out.print(seat_type);
         String orderTime = request.getParameter("orderTime");
         Integer paymentStatus = Integer.valueOf(request.getParameter("paymentStatus"));
         Float realPrice = Float.valueOf(request.getParameter("realPrice"));
         String order_num = request.getParameter("order_num");
-        Order order = new Order(userid,user_name,passenger_id,flight_id,orderTime,paymentStatus,realPrice,order_num);
-        System.out.print(order);
+        Order order = new Order(userid,user_name,passenger_id,flight_id,seat_type,orderTime,paymentStatus,realPrice,order_num);
+        //System.out.print(order);
         orderService.insertOrder(order);
         return "success";
     }
-
 
 
     @RequestMapping("/selectOdByNum")

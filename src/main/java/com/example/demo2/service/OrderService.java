@@ -73,7 +73,6 @@ public class OrderService {
     }
 
     public int insertOrder(Order order){
-
         orderMapper.insertOrder(order);
         return 1;
     }

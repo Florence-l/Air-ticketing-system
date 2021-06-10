@@ -8,6 +8,7 @@
         <result column="passenger_id" property="passenger_id"/>
 <!--        <result column="user_id" javaType="INTEGER" property="user_id" />-->
         <result column="flight_id" jdbcType="INTEGER" property="flight_id" />
+        <result column="seat_type" jdbcType="VARCHAR" property="seat_type" />
         <result column="orderTime" jdbcType="VARCHAR" property="orderTime" />
 <!--        <result column="paymentStatus" jdbcType="INTEGER" property="orderTime" />-->
         <result column="paymentTime" jdbcType="VARCHAR" property="paymentTime" />
@@ -40,6 +41,7 @@
         orderTime,
         paymentTime,
         seat_id,
+        seat_type,
         departurecity,
         arrivalcity,
         date,
@@ -60,6 +62,7 @@
         user_name,
         orderTime,
         seat_id,
+        seat_type,
         departurecity,
         arrivalcity,
         date,
@@ -76,10 +79,10 @@
     </select>
 
     <insert id="insertOrder" parameterType="com.example.demo2.bean.Order">
-        insert into order_table (user_id, passenger_id, user_name, flight_id,
+        insert into order_table (user_id, passenger_id, user_name, flight_id,seat_type,
         orderTime, paymentStatus, realPrice, order_num)
         values (#{user_id,jdbcType=INTEGER}, #{passenger_id,jdbcType=VARCHAR}, #{user_name,jdbcType=VARCHAR},
-        #{flight_id,jdbcType=INTEGER},#{orderTime,jdbcType=VARCHAR}, #{paymentStatus,jdbcType=INTEGER},
+        #{flight_id,jdbcType=INTEGER},#{seat_type,jdbcType=VARCHAR},#{orderTime,jdbcType=VARCHAR}, #{paymentStatus,jdbcType=INTEGER},
         #{realPrice,jdbcType=FLOAT},#{order_num,jdbcType=VARCHAR})
     </insert>
 
