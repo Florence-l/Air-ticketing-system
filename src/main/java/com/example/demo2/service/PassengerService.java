@@ -19,7 +19,7 @@ public class PassengerService{
         return 1;
     }
 
-    @Override
+
     public int insert(Passenger passenger) {
         return 0;
     }
@@ -55,7 +55,6 @@ public class PassengerService{
         return 0;
     }
 
-    @Override
     public Passenger selectById(Passenger passenger) {
         return null;
     }

@@ -118,9 +118,6 @@ function next(){
     var orderTime = nowDate.getFullYear()+"."+(parseInt(nowDate.getMonth())+1)+"."+nowDate.getDate()
         +" "+nowDate.getHours()+":"+nowDate.getMinutes()+":"+nowDate.getSeconds();
     var realPrice = document.getElementsByClassName('realPrice');
-    console.log(realPrice[0].innerText);
-    console.log(realPrice[1].innerText);
-    console.log(realPrice[2].innerText);
     var order_num = nowDate.getFullYear()+(parseInt(nowDate.getMonth())+1).toString()+nowDate.getDate()+nowDate.getHours()+nowDate.getMinutes()+nowDate.getSeconds();
     var flight_id = unescape(getQueryString("book_flight_id"));
 

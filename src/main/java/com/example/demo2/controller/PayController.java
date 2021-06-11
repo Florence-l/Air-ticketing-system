@@ -51,6 +51,7 @@ public class PayController {
     @RequestMapping("/payReturn")
     public String returnCall(HttpServletRequest request) throws AlipayApiException {
         System.out.println("支付成功, 进入同步通知接口...");
+
         return "orderDetail";}
 
 //        // 获取支付宝GET过来反馈信息
