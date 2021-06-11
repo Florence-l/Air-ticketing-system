@@ -17,6 +17,7 @@ public class Order {
     private Integer seat_id;
     private Float realPrice;
     private String order_num;
+    private Integer is_valid;
     private Flight flight;
 
     public Order(){
@@ -142,6 +143,8 @@ public class Order {
     public String getUser_name(){
         return user_name;
     }
+    public void setIs_valid(Integer is_valid){this.is_valid = is_valid;}
+    public Integer getIs_valid(){return is_valid;}
 
 
 
@@ -159,6 +162,7 @@ public class Order {
                 "seatid=" + seat_id +
                 "realPrice" + realPrice +
                 "order_num" + order_num+
+                "is_valid" + is_valid +
                 '}';
     }
 }

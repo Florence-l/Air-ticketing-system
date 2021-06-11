@@ -4,8 +4,10 @@ import com.beust.jcommander.Parameters;
 import com.example.demo2.Util.LayuiTableResultUtil;
 import com.example.demo2.Util.RequiredUtil;
 import com.example.demo2.bean.Order;
+import com.example.demo2.bean.Passenger;
 import com.example.demo2.bean.User;
 import com.example.demo2.service.OrderService;
+import com.example.demo2.service.PassengerService;
 import com.example.demo2.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -24,6 +26,8 @@ public class MineController {
     public OrderService orderService;
     @Autowired
     public UserService userService;
+    @Autowired
+    public PassengerService passengerService;
 
     @GetMapping("/orderdetail")
     public String orderdetail(){
@@ -63,6 +67,36 @@ public class MineController {
     public LayuiTableResultUtil<List> oderList(Principal principal,HttpServletRequest request)
     {
 
+        List<Order> list_rel = null;
+        RequiredUtil Required = new RequiredUtil();
+        if(!Required.Required(request.getParameter("limit").trim())){
+            return new LayuiTableResultUtil<List>("分页异常",null,1,10);
+        }
+        if(!Required.Required(request.getParameter("page").trim())){
+            return new LayuiTableResultUtil<List>("分页异常",null,1,10);
+        }
+        int limit = Integer.parseInt(request.getParameter("limit").trim());
+        int page = Integer.parseInt(request.getParameter("page").trim());
+
+        User user = userService.selectUserByName(principal.getName());
+        Integer userid = user.getUserId();
+        List<Order> orderList = orderService.findByid(userid,page,limit);
+        if(orderList.size()>3) list_rel = orderList.subList(0,3);
+        else list_rel = orderList;
+        int countOrder = orderService.countAllOrder();
+
+        LayuiTableResultUtil<List> list = new LayuiTableResultUtil<List>("",list_rel,0,countOrder);
+        if(orderList!=null){
+            return list;
+        }
+        return null;
+    }
+
+    @RequestMapping("orderAll")
+    @ResponseBody()
+    public LayuiTableResultUtil<List> orderAll(Principal principal,HttpServletRequest request)
+    {
+
         RequiredUtil Required = new RequiredUtil();
         if(!Required.Required(request.getParameter("limit").trim())){
             return new LayuiTableResultUtil<List>("分页异常",null,1,10);
@@ -89,6 +123,38 @@ public class MineController {
     @ResponseBody()
     public LayuiTableResultUtil<List> oderUnpay(Principal principal,HttpServletRequest request)
     {
+        List<Order> list_rel = null;
+        RequiredUtil Required = new RequiredUtil();
+        if(!Required.Required(request.getParameter("limit").trim())){
+            return new LayuiTableResultUtil<List>("分页异常",null,1,10);
+        }
+        if(!Required.Required(request.getParameter("page").trim())){
+            return new LayuiTableResultUtil<List>("分页异常",null,1,10);
+        }
+        int limit = Integer.parseInt(request.getParameter("limit").trim());
+        int page = Integer.parseInt(request.getParameter("page").trim());
+
+        User user = userService.selectUserByName(principal.getName());
+        Integer userid = user.getUserId();
+        List<Order> orderList = orderService.findUnpay(userid,page,limit);
+        if(orderList.size()>3) {
+            list_rel = orderList.subList(0,3);
+        } else {
+            list_rel = orderList;
+        }
+        int countOrder = orderService.countAllOrder();
+
+        LayuiTableResultUtil<List> list = new LayuiTableResultUtil<List>("",list_rel,0,countOrder);
+        if(orderList!=null){
+            return list;
+        }
+        return null;
+    }
+
+    @RequestMapping("unpayAll")
+    @ResponseBody()
+    public LayuiTableResultUtil<List> oderUnpayAll(Principal principal,HttpServletRequest request)
+    {
         RequiredUtil Required = new RequiredUtil();
         if(!Required.Required(request.getParameter("limit").trim())){
             return new LayuiTableResultUtil<List>("分页异常",null,1,10);
@@ -111,6 +177,33 @@ public class MineController {
         return null;
     }
 
+
+    @RequestMapping("minePassenger")
+    @ResponseBody()
+    public LayuiTableResultUtil<List> minePassenger(Principal principal,HttpServletRequest request)
+    {
+
+        RequiredUtil Required = new RequiredUtil();
+        if(!Required.Required(request.getParameter("limit").trim())){
+            return new LayuiTableResultUtil<List>("分页异常",null,1,10);
+        }
+        if(!Required.Required(request.getParameter("page").trim())){
+            return new LayuiTableResultUtil<List>("分页异常",null,1,10);
+        }
+        int limit = Integer.parseInt(request.getParameter("limit").trim());
+        int page = Integer.parseInt(request.getParameter("page").trim());
+
+        User user = userService.selectUserByName(principal.getName());
+        String userid = user.getUserId().toString();
+        List<Passenger> passengerList = passengerService.selectByUser(userid,page,limit);
+        int countOrder = passengerService.countAllPassenger(userid);
+
+        LayuiTableResultUtil<List> list = new LayuiTableResultUtil<List>("",passengerList,0,countOrder);
+        if(passengerList!=null){
+            return list;
+        }
+        return null;
+    }
     @RequestMapping("/usrname")
     @ResponseBody()
     public String username(Principal principal){

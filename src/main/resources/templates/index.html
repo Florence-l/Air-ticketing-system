@@ -615,7 +615,13 @@
                     });
                 }
                 var obj = JSON.parse(res);
-
+                if(obj.is_valid === "1") {
+                    layui.use('layer', function(){
+                    var layer = layui.layer;
+                    layer.msg('订单已失效');
+                    });
+                }
+                else{
                 $('#departuretime').html((obj.flight.departuretime).slice(0,-3));
                 $('#arrivaltime').html((obj.flight.arrivaltime).slice(0,-3));
                 $('#date').html(obj.flight.date);
@@ -630,6 +636,7 @@
                 $("#type").val(obj.flight.type);
                 $("#seat_id").val(obj.seat_id);
                 $("#orderR").show();
+                }
                 }
                 })
                 }

@@ -4,12 +4,13 @@
     <resultMap id="OrderResultMap" type="com.example.demo2.bean.Order">
         <id column="order_id" jdbcType="INTEGER" property="order_id" />
         <result column="order_num" jdbcType="VARCHAR" property="order_num"/>
+        <result column="is_valid" jdbcType="INTEGER" property="is_valid"/>
         <result column="user_name" jdbcType="VARCHAR" property="user_name" />
         <result column="passenger_id" property="passenger_id"/>
 <!--        <result column="user_id" javaType="INTEGER" property="user_id" />-->
         <result column="flight_id" jdbcType="INTEGER" property="flight_id" />
         <result column="orderTime" jdbcType="VARCHAR" property="orderTime" />
-<!--        <result column="paymentStatus" jdbcType="INTEGER" property="orderTime" />-->
+        <result column="paymentStatus" jdbcType="INTEGER" property="paymentStatus" />
         <result column="paymentTime" jdbcType="VARCHAR" property="paymentTime" />
         <result column="seat_id" jdbcType="INTEGER" property="seat_id" />
         <result column="paymentStatus" property="paymentStatus"/>
@@ -35,8 +36,10 @@
         order_num,
         user_name,
         orderTime,
+        paymentStatus,
         paymentTime,
         seat_id,
+        is_valid,
         departurecity,
         arrivalcity,
         date,
@@ -55,6 +58,7 @@
         user_name,
         orderTime,
         seat_id,
+        paymentStatus,
         departurecity,
         arrivalcity,
         date,
@@ -63,7 +67,7 @@
         realPrice
         from order_table
         inner join flight_table  on order_table.flight_id = flight_table.flight_id
-        where user_id = #{user_id} and paymentStatus = 0
+        where user_id = #{user_id} and paymentStatus = 0 and is_valid = 0
     </select>
 
     <select id="countAllOrder" resultType="int">
@@ -79,16 +83,27 @@
     </insert>
 
     <select id="findByNum" resultMap="OrderResultMap">
-        select * from order_table inner join flight_table on order_table.flight_id = flight_table.flight_id where order_num = #{order_num} and passenger_id = #{passenger_id}
+        select * from order_table inner join flight_table on order_table.flight_id = flight_table.flight_id where order_num = #{order_num} and passenger_id = #{passenger_id} and is_valid = 0
     </select>
 
     <select id="findByoNum" resultMap="OrderResultMap">
-        select * from order_table inner join flight_table on order_table.flight_id = flight_table.flight_id where order_num = #{order_num}
+        select * from order_table inner join flight_table on order_table.flight_id = flight_table.flight_id where order_num = #{order_num} and is_valid = 0
     </select>
 
     <select id="findById" resultMap="OrderResultMap">
         select * from order_table inner join flight_table on order_table.flight_id = flight_table.flight_id where order_id = #{order_id}
     </select>
+
+    <select id="scheduleTable" resultType="String">
+        select orderTime from order_table where paymentStatus = 0
+    </select>
+
+    <update id="updateStatus" parameterType="com.example.demo2.bean.Order">
+        update order_table
+        set is_valid = 1
+        where orderTime = #{orderTime} and paymentStatus = 0
+
+    </update>
 
 
     <update id="updateSeat" parameterType="com.example.demo2.bean.Order">
@@ -97,6 +112,11 @@
         where order_id=#{order_id}
     </update>
 
+    <update id="updatePaymentTime" parameterType="com.example.demo2.bean.Order">
+        update order_table
+        set paymentTime=#{paymentTime}
+        where order_num = #{order_num}
+    </update>
 
     <!--    <select id="findUnpayByid" resultType="com.example.demo2.bean.Order" resultMap="OrderResultMap" >-->
 <!--        select * from order_table where user_id = #{user_id} and paymentStatus = 0-->

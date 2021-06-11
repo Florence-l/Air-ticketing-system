@@ -9,6 +9,7 @@ public class Passenger {
     @Id
     private String passenger_id;
     private String user_tel;
+    private String user_id;
 
     public Passenger(){
 
@@ -18,6 +19,13 @@ public class Passenger {
         this.user_name = user_name;
         this.passenger_id = passenger_id;
         this.user_tel = user_tel;
+    }
+
+    public Passenger(String user_name,String passenger_id,String user_tel,String user_id){
+        this.user_name = user_name;
+        this.passenger_id = passenger_id;
+        this.user_tel = user_tel;
+        this.user_id = user_id;
     }
 
     public String getUser_name() {
@@ -43,5 +51,10 @@ public class Passenger {
     public void setUser_tel(String user_tel) {
         this. user_tel =  user_tel;
     }
+
+    public String getUser_id() { return user_id; }
+
+    public void setUser_id(String user_id) {this.user_id = user_id; }
+
 
 }

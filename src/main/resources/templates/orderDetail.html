@@ -319,6 +319,9 @@
 </div>
 
 <script>
+       var nowDate = new Date();
+       var paymentTime = nowDate.getFullYear()+"."+(parseInt(nowDate.getMonth())+1)+"."+nowDate.getDate()
+            +" "+nowDate.getHours()+":"+nowDate.getMinutes()+":"+nowDate.getSeconds();
     $(function() {
    　　 $.ajax({
                 type : 'GET',
@@ -330,7 +333,9 @@
                      $.ajax({
                         type : 'POST',
                         url : '/findByoNum',
-                        data : {'order_num' : data},
+                        data : {
+                        'order_num' : data,
+                        'paymentTime' : paymentTime},
                         success: function(res){
                             var obj = JSON.parse(res);
                             var count = 0;
