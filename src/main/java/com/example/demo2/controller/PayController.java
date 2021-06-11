@@ -43,6 +43,9 @@ public class PayController {
         return order_num_;
     }
 
+    @GetMapping("/hahaha")
+    public String haha(){return "orderDetail";}
+
 
     //同步通知
     @RequestMapping("/payReturn")

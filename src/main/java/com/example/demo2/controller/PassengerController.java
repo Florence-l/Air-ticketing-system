@@ -23,16 +23,21 @@ public class PassengerController {
 
     @Autowired
     private PassengerService passengerService;
+    @Autowired
+    private UserService userService;
 
     @RequestMapping("/book")
     @ResponseBody()
     //判断数据库中是否存在用户所输入乘客信息 不存在：插入信息，返回success；存在：不对数据库做改动
-    public String passengerresult(HttpServletRequest request) throws IOException {
+    public String passengerresult(HttpServletRequest request,Principal principal) throws IOException {
         String user_name = request.getParameter("user_name");
         String passenger_id = request.getParameter("passenger_id");
         String user_tel = request.getParameter("user_tel");
+        String name = principal.getName();
+        String user_id = (userService.selectUserByName(name).getUserId()).toString();
 
-        Passenger passenger = new Passenger(user_name, passenger_id, user_tel);
+
+        Passenger passenger = new Passenger(user_name, passenger_id, user_tel,user_id);
         Passenger result = passengerService.selectAllPassenger(passenger);
         if (result == null) {
             //数据库中不存在此乘客信息，插入

@@ -75,7 +75,7 @@
         realPrice
         from order_table
         inner join flight_table  on order_table.flight_id = flight_table.flight_id
-        where user_id = #{user_id} and paymentStatus = 0
+        where user_id = #{user_id} and paymentStatus = 0 and is_valid = 0
     </select>
 
     <select id="countAllOrder" resultType="int">
@@ -122,7 +122,7 @@
 
     <update id="updatePaymentTime" parameterType="com.example.demo2.bean.Order">
         update order_table
-        set paymentTime=#{paymentTime}
+        set paymentTime=#{paymentTime} , paymentStatus = 1
         where order_num = #{order_num}
     </update>
 

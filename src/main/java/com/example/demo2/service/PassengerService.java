@@ -19,6 +19,7 @@ public class PassengerService{
         return 1;
     }
 
+
     public int insert(Passenger passenger) {
         return 0;
     }
