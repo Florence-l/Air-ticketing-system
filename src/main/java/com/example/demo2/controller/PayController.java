@@ -52,9 +52,7 @@ public class PayController {
     public String returnCall(HttpServletRequest request) throws AlipayApiException {
         System.out.println("支付成功, 进入同步通知接口...");
 
-        return "orderDetail";}
-
-//        // 获取支付宝GET过来反馈信息
+        // 获取支付宝GET过来反馈信息
 //        Map<String, String> params = new HashMap<String, String>();
 //        Map<String, String[]> requestParams = request.getParameterMap();
 //        for (Iterator<String> iter = requestParams.keySet().iterator(); iter.hasNext(); ) {
@@ -90,7 +88,8 @@ public class PayController {
 //            System.out.println("支付, 验签失败...");
 //            return "booking";
 //        }
-//    }
+        return "orderDetail";
+    }
 
     //异步通知
     @RequestMapping("/payNotify")
