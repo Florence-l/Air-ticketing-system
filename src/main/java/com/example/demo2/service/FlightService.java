@@ -47,6 +47,16 @@ public class FlightService implements FlightMapper{
     }
 
     @Override
+    public int updateBC(Integer flight_id){
+        return flightMapper.updateBC(flight_id);
+    }
+
+    @Override
+    public int updateEC(Integer flight_id){
+        return flightMapper.updateEC(flight_id);
+    }
+
+    @Override
     public List<Flight> findByRandom(){
         List<Flight> list = flightMapper.findByRandom();
         if(list!=null){
@@ -66,7 +76,7 @@ public class FlightService implements FlightMapper{
 
     /**
      * 计算航班价格(直接调用次函数)
-     * @param seattype 舱位类型 经济舱 0  商务舱 1
+     * @param seattype 舱位类型  商务舱 1 经济舱 2
      * @param age 年龄，判断是否为儿童
      * @param date 起飞时间
      * @param price 原始价格
@@ -75,7 +85,7 @@ public class FlightService implements FlightMapper{
      */
     public int priceCalculate(int seattype, int age, String date,int price) throws ParseException {
        //根据舱位 经济舱6.7折
-        if(seattype==0) price*=0.67;
+        if(seattype==2) price*=0.67;
         //判断是否为儿童[2,12) 5折
         if(2<=age&&age<12) price*=0.5;
         SimpleDateFormat simpleFormat = new SimpleDateFormat("yyyy-MM-dd");

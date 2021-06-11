@@ -15,15 +15,17 @@
     <result column="price" jdbcType="INTEGER" property="price"/>
     <result column="seat_status" jdbcType="VARCHAR" property="seat_status"/>
     <result column="type" jdbcType="INTEGER" property="type"/>
+    <result column="bc_remaining" jdbcType="INTEGER" property="bc_remaining"/>
+    <result column="ec_remaining" jdbcType="INTEGER" property="ec_remaining"/>
   </resultMap>
 
   <sql id="Base_Column_List">
     flight_id, airplane_id, departurecity, arrivalcity, departuretime, arrivaltime, date,
-    arrival_airport, departure_airport, passby_city ,price,seat_status,type
+    arrival_airport, departure_airport, passby_city ,price,seat_status,type,bc_remaining,ec_remaining
   </sql>
 
   <select id="findByRequired" resultMap="FlightResultMap" resultType="com.example.demo2.bean.Flight" >
-    select * from flight_table where departurecity = #{departurecity} and arrivalcity = #{arrivalcity} and date =#{date}
+    select * from flight_table where (bc_remaining+ec_remaining)>0 and departurecity = #{departurecity} and arrivalcity = #{arrivalcity} and date =#{date}
 
   </select>
 
@@ -36,11 +38,11 @@
   </select>
 
   <select id="findByRandom" resultType="com.example.demo2.bean.Flight" resultMap="FlightResultMap">
-    select * from flight_table where date="2021.06.19" order by rand() limit 5
+    select * from flight_table where date="2021.06.19" and (bc_remaining+ec_remaining)>0 order by rand() limit 5
   </select>
 
   <select id="findByPrice" resultType="com.example.demo2.bean.Flight" resultMap="FlightResultMap">
-    select * from flight_table order by price limit 5
+    select * from flight_table where (bc_remaining+ec_remaining)>0 order by price limit 5
   </select>
 
   <update id="updateSeatStatus" parameterType="com.example.demo2.bean.Order">
@@ -48,6 +50,20 @@
     set seat_status=#{seat_status}
     where flight_id=#{flight_id}
   </update>
+
+  <update id="updateBC" parameterType="com.example.demo2.bean.Order">
+    update flight_table
+    set bc_remaining=bc_remaining-1
+    where flight_id=#{flight_id}
+  </update>
+
+  <update id="updateEC" parameterType="com.example.demo2.bean.Order">
+    update flight_table
+    set ec_remaining=(ec_remaining-1)
+    where flight_id=#{flight_id}
+  </update>
+
+
 
 
 

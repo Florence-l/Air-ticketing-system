@@ -1,8 +1,5 @@
 package com.example.demo2.bean;
 
-
-
-
 //import java.util.Date;
 
 public class Order {
@@ -15,6 +12,7 @@ public class Order {
     private Integer paymentStatus;
     private String paymentTime;
     private Integer seat_id;
+    private String seat_type;
     private Float realPrice;
     private String order_num;
     private Integer is_valid;
@@ -26,7 +24,7 @@ public class Order {
 
     public Order(Integer order_id,Integer user_id,String passenger_id,
                  Integer flight_id,String orderTime,Integer paymentStatus,String paymentTime,
-                 Integer seat_id, Float realPrice,String order_num){
+                 Integer seat_id, String seat_type, Float realPrice,String order_num){
         this.order_id = order_id;
         this.user_id = user_id;
         this.passenger_id = passenger_id;
@@ -35,17 +33,19 @@ public class Order {
         this.paymentStatus = paymentStatus;
         this.paymentTime = paymentTime;
         this.seat_id = seat_id;
+        this.seat_type = seat_type;
         this.realPrice = realPrice;
         this.order_num = order_num;
     }
 
     public Order(Integer userid, String user_name, String passenger_id,
-                 Integer flght_id, String orderTime, Integer paymentStatus,
+                 Integer flght_id, String seat_type,String orderTime, Integer paymentStatus,
                  Float realPrice, String order_num) {
         this.user_id = userid;
         this.user_name = user_name;
         this.passenger_id = passenger_id;
         this.flight_id = flght_id;
+        this.seat_type = seat_type;
         this.orderTime = orderTime;
         this.paymentStatus = paymentStatus;
         this.realPrice = realPrice;
@@ -116,6 +116,14 @@ public class Order {
         this.seat_id = seat_id;
     }
 
+    public String getSeat_type() {
+        return seat_type;
+    }
+
+    public void setSeat_type(String seat_type) {
+        this.seat_type = seat_type;
+    }
+
     public Float getRealPrice() {
         return realPrice;
     }
@@ -160,6 +168,7 @@ public class Order {
                 "paymentStatus" + paymentStatus +
                 "paymentTime" + paymentTime+
                 "seatid=" + seat_id +
+                "seat_type=" + seat_type +
                 "realPrice" + realPrice +
                 "order_num" + order_num+
                 "is_valid" + is_valid +

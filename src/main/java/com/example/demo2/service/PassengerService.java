@@ -19,6 +19,11 @@ public class PassengerService{
         return 1;
     }
 
+    @Override
+    public int insert(Passenger passenger) {
+        return 0;
+    }
+
     public int deleteById(Passenger passenger) {
         passengerMapper.deleteById(passenger);
         return 1;
@@ -48,5 +53,10 @@ public class PassengerService{
             return count;
         }
         return 0;
+    }
+
+    @Override
+    public Passenger selectById(Passenger passenger) {
+        return null;
     }
 }

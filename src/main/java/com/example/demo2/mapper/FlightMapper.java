@@ -13,6 +13,8 @@ public interface FlightMapper {
     List<Flight> findByRandom();
     List<Flight> findByPrice();
     int updateSeatStatus(Integer flight_id,String seat_status);
+    int updateBC(Integer flight_id);
+    int updateEC(Integer flight_id);
     int countAllFlight();
 
 }

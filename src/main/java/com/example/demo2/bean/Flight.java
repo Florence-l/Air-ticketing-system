@@ -29,6 +29,10 @@ public class Flight {
 
     private Integer type;
 
+    private Integer bc_remaining;
+
+    private Integer ec_remaining;
+
     public Integer getFlight_id() {
         return flight_id;
     }
@@ -130,5 +134,21 @@ public class Flight {
 
     public void setType(Integer type) {
         this.type = type;
+    }
+
+    public Integer getBc_remaining() {
+        return bc_remaining;
+    }
+
+    public void setBc_remaining(Integer bc_remaining) {
+        this.bc_remaining = bc_remaining;
+    }
+
+    public Integer getEc_remaining() {
+        return ec_remaining;
+    }
+
+    public void setEc_remaining(Integer ec_remaining) {
+        this.ec_remaining = ec_remaining;
     }
 }
