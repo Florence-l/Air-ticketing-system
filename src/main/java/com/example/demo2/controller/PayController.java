@@ -50,41 +50,42 @@ public class PayController {
         System.out.println("支付成功, 进入同步通知接口...");
 
         // 获取支付宝GET过来反馈信息
-        Map<String, String> params = new HashMap<String, String>();
-        Map<String, String[]> requestParams = request.getParameterMap();
-        for (Iterator<String> iter = requestParams.keySet().iterator(); iter.hasNext(); ) {
-            String name = (String) iter.next();
-            String[] values = (String[]) requestParams.get(name);
-            String valueStr = "";
-            for (int i = 0; i < values.length; i++) {
-                valueStr = (i == values.length - 1) ? valueStr + values[i]
-                        : valueStr + values[i] + ",";
-            }
-            params.put(name, valueStr);
-        }
-
-        // 调用SDK验证签名
-        boolean signVerified = AlipaySignature.rsaCheckV1(params,
-                AlipayConfig.ALIPAY_PUBLIC_KEY,
-                AlipayConfig.CHARSET,
-                AlipayConfig.sign_type);
-
-        // 验签成功
-        if (signVerified) {
-            // 同步通知返回的参数（部分说明）
-            // out_trade_no :   商户订单号
-            // trade_no : 支付宝交易号
-            // total_amount ： 交易金额
-            // auth_app_id/app_id : 商户APPID
-            // seller_id ：收款支付宝账号对应的支付宝唯一用户号(商户UID )
-            System.out.println("****************** 支付宝同步通知成功   ******************");
-            System.out.println("同步通知返回参数：" + params.toString());
-            System.out.println("****************** 支付宝同步通知成功   ******************");
-            return "orderDetail";
-        } else {
-            System.out.println("支付, 验签失败...");
-            return "booking";
-        }
+//        Map<String, String> params = new HashMap<String, String>();
+//        Map<String, String[]> requestParams = request.getParameterMap();
+//        for (Iterator<String> iter = requestParams.keySet().iterator(); iter.hasNext(); ) {
+//            String name = (String) iter.next();
+//            String[] values = (String[]) requestParams.get(name);
+//            String valueStr = "";
+//            for (int i = 0; i < values.length; i++) {
+//                valueStr = (i == values.length - 1) ? valueStr + values[i]
+//                        : valueStr + values[i] + ",";
+//            }
+//            params.put(name, valueStr);
+//        }
+//
+//        // 调用SDK验证签名
+//        boolean signVerified = AlipaySignature.rsaCheckV1(params,
+//                AlipayConfig.ALIPAY_PUBLIC_KEY,
+//                AlipayConfig.CHARSET,
+//                AlipayConfig.sign_type);
+//
+//        // 验签成功
+//        if (signVerified) {
+//            // 同步通知返回的参数（部分说明）
+//            // out_trade_no :   商户订单号
+//            // trade_no : 支付宝交易号
+//            // total_amount ： 交易金额
+//            // auth_app_id/app_id : 商户APPID
+//            // seller_id ：收款支付宝账号对应的支付宝唯一用户号(商户UID )
+//            System.out.println("****************** 支付宝同步通知成功   ******************");
+//            System.out.println("同步通知返回参数：" + params.toString());
+//            System.out.println("****************** 支付宝同步通知成功   ******************");
+//            return "orderDetail";
+//        } else {
+//            System.out.println("支付, 验签失败...");
+//            return "booking";
+//        }
+        return "orderDetail";
     }
 
     //异步通知
