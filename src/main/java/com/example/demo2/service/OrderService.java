@@ -64,8 +64,9 @@ public class OrderService {
         return null;
     }
 
-    public List<Order> findByoNum(String order_num){
+    public List<Order> findByoNum(String order_num,String paymentTime){
         List<Order> list = orderMapper.findByoNum(order_num);
+        orderMapper.updatePaymentTime(order_num,paymentTime);
         if(list != null){
             return list;
         }
@@ -80,6 +81,14 @@ public class OrderService {
     public int updateSeat(Integer seat_id,Integer order_id){
         orderMapper.updateSeat(seat_id,order_id);
         return 1;
+    }
+
+    public List<String> scheduleTable(){
+        return orderMapper.scheduleTable();
+    }
+
+    public void updateStatus(String orderTime){
+        orderMapper.updateStatus(orderTime);
     }
 
 //    @Override

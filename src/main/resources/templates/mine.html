@@ -94,7 +94,7 @@
             </ul>
             <div class="layui-tab-content">
                 <div class="layui-tab-item layui-show">
-                    <table class="layui-hide" id="orderList"></table>
+                    <table class="layui-hide" id="orderList" lay-filter="test1"></table>
                     <ul class="order-list home-order-list">
                         <li class="load-more ">
                             <a href="/orderdetail">
@@ -130,47 +130,69 @@ layui.use(['table'], function(){
   table.render({
     elem: '#orderList'
     ,url: 'order' //数据接口
+    ,even: true
+    ,skin: 'line'
     ,limit: 3
     ,where: {
         status: status
         }
     ,cols: [[ //表头
       {field: 'order_num', title: '订单号', width:150,  fixed: 'left'}
-      ,{field: 'orderTime', title: '订购时间', width:150}
       ,{field: 'user_name', title: '乘客姓名', width:100}
       ,{field: 'seat_id', title: '座位号', width: 90}
       ,{templet:'<div>{{d.flight.departurecity}}</div>', title: '出发城市', width: 100}
       ,{templet:'<div>{{d.flight.arrivalcity}}</div>', title: '到达城市', width: 100}
       ,{templet:'<div>{{d.flight.date}}</div>', title: '日期', width: 130}
       ,{templet:'<div>{{d.flight.departuretime}}</div>', title: '出发时间', width: 130}
-      ,{templet:'<div>{{d.flight.arrivaltime}}</div>', title: '到达时间', width: 130}
       ,{field: 'realPrice', title: '全部金额', width: 135}
+      ,{field:'is_valid', width:8+'%', title: '订单状态',
+
+templet:function(d){
+if(d.is_valid ==1)
+return '已失效'
+else if(d.paymentStatus == 1)
+return '已支付'
+else
+return '未支付';
+}
+}
+        ,{field:'', title: '操作', toolbar: "#bar"}
 
     ]]
   });
   table.render({
     elem: '#orderPay'
     ,url: 'unpay' //数据接口
+    ,even: true
+    ,skin: 'line'
     ,limit: 3
     ,where: {
         status: status
         }
     ,cols: [[ //表头
       {field: 'order_num', title: '订单号', width:150,  fixed: 'left'}
-      ,{field: 'orderTime', title: '订购时间', width:150}
       ,{field: 'user_name', title: '乘客姓名', width:100}
       ,{field: 'seat_id', title: '座位号', width: 90}
       ,{templet:'<div>{{d.flight.departurecity}}</div>', title: '出发城市', width: 100}
       ,{templet:'<div>{{d.flight.arrivalcity}}</div>', title: '到达城市', width: 100}
       ,{templet:'<div>{{d.flight.date}}</div>', title: '日期', width: 130}
       ,{templet:'<div>{{d.flight.departuretime}}</div>', title: '出发时间', width: 130}
-      ,{templet:'<div>{{d.flight.arrivaltime}}</div>', title: '到达时间', width: 130}
-      ,{field: 'realPrice', title: '全部金额', width: 135}
+      ,{field: 'realPrice', title: '全部金额', width: 100}
+      ,{field:'', title: '操作', toolbar: "#bar"}
     ]]
   });
-
 });
 
+</script>
+
+<script th:inline="none">
+    layui.use(['table'], function(){
+    })
+
+
+</script>
+<script type="text/html" id="bar">
+    <button class="layui-btn layui-btn-normal layui-btn-sm" lay-event="detail" >查看</button>
 </script>
 <script>
     layui.use(['element', 'table'], function () {

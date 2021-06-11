@@ -5,10 +5,11 @@
     <id column="passenger_id" property="passenger_id" jdbcType="INTEGER" />
     <result column="user_name" property="user_name" jdbcType="VARCHAR" />
     <result column="user_tel" property="user_tel" jdbcType="INTEGER" />
+    <result column="user_id" property="user_id" jdbcType="VARCHAR"/>
   </resultMap>
 
   <sql id="Base_Column_List" >
-    passenger_id, user_name, user_tel
+    passenger_id, user_name, user_tel, user_id
   </sql>
 
   <!--selectById:返回含有指定passenger_id数值的一条完整信息-->
@@ -19,17 +20,33 @@
     where passenger_id = #{passenger_id,jdbcType=VARCHAR}
   </select>
 
+  <select id="selectByUser" resultMap="BaseResultMap">
+    select * from passenger_table where user_id = #{user_id}
+  </select>
+
+  <select id="countAllPassenger" resultType="int">
+    select count(passenger_id) from passenger_table where user_id = #{user_id}
+  </select>
+
   <delete id="deleteById" parameterType="java.lang.String" >
     delete from passenger_table
     where passenger_id = #{passenger_id,jdbcType=VARCHAR}
   </delete>
 
+  <delete id="deleteByMineId" parameterType="java.lang.String" >
+    delete from passenger_table
+    where passenger_id = #{passenger_id,jdbcType=VARCHAR}
+  </delete>
+
+
+
 
 <!--insert:所有的字段都会添加一遍-->
   <insert id="insert" parameterType="com.example.demo2.bean.Passenger" >
-    insert into passenger_table (passenger_id, user_name, user_tel
+    insert into passenger_table (passenger_id, user_name, user_tel, user_id
       )
-    values (#{passenger_id,jdbcType=VARCHAR}, #{user_name,jdbcType=VARCHAR}, #{user_tel,jdbcType=VARCHAR}
+    values (#{passenger_id,jdbcType=VARCHAR}, #{user_name,jdbcType=VARCHAR}, #{user_tel,jdbcType=VARCHAR},
+            #{user_id,jdbcType=VARCHAR}
       )
   </insert>
 
@@ -47,6 +64,9 @@
       <if test="user_tel != null" >
         user_tel,
       </if>
+      <if test="user_id != null" >
+        user_id,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="passenger_id != null" >
@@ -57,6 +77,9 @@
       </if>
       <if test="user_tel != null" >
         #{user_tel,jdbcType=INTEGER},
+      </if>
+      <if test="user_id != null" >
+        #{user_id,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>

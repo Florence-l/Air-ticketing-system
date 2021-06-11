@@ -4,6 +4,7 @@
     <resultMap id="OrderResultMap" type="com.example.demo2.bean.Order">
         <id column="order_id" jdbcType="INTEGER" property="order_id" />
         <result column="order_num" jdbcType="VARCHAR" property="order_num"/>
+        <result column="is_valid" jdbcType="INTEGER" property="is_valid"/>
         <result column="user_name" jdbcType="VARCHAR" property="user_name" />
         <result column="passenger_id" property="passenger_id"/>
 <!--        <result column="user_id" javaType="INTEGER" property="user_id" />-->
@@ -39,8 +40,10 @@
         order_num,
         user_name,
         orderTime,
+        paymentStatus,
         paymentTime,
         seat_id,
+        is_valid,
         seat_type,
         departurecity,
         arrivalcity,
@@ -62,6 +65,7 @@
         user_name,
         orderTime,
         seat_id,
+        paymentStatus,
         seat_type,
         departurecity,
         arrivalcity,
@@ -79,10 +83,10 @@
     </select>
 
     <insert id="insertOrder" parameterType="com.example.demo2.bean.Order">
-        insert into order_table (user_id, passenger_id, user_name, flight_id,seat_type,
+        insert into order_table (user_id, passenger_id, user_name, flight_id,
         orderTime, paymentStatus, realPrice, order_num)
         values (#{user_id,jdbcType=INTEGER}, #{passenger_id,jdbcType=VARCHAR}, #{user_name,jdbcType=VARCHAR},
-        #{flight_id,jdbcType=INTEGER},#{seat_type,jdbcType=VARCHAR},#{orderTime,jdbcType=VARCHAR}, #{paymentStatus,jdbcType=INTEGER},
+        #{flight_id,jdbcType=INTEGER},#{orderTime,jdbcType=VARCHAR}, #{paymentStatus,jdbcType=INTEGER},
         #{realPrice,jdbcType=FLOAT},#{order_num,jdbcType=VARCHAR})
     </insert>
 
@@ -98,6 +102,17 @@
         select * from order_table inner join flight_table on order_table.flight_id = flight_table.flight_id where order_id = #{order_id}
     </select>
 
+    <select id="scheduleTable" resultType="String">
+        select orderTime from order_table where paymentStatus = 0
+    </select>
+
+    <update id="updateStatus" parameterType="com.example.demo2.bean.Order">
+        update order_table
+        set is_valid = 1
+        where orderTime = #{orderTime} and paymentStatus = 0
+
+    </update>
+
 
     <update id="updateSeat" parameterType="com.example.demo2.bean.Order">
         update order_table
@@ -105,6 +120,11 @@
         where order_id=#{order_id}
     </update>
 
+    <update id="updatePaymentTime" parameterType="com.example.demo2.bean.Order">
+        update order_table
+        set paymentTime=#{paymentTime}
+        where order_num = #{order_num}
+    </update>
 
     <!--    <select id="findUnpayByid" resultType="com.example.demo2.bean.Order" resultMap="OrderResultMap" >-->
 <!--        select * from order_table where user_id = #{user_id} and paymentStatus = 0-->

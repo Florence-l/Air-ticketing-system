@@ -34,20 +34,18 @@ layui.use(['table'], function(){
   table.render({
     elem: '#orderList'
     ,height: 500
-    ,url: 'unpay' //数据接口
+    ,url: 'unpayAll' //数据接口
     ,limit: 10
     ,limits: [10, 20, 30, 50]
     ,page: true //开启分页
     ,cols: [[ //表头
       {field: 'order_num', title: '订单号', width:150,  fixed: 'left'}
-      ,{field: 'orderTime', title: '订购时间', width:150}
       ,{field: 'user_name', title: '乘客姓名', width:100}
       ,{field: 'seat_id', title: '座位号', width: 90}
       ,{templet:'<div>{{d.flight.departurecity}}</div>', title: '出发城市', width: 100}
       ,{templet:'<div>{{d.flight.arrivalcity}}</div>', title: '到达城市', width: 100}
       ,{templet:'<div>{{d.flight.date}}</div>', title: '日期', width: 130}
       ,{templet:'<div>{{d.flight.departuretime}}</div>', title: '出发时间', width: 130}
-      ,{templet:'<div>{{d.flight.arrivaltime}}</div>', title: '到达时间', width: 130}
       ,{field: 'realPrice', title: '应付金额', width: 135}
     ]]
   });

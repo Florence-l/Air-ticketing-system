@@ -63,15 +63,18 @@ public class OrderController {
             System.out.println(orderJson);
             return orderJson;
         }
-        else return "error";
+        else {
+            return "error";
+        }
     }
 
     @RequestMapping("/findByoNum")
     @ResponseBody()
     public String findByoNum(HttpServletRequest request) throws IOException{
         String order_num = request.getParameter("order_num");
+        String paymentTime = request.getParameter("paymentTime");
         ObjectMapper objectMapper = new ObjectMapper();
-        String strObject = objectMapper.writeValueAsString(orderService.findByoNum(order_num));
+        String strObject = objectMapper.writeValueAsString(orderService.findByoNum(order_num,paymentTime));
 //        System.out.println(strObject);
         return strObject;
     }

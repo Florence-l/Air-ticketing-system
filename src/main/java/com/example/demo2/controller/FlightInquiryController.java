@@ -95,24 +95,7 @@ public class FlightInquiryController {
         }
         return null;
     }
-//
-//    @RequestMapping("/ifAuthentication")
-//    @ResponseBody
-//    public String ifAuthentication(Principal principal){
-//        try {
-//            if(principal.getName()==null){
-//                System.out.printf("\nprincipal is null\n");
-//                return "null";
-//            }
-//            else {
-//                System.out.printf("\nprincipal is not null\n");
-//                return "notnull";
-//            }
-//
-//        }catch (Exception e) {
-//            return "null";
-//        }
-//    }
+
 
 
 }

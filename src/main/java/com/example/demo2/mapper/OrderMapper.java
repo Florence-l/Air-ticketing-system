@@ -24,4 +24,10 @@ public interface OrderMapper {
 
     Order findById(@Param("order_id") Integer order_id);
 
+    List<String> scheduleTable();
+
+    void updateStatus(@Param("orderTime") String orderTime);
+
+    void updatePaymentTime(@Param("order_num") String order_num,@Param("paymentTime") String paymentTime);
+
 }

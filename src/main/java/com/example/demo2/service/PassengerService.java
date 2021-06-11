@@ -1,6 +1,5 @@
 package com.example.demo2.service;
 
-import com.example.demo2.bean.Flight;
 import com.example.demo2.bean.Passenger;
 import com.example.demo2.mapper.PassengerMapper;
 import org.springframework.stereotype.Component;
@@ -10,7 +9,7 @@ import java.util.*;
 
 @Component
 @Service
-public class PassengerService implements PassengerMapper{
+public class PassengerService{
     @Resource
     private PassengerMapper passengerMapper;
 
@@ -20,7 +19,6 @@ public class PassengerService implements PassengerMapper{
         return 1;
     }
 
-    @Override
     public int insert(Passenger passenger) {
         return 0;
     }
@@ -30,9 +28,8 @@ public class PassengerService implements PassengerMapper{
         return 1;
     }
 
-    @Override
-    public Passenger selectById(Passenger passenger) {
-        return null;
+    public void deleteByMineId(String passenger_id) {
+        passengerMapper.deleteByMineId(passenger_id);
     }
 
     public Passenger selectAllPassenger(Passenger passenger){
@@ -40,12 +37,24 @@ public class PassengerService implements PassengerMapper{
         return p;
     }
 
-/*    @Override
-    public List<Passenger> queryList(){
-        List<Passenger> list = passengerMapper.queryList();
-        if(list!=null){
-            return list;
+    public List<Passenger> selectByUser(String user_id, int page, int limits){
+        List<Passenger> p = passengerMapper.selectByUser(user_id,(limits-1)*page,page);
+        if(p!=null){
+            return p;
         }
         return null;
-    }*/
+
+    }
+
+    public int countAllPassenger(String user_id) {
+        int count = passengerMapper.countAllPassenger(user_id);
+        if(count>0){
+            return count;
+        }
+        return 0;
+    }
+
+    public Passenger selectById(Passenger passenger) {
+        return null;
+    }
 }

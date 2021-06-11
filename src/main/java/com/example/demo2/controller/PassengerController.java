@@ -1,8 +1,12 @@
 package com.example.demo2.controller;
 
+import com.example.demo2.Util.LayuiTableResultUtil;
+import com.example.demo2.Util.RequiredUtil;
+import com.example.demo2.bean.Order;
 import com.example.demo2.bean.Passenger;
+import com.example.demo2.bean.User;
 import com.example.demo2.service.PassengerService;
-
+import com.example.demo2.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -10,6 +14,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
+import java.security.Principal;
 import java.util.List;
 
 
@@ -38,4 +43,14 @@ public class PassengerController {
         }
         return "success";
     }
+
+    @RequestMapping("/delPassenger")
+    @ResponseBody()
+    public String delPassenger(HttpServletRequest request) throws IOException{
+        String passenger_id = request.getParameter("passenger_id");
+        passengerService.deleteByMineId(passenger_id);
+        return "success";
+    }
+
+
 }
