@@ -611,7 +611,16 @@
                 });
             } else {
                 var username = $('#username').html();
-                if (username != '') {
+                if (username == '') {
+                    layer.open({
+                        type: 2,
+                        area: ["500px", "600px"],
+                        title: "请先登录",
+                        closeBtn: 1,
+                        content: "/loginModal",
+                    });
+                }
+                else {
                     $.ajax({
                         type: 'post',
                         url: '/selectOdByNum',
@@ -652,6 +661,7 @@
                         }
                     })
                 }
+
             }
         }
 
