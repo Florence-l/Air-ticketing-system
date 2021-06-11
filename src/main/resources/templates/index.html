@@ -276,6 +276,11 @@
         animation-name: shadow-show;
         animation-duration: 1.5s;
     }
+    .title{
+        font-size:10px;
+        color: darksalmon;
+
+    }
     hr{
         display: block;
         border: none;
@@ -579,65 +584,79 @@
 </script>
 
 <script>
-        function os(){
+    window.onload = function(){
+        var coosStr = document.cookie;    //获取cookie中的数据
+        var coos=coosStr.split("; ");     //多个值之间用; 分隔
+        for(var i=0;i<coos.length;i++){   //获取select写入的id
+            var coo=coos[i].split("=");
+            console.log(coo);
+            if("order_num"==coo[0]){
+                document.getElementById('orderNum').value=coo[1];
+            }
+            if("passenger_id"==coo[0]){
+                document.getElementById('IDcard').value=coo[1];
+            }
+        }
+    }
+        function os() {
             var order_num = $('#orderNum').val();
             var passenger_id = $('#IDcard').val();
-            if(order_num.length === 0){
-                layui.use('layer', function(){
-                   var layer = layui.layer;
-                   layer.msg('请输入订单号');
-                    });
-            }
-            else if(passenger_id.length === 0){
-                layui.use('layer', function(){
-                   var layer = layui.layer;
-                   layer.msg('请输入身份证号');
-                    });
-            }
-            else{
-            $.ajax({
-                type : 'post',
-                url : '/selectOdByNum',
-                data: {
-                    'order_num' : order_num,
-                    'passenger_id' : passenger_id
-                },
-                success:function(res){
-                if(res === "error"){
-                   layui.use('layer', function(){
-                   var layer = layui.layer;
-                   layer.msg('未查询到相关订单');
-                    });
-                }
-                var obj = JSON.parse(res);
-                if(obj.is_valid === "1") {
-                    layui.use('layer', function(){
+            if (order_num.length === 0) {
+                layui.use('layer', function () {
                     var layer = layui.layer;
-                    layer.msg('订单已失效');
-                    });
+                    layer.msg('请输入订单号');
+                });
+            } else if (passenger_id.length === 0) {
+                layui.use('layer', function () {
+                    var layer = layui.layer;
+                    layer.msg('请输入身份证号');
+                });
+            } else {
+                var username = $('#username').html();
+                if (username != '') {
+                    $.ajax({
+                        type: 'post',
+                        url: '/selectOdByNum',
+                        data: {
+                            'order_num': order_num,
+                            'passenger_id': passenger_id
+                        },
+                        success: function (res) {
+                            if (res === "error") {
+                                layui.use('layer', function () {
+                                    var layer = layui.layer;
+                                    layer.msg('未查询到相关订单');
+                                });
+                            }
+                            var obj = JSON.parse(res);
+                            if (obj.is_valid === "1") {
+                                layui.use('layer', function () {
+                                    var layer = layui.layer;
+                                    layer.msg('订单已失效');
+                                });
+                            } else {
+                                $('#departuretime').html((obj.flight.departuretime).slice(0, -3));
+                                $('#arrivaltime').html((obj.flight.arrivaltime).slice(0, -3));
+                                $('#date').html(obj.flight.date);
+                                $('#departurecity').html(obj.flight.departurecity);
+                                $('#arrivalcity').html(obj.flight.arrivalcity);
+                                $('#departure_airport').html(obj.flight.departure_airport);
+                                $('#arrival_airport').html(obj.flight.arrival_airport);
+                                $('#user_name').html(obj.user_name);
+                                $("#order_id").val(obj.order_id);
+                                $("#paymentStatus").val(obj.paymentStatus);
+                                $("#flight_id").val(obj.flight.flight_id);
+                                $("#type").val(obj.flight.type);
+                                $("#seat_id").val(obj.seat_id);
+                                $("#seat_type").val(obj.seat_type);
+                                $("#orderR").show();
+                            }
+                        }
+                    })
                 }
-                else{
-                $('#departuretime').html((obj.flight.departuretime).slice(0,-3));
-                $('#arrivaltime').html((obj.flight.arrivaltime).slice(0,-3));
-                $('#date').html(obj.flight.date);
-                $('#departurecity').html(obj.flight.departurecity);
-                $('#arrivalcity').html(obj.flight.arrivalcity);
-                $('#departure_airport').html(obj.flight.departure_airport);
-                $('#arrival_airport').html(obj.flight.arrival_airport);
-                $('#user_name').html(obj.user_name);
-                $("#order_id").val(obj.order_id);
-                $("#paymentStatus").val(obj.paymentStatus);
-                $("#flight_id").val(obj.flight.flight_id);
-                $("#type").val(obj.flight.type);
-                $("#seat_id").val(obj.seat_id);
-                $("#seat_type").val(obj.seat_type);
-                $("#orderR").show();
-                }
-                }
-                })
-                }
+            }
+        }
 
-     }
         function xz(){
                 var order_id = document.getElementById("order_id").value;
                 var paymentStatus = document.getElementById("paymentStatus").value;

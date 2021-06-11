@@ -70,8 +70,12 @@
                         parent.layer.close(index);
                         //跳转页面
                         url=window.location.search;
-                        window.parent.location.href = "/book"+url;
-                        console.log("/book"+url);
+                        if(url) {
+                            window.parent.location.href = "/book" + url;
+                        }
+                        else{
+                            window.parent.location.reload();
+                        }
                     }
                     else{
                         document.getElementById("msg").innerText=data.msg;

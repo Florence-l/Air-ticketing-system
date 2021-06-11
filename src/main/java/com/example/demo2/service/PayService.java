@@ -23,7 +23,6 @@ public class PayService {
      * */
     public void pay(String totalPrice,String subject,HttpServletResponse response)throws IOException {
         AlipayClient alipayClient = new DefaultAlipayClient(AlipayConfig.gatewayUrl, AlipayConfig.APP_ID, AlipayConfig.APP_PRIVATE_KEY, "json", AlipayConfig.CHARSET, AlipayConfig.ALIPAY_PUBLIC_KEY, AlipayConfig.sign_type);
-
         // 设置请求参数
         AlipayTradePagePayRequest alipayRequest = new AlipayTradePagePayRequest();
         alipayRequest.setReturnUrl(AlipayConfig.return_url);
@@ -32,13 +31,13 @@ public class PayService {
         // 订单号，商户网站订单系统中唯一订单号，必填
         String order_no = OrderUtil.getOrderNo();
         // 商品描述，可空
-//        String body = request.getParameter("body");
         String body="";
 
         alipayRequest.setBizContent("{\"out_trade_no\":\"" + order_no + "\","
                 + "\"total_amount\":\"" + totalPrice + "\","
                 + "\"subject\":\"" + subject + "\","
                 + "\"body\":\"" + body + "\","
+                + "\"timeout_express\":\"5m\"," //支付有效时间
                 + "\"product_code\":\"FAST_INSTANT_TRADE_PAY\"}");
 
         // 请求
@@ -51,7 +50,6 @@ public class PayService {
         }
         response.setContentType("text/html;charset=" + AlipayConfig.CHARSET);
         response.getWriter().write(form);// 直接将完整的表单html输出到页面
-        System.out.printf("\n"+response+"\n");
         response.getWriter().flush();
         response.getWriter().close();
     }
