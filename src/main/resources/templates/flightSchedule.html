@@ -75,7 +75,7 @@
 <th:block th:include="common.html :: footer"></th:block>
 
 <script type="text/html" id="toolbtn">
-    <button id="book" class="layui-btn layui-btn-xs layui-btn-radius layui-btn-primary" lay-event="book" >预定</button>
+    <button id="book" style="width: 50px;" class="layui-btn layui-btn-xs layui-btn-radius layui-btn-primary" lay-event="book" >预定</button>
 </script>
 
 
@@ -148,18 +148,17 @@
             ,limits: [10, 20, 30, 50]
             ,page: true //开启分页
             ,cols: [[ //表头
-                {field: 'flight_id', title: '出发城市', width: 100}
-                ,{field: 'departurecity', title: '出发城市', width: 100}
+                {field: 'departurecity', title: '出发城市', width: 100}
                 ,{field: 'arrivalcity', title: '到达城市', width: 100}
                 ,{field: 'departuretime', title: '出发时间',sort: true, width: 110}
                 ,{field: 'arrivaltime', title: '到达时间', width: 110}
                 ,{field: 'date', title: '日期', width: 120}
                 ,{field: 'arrival_airport', title: '到达机场', width: 120}
                 ,{field: 'departure_airport', title: '出发机场', width: 120}
-                ,{field: 'price', title: '价格', width: 100,templet:function (d) {return '<span style="color:#23a9de;font-size: 16px;font-weight: bold">'+"￥"+d.price;}}
+                ,{field: 'price', title: '价格', width: 100,sort: true,templet:function (d) {return '<span style="color:#23a9de;font-size: 16px;font-weight: bold">'+"￥"+d.price;}}
                 ,{title: '剩余量', width: 80,templet:function (d){return (d.bc_remaining+d.ec_remaining);
                     }}
-                ,{fixed: '', title:'操作', toolbar: "#toolbtn", width:130}
+                ,{fixed: '', title:'操作', toolbar: "#toolbtn", width:80}
             ]]
         });
     table.on('tool(test)', function (obj)  {
