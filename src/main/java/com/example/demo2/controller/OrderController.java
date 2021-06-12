@@ -43,7 +43,9 @@ public class OrderController {
         Integer paymentStatus = Integer.valueOf(request.getParameter("paymentStatus"));
         Float realPrice = Float.valueOf(request.getParameter("realPrice"));
         String order_num = request.getParameter("order_num");
-        Order order = new Order(userid,user_name,passenger_id,flight_id,seat_type,orderTime,paymentStatus,realPrice,order_num);
+        String change = request.getParameter("change");
+
+        Order order = new Order(userid,user_name,passenger_id,flight_id,seat_type,orderTime,paymentStatus,realPrice,order_num,change);
         System.out.print(order);
         orderService.insertOrder(order);
         return "success";
@@ -87,6 +89,20 @@ public class OrderController {
         String strObject = objectMapper.writeValueAsString(orderService.findById(order_id));
 //        System.out.println(strObject);
         return strObject;
+    }
+
+    //改签界面
+    @RequestMapping("/change")
+    @ResponseBody()
+    public String rebook(HttpServletRequest request) throws IOException{
+        String change = request.getParameter("change");
+        Integer order_id = Integer.valueOf(request.getParameter("order_id"));
+
+        Order order = orderService.findById(order_id);
+        String order_num = order.getOrder_num();
+        String passenger_id = order.getPassenger_id();
+        orderService.updateChange(change,order_num,order_id,passenger_id);
+        return "success";
     }
 
 

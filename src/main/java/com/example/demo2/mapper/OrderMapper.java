@@ -20,6 +20,8 @@ public interface OrderMapper {
 
     int updateSeat(@Param("seat_id") Integer seat_id,@Param("order_id")Integer order_id );
 
+    int updateChange(@Param("change")String change, @Param("order_num")String order_num, @Param("order_id")Integer order_id);
+
     List<Order> findByoNum(@Param("order_num") String order_num);
 
     Order findById(@Param("order_id") Integer order_id);

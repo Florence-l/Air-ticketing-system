@@ -126,8 +126,8 @@ function next(){
     var loopTime = allInput.length; //获得数量
     var seatArray = new Array();//存储选项的值
     var count=0;
-    for(i = 1;i < loopTime;i++){
-        if(allInput[i].type == "radio")//只对radio进行检查
+            for(i = 1;i < loopTime;i++){
+                if(allInput[i].type == "radio")//只对radio进行检查
             if(allInput[i].checked==true){ //如果被选择
                 seatArray[count++]=allInput[i].value;//记录所选的值
             }

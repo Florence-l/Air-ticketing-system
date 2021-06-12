@@ -41,8 +41,8 @@ public class OrderService {
             return order;
         }
         return null;
-
     }
+
 //    public User findUser(String username) {
 //        return userMapper.loadUserByUsername(username);
 //    }
@@ -80,6 +80,13 @@ public class OrderService {
 
     public int updateSeat(Integer seat_id,Integer order_id){
         orderMapper.updateSeat(seat_id,order_id);
+        return 1;
+    }
+
+    public int updateChange(String change,String order_num,Integer order_id,String passenger_id){
+        if(change.equals("1"))
+            order_num = order_num + passenger_id;
+        orderMapper.updateChange(change,order_num,order_id);
         return 1;
     }
 

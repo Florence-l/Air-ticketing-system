@@ -6,7 +6,7 @@
         <result column="order_num" jdbcType="VARCHAR" property="order_num"/>
         <result column="is_valid" jdbcType="INTEGER" property="is_valid"/>
         <result column="user_name" jdbcType="VARCHAR" property="user_name" />
-        <result column="passenger_id" property="passenger_id"/>
+        <result column="passenger_id" jdbcType="VARCHAR" property="passenger_id"/>
 <!--        <result column="user_id" javaType="INTEGER" property="user_id" />-->
         <result column="flight_id" jdbcType="INTEGER" property="flight_id" />
         <result column="seat_type" jdbcType="VARCHAR" property="seat_type" />
@@ -16,6 +16,7 @@
         <result column="seat_id" jdbcType="INTEGER" property="seat_id" />
         <result column="paymentStatus" property="paymentStatus"/>
         <result column="realPrice" jdbcType="FLOAT" property="realPrice" />
+        <result column="change" jdbcType="VARCHAR" property="change"/>
         <association property="flight" javaType="Flight">
             <id column="flight_id" property="flight_id" />
             <result column="departurecity" property="departurecity"/>
@@ -119,6 +120,12 @@
     <update id="updateSeat" parameterType="com.example.demo2.bean.Order">
         update order_table
         set seat_id=#{seat_id}
+        where order_id=#{order_id}
+    </update>
+
+    <update id="updateChange" parameterType="com.example.demo2.bean.Order">
+        update order_table
+        set change=#{change},order_num=#{order_num}
         where order_id=#{order_id}
     </update>
 

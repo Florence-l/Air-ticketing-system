@@ -17,6 +17,7 @@ public class Order {
     private String order_num;
     private Integer is_valid;
     private Flight flight;
+    private String change;
 
     public Order(){
 
@@ -24,7 +25,7 @@ public class Order {
 
     public Order(Integer order_id,Integer user_id,String passenger_id,
                  Integer flight_id,String orderTime,Integer paymentStatus,String paymentTime,
-                 Integer seat_id, String seat_type, Float realPrice,String order_num){
+                 Integer seat_id, String seat_type, Float realPrice,String order_num, String change){
         this.order_id = order_id;
         this.user_id = user_id;
         this.passenger_id = passenger_id;
@@ -36,11 +37,12 @@ public class Order {
         this.seat_type = seat_type;
         this.realPrice = realPrice;
         this.order_num = order_num;
+        this.change = change;
     }
 
     public Order(Integer userid, String user_name, String passenger_id,
                  Integer flght_id, String seat_type,String orderTime, Integer paymentStatus,
-                 Float realPrice, String order_num) {
+                 Float realPrice, String order_num, String change) {
         this.user_id = userid;
         this.user_name = user_name;
         this.passenger_id = passenger_id;
@@ -50,6 +52,7 @@ public class Order {
         this.paymentStatus = paymentStatus;
         this.realPrice = realPrice;
         this.order_num = order_num;
+        this.change = change;
     }
 
     public Integer getOrder_id() {
@@ -139,21 +142,34 @@ public class Order {
     public void setFlight(Flight flight) {
         this.flight = flight;
     }
+
     public String getOrder_num(){
         return order_num;
     }
+
     public void setOrder_num(String order_num){
         this.order_num = order_num;
     }
+
     public void setUser_name(String user_name){
         this.user_name = user_name;
     }
+
     public String getUser_name(){
         return user_name;
     }
+
     public void setIs_valid(Integer is_valid){this.is_valid = is_valid;}
+
     public Integer getIs_valid(){return is_valid;}
 
+    public String getChange() {
+        return change;
+    }
+
+    public void setChange(String change) {
+        this.change = change;
+    }
 
 
     @Override
@@ -172,6 +188,7 @@ public class Order {
                 "realPrice" + realPrice +
                 "order_num" + order_num+
                 "is_valid" + is_valid +
+                "change" + change +
                 '}';
     }
 }
