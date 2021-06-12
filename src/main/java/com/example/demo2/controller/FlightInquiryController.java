@@ -40,6 +40,11 @@ public class FlightInquiryController {
         return "booking";
     }
 
+    @GetMapping("/boardingPass")
+    public String board(){
+        return "boardingPass";
+    }
+
 
     //航班推荐(随机)
     @RequestMapping("/index/re")

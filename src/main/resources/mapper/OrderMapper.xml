@@ -48,6 +48,8 @@
         departurecity,
         arrivalcity,
         date,
+        arrival_airport,
+        departure_airport,
         departuretime,
         arrivaltime,
         seat_status,
