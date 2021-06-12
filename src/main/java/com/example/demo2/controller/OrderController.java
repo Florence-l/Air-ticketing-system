@@ -1,10 +1,12 @@
 package com.example.demo2.controller;
 
 
+import com.alipay.api.AlipayApiException;
 import com.example.demo2.bean.Order;
 import com.example.demo2.bean.User;
 import com.example.demo2.service.FlightService;
 import com.example.demo2.service.OrderService;
+import com.example.demo2.service.PayService;
 import com.example.demo2.service.UserService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +29,7 @@ public class OrderController {
     @Autowired
     public UserService userService;
     @Autowired
-    public FlightService flightService;
+    public PayService payService;
 
 
     @RequestMapping("/insertOrder")
@@ -87,6 +89,26 @@ public class OrderController {
         String strObject = objectMapper.writeValueAsString(orderService.findById(order_id));
 //        System.out.println(strObject);
         return strObject;
+    }
+
+    @RequestMapping("/ReturnTicket")
+    @ResponseBody()
+    public String ReturnTicket(HttpServletRequest request) throws IOException{
+        String order_num = request.getParameter("order_num");
+        Float realPrice = Float.parseFloat(request.getParameter("realPrice"))+50;
+        System.out.println(realPrice);
+        String flight_id = request.getParameter("flight_id");
+        Integer order_id = Integer.parseInt(request.getParameter("order_id"));
+        try {
+            if(payService.refund(order_num,realPrice.toString(),0) == "success"){
+                orderService.ReturnTicket(order_id);
+                return "success";
+            }
+        } catch (AlipayApiException e) {
+            e.printStackTrace();
+        }
+        return "false";
+
     }
 
 

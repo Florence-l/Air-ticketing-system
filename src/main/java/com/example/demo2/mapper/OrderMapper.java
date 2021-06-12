@@ -30,4 +30,6 @@ public interface OrderMapper {
 
     void updatePaymentTime(@Param("order_num") String order_num,@Param("paymentTime") String paymentTime);
 
+    void ReturnTicket(@Param("order_id") Integer order_id);
+
 }

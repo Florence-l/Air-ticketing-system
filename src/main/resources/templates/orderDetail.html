@@ -267,15 +267,7 @@
                                                 </div>
                                             </div>
                                         </li>
-                                        <li>
-                                            <div class="item-pay-info">
-                                                <div class="item-name">机票价</div>
-                                                <div class="item-price">
-                                                    <dfn>¥</dfn><span id="price_be"></span>348</div>
-                                                <div class="item-count">
-                                                    <span><dfn>×</dfn><span id="passenger_num1">1人</span></span></div>
-                                            </div>
-                                        </li>
+
                                         <li>
                                             <div class="item-pay-info"><div class="item-name">机建</div>
                                                 <div class="item-price">
@@ -348,7 +340,8 @@
                                     $('#user_name').html(obj[0].user_name);
                                     $('#passenger_id').html((obj[0].passenger_id).slice(0,5)+"**********"+(obj[0].passenger_id).slice(16));
                                     document.getElementById("links").href='http://localhost:8080/seatchooser?order_id='+obj[0].order_id+"&flight_id="+obj[0].flight_id+"&type="+obj[0].flight.type+"&seat_type="+obj[0].seat_type;
-
+                                    $('#realPrice').html(obj[0].realPrice);
+                                    $('#realPrice1').html(obj[0].realPrice);
                                     $('#passenger1').show();
                                     break;
                                 case 2:
@@ -359,6 +352,8 @@
                                     $('#user_name2').html(obj[1].user_name);
                                     $('#passenger_id2').html((obj[1].passenger_id).slice(0,5)+"**********"+(obj[1].passenger_id).slice(16));
                                     document.getElementById("links2").href='http://localhost:8080/seatchooser?order_id='+obj[1].order_id+"&flight_id="+obj[1].flight_id+"&type="+obj[1].flight.type+"&seat_type="+obj[1].seat_type;
+                                    $('#realPrice').html(parseFloat((obj[0].realPrice)+parseFloat(obj[1].realPrice)+100).toString());
+                                    $('#realPrice1').html(parseFloat((obj[0].realPrice)+parseFloat(obj[1].realPrice)+100).toString());
                                     $('#passenger2').show();
                                     break;
                                 case 3:
@@ -374,6 +369,8 @@
                                     $('#passenger_id3').html((obj[2].passenger_id).slice(0,5)+"**********"+(obj[2].passenger_id).slice(16));
                                     document.getElementById("links3").href='http://localhost:8080/seatchooser?order_id='+obj[2].order_id+"&flight_id="+obj[2].flight_id+"&type="+obj[2].flight.type+"&seat_type="+obj[2].seat_type;
                                     $('#passenger3').show();
+                                    $('#realPrice').html(parseFloat((obj[0].realPrice)+parseFloat(obj[1].realPrice)+parseFloat(obj[2].realPrice)+150).toString());
+                                    $('#realPrice1').html(parseFloat((obj[0].realPrice)+parseFloat(obj[1].realPrice)+parseFloat(obj[2].realPrice)+150).toString());
                                     break;
                                 case 4:
                                     $('#user_name').html(obj[0].user_name);
@@ -392,6 +389,8 @@
                                     $('#passenger_id4').html((obj[3].passenger_id).slice(0,5)+"**********"+(obj[3].passenger_id).slice(16));
                                     document.getElementById("links4").href='http://localhost:8080/seatchooser?order_id='+obj[3].order_id+"&flight_id="+obj[3].flight_id+"&type="+obj[3].flight.type+"&seat_type="+obj[3].seat_type;
                                     $('#passenger4').show();
+                                    $('#realPrice').html(parseFloat((obj[0].realPrice)+parseFloat(obj[1].realPrice)+parseFloat(obj[2].realPrice)+parseFloat(obj[3].realPrice)+200).toString());
+                                    $('#realPrice1').html(parseFloat((obj[0].realPrice)+parseFloat(obj[1].realPrice)+parseFloat(obj[2].realPrice)+parseFloat(obj[3].realPrice)+200).toString());
                                     break;
                                 case 5:
                                     $('#user_name').html(obj[0].user_name);
@@ -414,6 +413,8 @@
                                     $('#passenger_id5').html((obj[4].passenger_id).slice(0,5)+"**********"+(obj[4].passenger_id).slice(16));
                                     document.getElementById("links5").href='http://localhost:8080/seatchooser?order_id='+obj[4].order_id+"&flight_id="+obj[4].flight_id+"&type="+obj[4].flight.type+"&seat_type="+obj[4].seat_type;
                                     $('#passenger5').show();
+                                    $('#realPrice').html(parseFloat((obj[0].realPrice)+parseFloat(obj[1].realPrice)+parseFloat(obj[2].realPrice)+parseFloat(obj[3].realPrice)+parseFloat(obj[4].realPrice)+250).toString());
+                                    $('#realPrice1').html(parseFloat((obj[0].realPrice)+parseFloat(obj[1].realPrice)+parseFloat(obj[2].realPrice)+parseFloat(obj[3].realPrice)+parseFloat(obj[4].realPrice)+250).toString());
                                     break;
 
                             }
@@ -428,9 +429,6 @@
                             $('#arrival_airport').html(obj[0].flight.arrival_airport);
                             $('#order_num').html("订单号： "+obj[0].order_num);
                             $('#orderTime').html((obj[0].orderTime).slice(0,-3));
-                            $('#realPrice').html(obj[0].realPrice);
-                            $('#realPrice1').html(obj[0].realPrice);
-                            $('#price_be').html(((parseInt(obj[0].realPrice)-50*count)/count).toString());
                             $('#passenger_num').html(count.toString()+"人");
                             $('#passenger_num1').html(count.toString()+"人");
                             $('#passenger_num2').html(count.toString()+"人");

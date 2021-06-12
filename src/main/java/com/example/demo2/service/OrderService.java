@@ -91,6 +91,8 @@ public class OrderService {
         orderMapper.updateStatus(orderTime);
     }
 
+    public void ReturnTicket(Integer order_id){orderMapper.ReturnTicket(order_id);}
+
 //    @Override
 //    public List<Order> findUnpayByid(Integer userid) {
 //        return orderMapper.findUnpayByid(userid);
