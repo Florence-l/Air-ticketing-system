@@ -34,7 +34,7 @@ public class PayController {
     public void payController(String totalPrice,String subject,String order_num,HttpServletResponse response)throws IOException{
         order_num_ = order_num;
         System.out.println(order_num_);
-        payService.pay(totalPrice,subject,response);
+        payService.pay(totalPrice,subject,order_num,response);
     }
 
     @RequestMapping("/getOd_num")
@@ -43,14 +43,11 @@ public class PayController {
         return order_num_;
     }
 
-    @GetMapping("/hahaha")
-    public String haha(){return "orderDetail";}
-
-
     //同步通知
     @RequestMapping("/payReturn")
     public String returnCall(HttpServletRequest request) throws AlipayApiException {
         System.out.println("支付成功, 进入同步通知接口...");
+        return "orderDetail";
 
         // 获取支付宝GET过来反馈信息
 //        Map<String, String> params = new HashMap<String, String>();
@@ -88,7 +85,6 @@ public class PayController {
 //            System.out.println("支付, 验签失败...");
 //            return "booking";
 //        }
-        return "orderDetail";
     }
 
     //异步通知
@@ -163,4 +159,5 @@ public class PayController {
         }
         return "orderDetail";
     }
+
 }
