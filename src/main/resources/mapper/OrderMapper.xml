@@ -59,7 +59,7 @@
         realPrice
         from order_table
         inner join flight_table  on order_table.flight_id = flight_table.flight_id
-        where user_id = #{user_id}
+        where user_id = #{user_id} and is_valid = 0
     </select>
     <select id="findUnpay" resultMap="OrderResultMap">
         select
