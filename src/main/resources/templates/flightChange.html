@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>改签航班查询结果</title>
+    <link rel="stylesheet" th:href="@{layui/css/layui.css}">
+    <link type="text/css" rel="stylesheet" href="/css/jqstyle.css"/>
+    <link rel="stylesheet" href="/css/index.css"/>
+    <link rel="stylesheet" href="/css/schedule.css"/>
+    <script type="text/javascript" src="/js/jquery-1.8.3.min.js"></script>
+    <script type="text/javascript" src="/js/getUrl.js"></script>
+    <script type="text/javascript" src="/js/change.js"></script>
+
+
+    <style type="text/css">
+        .btn{
+            width: 100px;
+            height: 30px;
+            background: blue;
+            border: none;
+            color: white;
+            margin: 6px 10px;
+        }
+        .btnStyle1{
+            border-radius: 40px;
+        }
+    </style>
+</head>
+<body>
+
+
+<th:block th:include="common.html :: header"></th:block>
+
+<!--判断用户是否已经登录-->
+<span id="username"  style="display:none;"  th:text="${session.SPRING_SECURITY_CONTEXT?.authentication?.principal?.username}"></span>
+
+<div class="wrapper">
+    <div class="container">
+        <article class="part card-details">
+            <h1>
+                Flight Schedule Details
+            </h1>
+            <form id="flightInquiry" action="/index" method="post" target="iframe">
+                <div class="group card-number">
+                    <label style="font-size:14px">出发地</label>
+                    <span style="font-size:16px" id="gdeparturecity"></span>
+                </div>
+                <div class="group card-name">
+                    <label style="font-size:14px">目的地</label>
+                    <span style="font-size:16px" id="garrivalcity"></span>
+                </div>
+                <div class="group card-name">
+                        <label style="font-size:14px">日期</label>
+                        <input style="font-size:16px" name="date" id="gdate" type="text" required="required" placeholder="格式如：yyyy.mm.dd">
+                </div>
+                <div class="grup submit-group">
+                    <button type="submit" onclick="getid()">查询</button>
+                </div>
+            </form>
+            <iframe id="iframe" name="iframe" style="display:none;" ></iframe>
+        </article>
+        <div class="part bg"></div>
+    </div>
+</div>
+
+<div class="card" style="position: relative;left: 50%;margin-left: -486px;">
+    <h2 style="font-size: 18px">改签航班查询结果</h2>
+    <div class="tab_box">
+        <table class="layui-hide" id="flightList" lay-filter="test"></table>
+    </div>
+</div>
+
+
+
+
+<th:block th:include="common.html :: footer"></th:block>
+
+<script type="text/html" id="toolbtn">
+    <button id="book" style="width: 50px;" class="layui-btn layui-btn-xs layui-btn-radius layui-btn-primary" lay-event="book" onclick="change">改签</button>
+</script>
+
+<script th:src="@{layui/layui.js}"></script>
+
+<script th:inline="none">
+    var id;
+    layui.use(['table'], function(){
+        var table = layui.table;//使用数据表格
+
+        table.render({
+            elem: '#flightList'
+            ,height: 500
+            ,url: 'flight' //数据接口
+            ,skin:'nob'
+            ,size:'lg'
+            ,limit: 10
+            ,limits: [10, 20, 30, 50]
+            ,page: true //开启分页
+            ,cols: [[ //表头
+                {field: 'departurecity', title: '出发城市', width: 100}
+                ,{field: 'arrivalcity', title: '到达城市', width: 100}
+                ,{field: 'departuretime', title: '出发时间',sort: true, width: 110}
+                ,{field: 'arrivaltime', title: '到达时间', width: 110}
+                ,{field: 'date', title: '日期', width: 120}
+                ,{field: 'arrival_airport', title: '到达机场', width: 120}
+                ,{field: 'departure_airport', title: '出发机场', width: 120}
+                ,{field: 'price', title: '价格', width: 100,sort: true,templet:function (d) {return '<span style="color:#23a9de;font-size: 16px;font-weight: bold">'+"￥"+d.price;}}
+                ,{title: '剩余量', width: 80,templet:function (d){return (d.bc_remaining+d.ec_remaining);
+                    }}
+                ,{fixed: '', title:'操作', toolbar: "#toolbtn", width:80}
+            ]]
+        });
+    table.on('tool(test)', function (obj)  {
+        var book_date = obj.data.date;
+        var book_departurecity = obj.data.departurecity;
+        var book_arrivalcity = obj.data.arrivalcity;
+        var book_departuretime = obj.data.departuretime;
+        var book_arrivaltime = obj.data.arrivaltime;
+        var book_arrival_airport = obj.data.arrival_airport;
+        var book_departure_airport = obj.data.departure_airport;
+        var book_price=parseInt(obj.data.price);
+        var book_flight_id=obj.data.flight_id;
+        if (obj.event === 'book') {
+            var username=$('#username').html();
+            if(compareNow(book_date)==false){
+                layui.use('layer', function(){
+                    var layer = layui.layer;
+                    layer.msg('当前日期无法改签！');
+                });
+            }else {
+                if (username != ''){
+                    if(book_price > originalPrice)
+                    {
+                        layui.use('layer', function(){
+                            var layer = layui.layer;
+                            layer.msg('友情提示：乘客改签当前航班需补差价哦');
+                        })
+                        change = "1";
+                        var diff = book_price - price;
+                        $.ajax({//支付
+                            async : false,
+                            type:'post',
+                            url:'/pay',
+                            data:{
+                                diff: diff,
+                                subject: departurecity+"-"+arrivalcity,
+                                order_num: order_num
+                            },
+                            success: function(response) {
+                                $.ajax({//修改数据库
+                                    type:'post',
+                                    url:'/change1',
+                                    data:{
+                                        order_id: order_id,
+                                        diff: diff
+                                    },
+                                    success:function(res){
+                                        if(res === "success"){
+                                            window.location.href='http://localhost:8080/orderChange';
+                                        }
+                                    }
+                                })
+                            }
+                        })
+                    }else if(book_price < price)
+                    {
+                        layui.use('layer', function(){
+                            var layer = layui.layer;
+                            layer.msg('友情提示：乘客改签当前航班会退差价哦');
+                        })
+                        change = "2";
+                        var diff = price - book_price;
+                        $.ajax({
+                            type:'post',
+                            url:'/change2',
+                            data:{
+                                order_id: order_id,
+                                diff: diff
+                            },
+                            success:function(res){
+                                if(res === "success"){
+                                    window.setTimeout(window.location.href, 1000);
+                                    window.location.href='http://localhost:8080/orderChange';
+                                }
+                            }
+                        })
+                    }else if(book_price === price)
+                    {
+                        layui.use('layer', function(){
+                            var layer = layui.layer;
+                            layer.msg('友情提示：乘客改签当前航班无差价哦');
+                        })
+                        change = "3";
+                        $.ajax({
+                            type:'post',
+                            url:'/change3',
+                            data:{
+                                order_id: order_id,
+                                diff: 0
+                            },
+                            success:function(res){
+                                if(res === "success"){
+                                    window.setTimeout(window.location.href, 1000);
+                                    window.location.href='http://localhost:8080/orderChange';
+                                }
+                            }
+                        })
+                    }
+                }else {
+                    layer.open({
+                        type: 2,
+                        area: ["500px", "600px"],
+                        title: "请先登录",
+                        closeBtn: 1,
+                        content: "/loginModal?book_departurecity=" + escape(book_departurecity) + "&book_arrivalcity="
+                            + escape(book_arrivalcity) + "&book_departuretime=" + escape(book_departuretime) + "&book_arrivaltime="
+                            + escape(book_arrivaltime) + "&book_arrival_airport=" + escape(book_arrival_airport) + "&book_departure_airport="
+                            + escape(book_departure_airport) + "&book_date=" + escape(book_date) + "&book_price=" + escape(book_price)
+                            + "&book_flight_id=" + escape(book_flight_id),
+                    });
+                }
+            }
+        }
+    });
+
+    });
+
+
+var now= new Date();
+    function compareNow(str)
+    {   var nowDate = new Date(now.getFullYear()+'/'+(now.getMonth()+1)+'/'+now.getDate());
+        var r = str.match(/^(\d{1,4})(.|\/)(\d{1,2})\2(\d{1,2})$/);
+        var queryDate= new Date(r[1], r[3]-1, r[4]);
+        console.log(nowDate);
+        console.log(queryDate);
+        if(queryDate<nowDate) return false;
+    }
+</script>
+
+</body>
+</html>

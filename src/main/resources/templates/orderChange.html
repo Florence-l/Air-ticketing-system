@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>订单详情</title>
+    <link rel="stylesheet" th:href="@{layui/css/layui.css}">
+    <link rel="stylesheet" th:href="@{css/orderDetail.css}">
+    <script type="text/javascript" src="/js/jquery-1.8.3.min.js"></script>
+    <link rel="stylesheet" href="https://webresource.c-ctrip.com/ResH5FlightOnline/R1/3rdLib/ant_cus.css?v=2018103101">
+    <link rel="stylesheet" href="https://bd-s.tripcdn.cn/modules/flight/online-orderdetail/static/css/main-1ad016d6.css">
+    <style data-styled="active" data-styled-version="5.3.0"></style>
+    <link type="text/css" rel="stylesheet" href="//webresource.c-ctrip.com/ResUnionOnline/R3/float/css/pc_flaot.css">
+</head>
+<body>
+<th:block th:include="common.html :: header"></th:block>
+<div class="sc-hxyAeK hIpCju">
+    <div class="sc-gggoXN byiTzm">
+        <div class="sc-hLyimJ eVcwMi">
+            <div class="sc-knSFqH iwmrPd">
+                <div class="sc-bVhZDa dWBRTa">
+                    <div>
+                        <div class="sc-fudqdz jBVZdE">支付成功</div>
+                        <div class="sc-ijByYY gEhAFQ">
+                            <div class="sc-tbgaB dkpyjO">已为您完成本次预订服务
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="sc-dhtNOG iBMwaq" id="order_num"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="u-trips" data-readyobserve="orderDetail" class="sc-hLyimJ eVcwMi">
+            <div class="sc-cQDFzS jKWGHJ">
+                <div class="sc-kSCemg OGHxE">
+            <span id="city">
+
+            </span>
+                </div>
+            </div>
+            <div class="sc-knSFqH iwmrPd">
+                <div class="sc-gmIBos gQpdXV">
+                    <div class="sc-jLDROR lbqFAR">
+                        <div class="sc-gSiFqf cPIGvg">
+                            <span>单程</span>
+                        </div>
+                        <span class="sc-gLwjMs hAQSL" id="date"> </span>
+                    </div>
+                    <div>
+                        <div class="sc-kQfVtO kKNmtJ">
+                            <div class="sc-fDUjSr fIGEpM">
+                                <div class="sc-fExJIe dlxVRf">
+                                    <strong class="sc-jdtaiD kLZsdo" id="departuretime"></strong>
+                                    <span class="sc-fBFNFI bgPFhY">
+                                <span id="departurecity_"></span>
+                                <span id="departure_airport"></span>
+                            </span>
+                                </div>
+                                <div class="sc-ektJcd gErMrf">
+                                    <div class="sc-eDdKWq bDyGyM">
+                                        <div class="sc-jaBegh ihbyqT">
+                                            <span>&#12288 &#12288</span>
+                                        </div>
+                                    </div>
+                                    <div class="sc-jaJIhW bGFtaP"></div>
+                                </div>
+                                <div class="sc-fExJIe hfjodw">
+                                    <strong class="sc-jdtaiD kLZsdo" id="arrivaltime"></strong>
+                                    <span class="sc-fBFNFI bgPFhY">
+                                <span id="arrivalcity_"></span>
+                                <span id="arrival_airport"></span>
+                            </span>
+                                </div>
+                            </div>
+                            <div class="sc-lMZDC ibbBdg">
+                                <p>
+                                    <span> &#12288 &#12288 &#12288 &#12288 &#12288 &#12288 &#12288</span>
+                                    <span> &#12288 &#12288 &#12288 &#12288 &#12288 &#12288 &#12288</span>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div  class="sc-hLyimJ eVcwMi" style="padding-bottom: 24px;">
+            <div class="sc-cQDFzS jKWGHJ">出行人信息</div>
+            <div style="display:none;" id="passenger1">
+                <div class="sc-knSFqH iwmrPd">
+                    <div class="sc-dRDboV cnsbKB" style="float: left; margin-top: 0px;">
+                        <div class="sc-HvCEC diNWkT" id="user_name">xiaohu</div>
+                        <div class="sc-ddIsst gjcLUR">
+                            <span class="sc-ieKCvr hZYpCo">身份证:</span>
+                            <span class="sc-gVPcaA dbdPny" id="passenger_id">balbala</span>
+                        </div><div class="sc-ddIsst gjcLUR">
+                        <span class="sc-ieKCvr hZYpCo"></span>
+                        <span class="sc-gVPcaA dbdPny"></span>
+                        <li class="load-more ">
+                            <a href="" id="links" style="position: absolute;margin-left: 550px;"> 前去选座 ></a>
+
+                        </li>
+                    </div>
+                        <div class="sc-ddIsst gjcLUR">
+                            <span class="sc-ieKCvr hZYpCo"></span>
+                            <span class="sc-gVPcaA dbdPny"></span>
+                        </div>
+                        <div class="sc-ddIsst gjcLUR">
+                            <span class="sc-ieKCvr hZYpCo"></span>
+                            <span class="sc-gVPcaA dbdPny">
+                    <span></span>
+                </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div style="display:none;" id="passenger2">
+                <div class="sc-knSFqH iwmrPd">
+                    <div class="sc-dRDboV cnsbKB" style="float: left; margin-top: 0px;">
+                        <div class="sc-HvCEC diNWkT" id="user_name2"></div>
+                        <div class="sc-ddIsst gjcLUR">
+                            <span class="sc-ieKCvr hZYpCo">身份证:</span>
+                            <span class="sc-gVPcaA dbdPny" id="passenger_id2"></span>
+                        </div><div class="sc-ddIsst gjcLUR">
+                        <span class="sc-ieKCvr hZYpCo"></span>
+                        <span class="sc-gVPcaA dbdPny"></span>
+                        <li class="load-more ">
+                            <a href="" id="links2" style="position: absolute;margin-left: 550px;"> 前去选座 ></a>
+
+                        </li>
+                    </div>
+                        <div class="sc-ddIsst gjcLUR">
+                            <span class="sc-ieKCvr hZYpCo"></span>
+                            <span class="sc-gVPcaA dbdPny"></span>
+                        </div>
+                        <div class="sc-ddIsst gjcLUR">
+                            <span class="sc-ieKCvr hZYpCo"></span>
+                            <span class="sc-gVPcaA dbdPny">
+                    <span></span>
+                </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div style="display:none;" id="passenger3">
+                <div class="sc-knSFqH iwmrPd">
+                    <div class="sc-dRDboV cnsbKB" style="float: left; margin-top: 0px;">
+                        <div class="sc-HvCEC diNWkT" id="user_name3"></div>
+                        <div class="sc-ddIsst gjcLUR">
+                            <span class="sc-ieKCvr hZYpCo">身份证:</span>
+                            <span class="sc-gVPcaA dbdPny" id="passenger_id3"></span>
+                        </div><div class="sc-ddIsst gjcLUR">
+                        <span class="sc-ieKCvr hZYpCo"></span>
+                        <span class="sc-gVPcaA dbdPny"></span>
+                        <li class="load-more ">
+                            <a href="" id="links3" style="position: absolute;margin-left: 550px;"> 前去选座 ></a>
+
+                        </li>
+                    </div>
+                        <div class="sc-ddIsst gjcLUR">
+                            <span class="sc-ieKCvr hZYpCo"></span>
+                            <span class="sc-gVPcaA dbdPny"></span>
+                        </div>
+                        <div class="sc-ddIsst gjcLUR">
+                            <span class="sc-ieKCvr hZYpCo"></span>
+                            <span class="sc-gVPcaA dbdPny">
+                    <span></span>
+                </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div style="display:none;" id="passenger4">
+                <div class="sc-knSFqH iwmrPd">
+                    <div class="sc-dRDboV cnsbKB" style="float: left; margin-top: 0px;">
+                        <div class="sc-HvCEC diNWkT" id="user_name4"></div>
+                        <div class="sc-ddIsst gjcLUR">
+                            <span class="sc-ieKCvr hZYpCo">身份证:</span>
+                            <span class="sc-gVPcaA dbdPny" id="passenger_id4"></span>
+                        </div><div class="sc-ddIsst gjcLUR">
+                        <span class="sc-ieKCvr hZYpCo"></span>
+                        <span class="sc-gVPcaA dbdPny"></span>
+                        <li class="load-more ">
+                            <a href="" id="links4" style="position: absolute;margin-left: 550px;"> 前去选座 ></a>
+
+                        </li>
+                    </div>
+                        <div class="sc-ddIsst gjcLUR">
+                            <span class="sc-ieKCvr hZYpCo"></span>
+                            <span class="sc-gVPcaA dbdPny"></span>
+                        </div>
+                        <div class="sc-ddIsst gjcLUR">
+                            <span class="sc-ieKCvr hZYpCo"></span>
+                            <span class="sc-gVPcaA dbdPny">
+                    <span></span>
+                </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div style="display:none;" id="passenger5">
+                <div class="sc-knSFqH iwmrPd">
+                    <div class="sc-dRDboV cnsbKB" style="float: left; margin-top: 0px;">
+                        <div class="sc-HvCEC diNWkT" id="user_name5"></div>
+                        <div class="sc-ddIsst gjcLUR">
+                            <span class="sc-ieKCvr hZYpCo">身份证:</span>
+                            <span class="sc-gVPcaA dbdPny" id="passenger_id5"></span>
+                        </div><div class="sc-ddIsst gjcLUR">
+                        <span class="sc-ieKCvr hZYpCo"></span>
+                        <span class="sc-gVPcaA dbdPny"></span>
+                        <li class="load-more ">
+                            <a href="" id="links5" style="position: absolute;margin-left: 550px;"> 前去选座 ></a>
+
+                        </li>
+                    </div>
+                        <div class="sc-ddIsst gjcLUR">
+                            <span class="sc-ieKCvr hZYpCo"></span>
+                            <span class="sc-gVPcaA dbdPny"></span>
+                        </div>
+                        <div class="sc-ddIsst gjcLUR">
+                            <span class="sc-ieKCvr hZYpCo"></span>
+                            <span class="sc-gVPcaA dbdPny">
+                    <span></span>
+                </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+
+
+
+    </div>
+
+    <div class="sc-hcmsbg iHLBIg">
+        <div class="sc-hLyimJ eVcwMi">
+            <div class="sc-knSFqH iwmrPd">
+                <div class="sc-dqFsfS bmFkzh">订单支付明细</div>
+                <div class="sc-bhrzfF bPHARW">
+                    <ul class="sc-cdxCiY kIrTuc">
+                        <li class="point">
+                            <div class="line">
+                                <div class="bgcolor"></div>
+                            </div>
+                            <div class="sc-bgRGxW dransz">
+                                <span></span>
+                                <span class="sc-fIkgrG guGlFy">
+                                    <dfn>¥</dfn><span id="realPrice"></span></span>
+                            </div><div class="sc-kLDuD gxAqPO">
+                            <h5>下单金额</h5>
+                            <p id="orderTime"></p>
+                        </div>
+                            <div class="sc-bQdwJz jVXKbk">
+                                <div class="sc-evcquM kJwJYF">
+                                    <ul class="price-list-item">
+                                        <li class="order-title">
+                                            <div class="item-pay-info">
+                                                <div class="item-name">出行人</div>
+                                                <div class="item-price">
+                                                    <dfn></dfn></div>
+                                                <div class="item-count"><span id="passenger_num">
+                                                    <dfn></dfn></span>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div class="item-pay-info">
+                                                <div class="item-name">机票价</div>
+                                                <div class="item-price">
+                                                    <dfn>¥</dfn><span id="price_be"></span>348</div>
+                                                <div class="item-count">
+                                                    <span><dfn>×</dfn><span id="passenger_num1">1人</span></span></div>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div class="item-pay-info"><div class="item-name">机建</div>
+                                                <div class="item-price">
+                                                    <dfn>¥</dfn>50</div>
+                                                <div class="item-count">
+                                                    <span>
+                                                        <dfn>×</dfn><span id="passenger_num2">1人</span>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div class="item-pay-info">
+                                                <div class="item-name">燃油</div>
+                                                <div class="item-price">
+                                                    <dfn>¥</dfn>0
+                                                </div>
+                                                <div class="item-count">
+                                                    <span>
+                                                        <dfn>×</dfn><span id="passenger_num3">1人</span></span>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="sc-CVGMF jGnAEF">
+                                    <ul>
+                                        <li>
+                                            <div>支付方式</div>
+                                            <div class="pay-way">移动版支付宝(<dfn>¥</dfn><span id="realPrice1"></span>)</div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+       var nowDate = new Date();
+       var paymentTime = nowDate.getFullYear()+"."+(parseInt(nowDate.getMonth())+1)+"."+nowDate.getDate()
+            +" "+nowDate.getHours()+":"+nowDate.getMinutes()+":"+nowDate.getSeconds();
+    $(function() {
+   　　 $.ajax({
+                type : 'GET',
+                url : '/getOd_id',
+                async : false,
+                data: {},
+                dataType : "JSON",
+                success: function (id) {
+                     $.ajax({
+                        type : 'POST',
+                        url : '/findById',
+                        data : {
+                        'order_id' : id,
+                        'paymentTime' : paymentTime
+                        },
+                        success: function(res){
+                            $('#user_name').html(res.user_name);
+                            $('#passenger_id').html((res.passenger_id).slice(0,5)+"**********"+(res.passenger_id).slice(16));
+                            document.getElementById("links").href='http://localhost:8080/seatchooser?order_id='+res.order_id+"&flight_id="+res.flight_id+"&type="+res.flight.type+"&seat_type="+res.seat_type;
+
+                            $('#passenger1').show();
+
+                            $('#city').html(res.flight.departurecity+"  ➡️  "+res.flight.arrivalcity);
+                            $('#departurecity_').html(res.flight.departurecity);
+                            $('#arrivalcity_').html(res.flight.arrivalcity);
+                            $('#date').html(res.flight.date);
+                            $('#departuretime').html((res.flight.departuretime).slice(0,-3));
+                            $('#arrivaltime').html((res.flight.arrivaltime).slice(0,-3));
+                            $('#departure_airport').html(res.flight.departure_airport);
+                            $('#arrival_airport').html(res.flight.arrival_airport);
+                            $('#order_num').html("订单号： "+res.order_num);
+                            $('#orderTime').html((res.orderTime).slice(0,-3));
+                            $('#realPrice').html(res.realPrice);
+                            $('#realPrice1').html(res.realPrice);
+                            $('#price_be').html(((parseInt(res.realPrice)-50*count)/count).toString());
+                            $('#passenger_num').html(count.toString()+"人");
+                            $('#passenger_num1').html(count.toString()+"人");
+                            $('#passenger_num2').html(count.toString()+"人");
+                            $('#passenger_num3').html(count.toString()+"人");
+                        }
+                     })
+                }
+                })
+　　});
+</script>
+
+</body>
+</html>
