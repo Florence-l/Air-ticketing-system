@@ -38,10 +38,14 @@
     where passenger_id = #{passenger_id,jdbcType=VARCHAR}
   </delete>
 
+  <update id="updateTel" parameterType="java.lang.String">
+    update passenger_table
+    set user_tel = #{user_tel,jdbcType=VARCHAR}
+    where passenger_id = #{passenger_id,jdbcType=VARCHAR}
+  </update>
 
 
-
-<!--insert:所有的字段都会添加一遍-->
+  <!--insert:所有的字段都会添加一遍-->
   <insert id="insert" parameterType="com.example.demo2.bean.Passenger" >
     insert into passenger_table (passenger_id, user_name, user_tel, user_id
       )

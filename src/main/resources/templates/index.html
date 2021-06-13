@@ -421,6 +421,8 @@
                     <input type="hidden" name="paymentStatus_" id="paymentStatus_">
                     <input type="hidden" name="flight_id_" id="flight_id_">
                     <input type="hidden" name="realPrice" id="realPrice">
+                    <input type="hidden" name="city1" id="city1">
+                    <input type="hidden" name="city2" id="city2">
                     <input type="hidden" name="seat_id" id="seat_id_">
                     <input type="hidden" name="seat_type" id="seat_type_">
 
@@ -752,7 +754,16 @@
                 });
             } else {
                 var username = $('#username').html();
-                if (username != '') {
+                if (username == '') {
+                    layer.open({
+                        type: 2,
+                        area: ["500px", "600px"],
+                        title: "请先登录",
+                        closeBtn: 1,
+                        content: "loginModal",
+                    });
+                    }
+                else{
                     $.ajax({
                         type: 'post',
                         url: '/selectOdByNum',
@@ -785,6 +796,8 @@
                                 $('#user_name_').html(obj.user_name);
                                 $("#order_id_").val(obj.order_id);
                                 $("#paymentStatus_").val(obj.paymentStatus);
+                                $("#city1").val(obj.flight.departurecity);
+                                $("#city2").val(obj.flight.arrivalcity);
                                 $("#flight_id_").val(obj.flight.flight_id);
                                 $("#realPrice").val(obj.realPrice);
                                 $("#seat_id_").val(obj.seat_id);
@@ -838,6 +851,17 @@
                         })
                 }
                 }
+
+        function gq(){
+            var departurecity = $('#city1').val();
+            var arrivalcity = $('#city2').val();
+            var realPrice = $('#realPrice').val();
+            var order_id = $('#order_id_').val();
+            var order_num = $('#orderNum_').val();
+            window.location.href='http://localhost:8080/result?departurecity='+departurecity+'&arrivalcity='+arrivalcity+'&realPrice='
+            +realPrice+'&order_id='+order_id+'&orderNum_='+orderNum_;
+
+        }
 
         function tp(){
             var order_num = $('#orderNum_').val();

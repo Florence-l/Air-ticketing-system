@@ -57,5 +57,14 @@ public class PassengerController {
         return "success";
     }
 
+    @RequestMapping("/updateTel")
+    @ResponseBody()
+    public int updateTel(HttpServletRequest request) throws IOException{
+        String user_tel = request.getParameter("user_tel");
+        String passenger_id = request.getParameter("passenger_id");
+        passengerService.updateTel(passenger_id,user_tel);
+        return 1;
+    }
+
 
 }

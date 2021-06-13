@@ -56,6 +56,23 @@
 
         if(obj.event === 'edit'){
 
+        layer.prompt({
+        formType: 0
+        ,value: data.word
+        ,title: '手机号',
+    }, function(value, index){
+
+         var reg = /^(((13[0-9]{1})|(15[0-9]{1})|(18[0-9]{1}))+\d{8})$/;
+        if(!reg.test(value))
+        {
+            layer.msg('请输入正确格式的手机号')
+            ;
+        }else{
+            EidtUv(data,value,index,obj);
+        }
+    });
+
+
 
 
 	}else if(layEvent === 'delete'){ //删除
@@ -80,9 +97,30 @@
 
             }
             })
-    });
+     });
+    }
+  });
+
+    function  EidtUv(data,value,index,obj) {
+    $.ajax({
+        url: "/updateTel",
+        type: "POST",
+        data:{"passenger_id":data.passenger_id,"user_tel":value},
+        dataType: "json",
+        success: function(result){
+            if(result>=1){
+                layer.close(index);
+                //同步更新表格和缓存对应的值
+                obj.update({
+                    user_tel: value
+                });
+                layer.msg("修改成功", {icon: 6});
+            }else{
+                layer.msg("修改失败", {icon: 5});
+            }
         }
-        });
+    });
+}
 
 
 
