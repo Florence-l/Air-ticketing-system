@@ -335,7 +335,8 @@
                         url : '/findByoNum',
                         data : {
                         'order_num' : data,
-                        'paymentTime' : paymentTime},
+                        'paymentTime' : paymentTime
+                        },
                         success: function(res){
 
                             var obj = JSON.parse(res);
@@ -435,10 +436,7 @@
                             $('#passenger_num1').html(count.toString()+"人");
                             $('#passenger_num2').html(count.toString()+"人");
                             $('#passenger_num3').html(count.toString()+"人");
-
-
                         }
-
                      })
                 }
                 })

@@ -44,7 +44,6 @@ public class PassengerService{
             return p;
         }
         return null;
-
     }
 
     public int countAllPassenger(String user_id) {

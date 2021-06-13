@@ -20,16 +20,25 @@ public interface OrderMapper {
 
     int updateSeat(@Param("seat_id") Integer seat_id,@Param("order_id")Integer order_id );
 
-    int updateChange(@Param("change")String change, @Param("order_num")String order_num, @Param("order_id")Integer order_id);
-
     List<Order> findByoNum(@Param("order_num") String order_num);
-
-    Order findById(@Param("order_id") Integer order_id);
 
     List<String> scheduleTable();
 
     void updateStatus(@Param("orderTime") String orderTime);
 
     void updatePaymentTime(@Param("order_num") String order_num,@Param("paymentTime") String paymentTime);
+
+
+
+    Order findByNum(@Param("order_num") String order_num);
+
+    Order findById(@Param("order_id") Integer order_id);
+
+    List<Order> findByID(@Param("order_id") Integer order_id);
+
+    void updatePaymentTime(@Param("order_id") Integer order_id,@Param("paymentTime") String paymentTime);
+
+    int updateChange(@Param("change")String change, @Param("order_num")String order_num, @Param("order_id")Integer order_id);
+
 
 }

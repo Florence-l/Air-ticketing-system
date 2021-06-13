@@ -18,8 +18,6 @@ public class OrderService {
 
 
     public List<Order> findByid(Integer user_id, int page, int limits) {
-//        User user = userMapper.loadUserByUsername(username);
-//        Integer user_id = user.getUserId();
         List<Order> list = orderMapper.findByid(user_id,(limits-1)*page,page);
         if(list!=null){
             return list;
@@ -35,17 +33,6 @@ public class OrderService {
         return null;
     }
 
-    public Order findById(Integer order_id){
-        Order order = orderMapper.findById(order_id);
-        if(order != null){
-            return order;
-        }
-        return null;
-    }
-
-//    public User findUser(String username) {
-//        return userMapper.loadUserByUsername(username);
-//    }
     public int countAllOrder() {
         int count = orderMapper.countAllOrder();
         if(count>0){
@@ -83,13 +70,6 @@ public class OrderService {
         return 1;
     }
 
-    public int updateChange(String change,String order_num,Integer order_id,String passenger_id){
-        if(change.equals("1"))
-            order_num = order_num + passenger_id;
-        orderMapper.updateChange(change,order_num,order_id);
-        return 1;
-    }
-
     public List<String> scheduleTable(){
         return orderMapper.scheduleTable();
     }
@@ -97,6 +77,52 @@ public class OrderService {
     public void updateStatus(String orderTime){
         orderMapper.updateStatus(orderTime);
     }
+
+
+
+    public Order findByNum(String order_num){
+        Order order = orderMapper.findByNum(order_num);
+        if(order != null){
+            return order;
+        }
+        return null;
+    }
+
+    //在改签时调用（返回order类型）
+    public Order findById(Integer order_id){
+        Order order = orderMapper.findById(order_id);
+        if(order != null){
+            return order;
+        }
+        return null;
+    }
+
+    //在改签时调用
+    public List<Order> findByID(Integer order_id){
+        List<Order> list = orderMapper.findByID(order_id);
+        if(list != null){
+            return list;
+        }
+        return null;
+    }
+
+    //在改签支付完成后调用
+    public List<Order> findByID(Integer order_id,String paymentTime){
+        List<Order> list = orderMapper.findByID(order_id);
+        orderMapper.updatePaymentTime(order_id,paymentTime);
+        if(list != null){
+            return list;
+        }
+        return null;
+    }
+
+    //在改签时调用
+    public int updateChange(String change,String order_num,Integer order_id){
+        orderMapper.updateChange(change,order_num,order_id);
+        return 1;
+    }
+
+
 
 //    @Override
 //    public List<Order> findUnpayByid(Integer userid) {

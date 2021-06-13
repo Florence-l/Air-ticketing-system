@@ -1,10 +1,12 @@
 package com.example.demo2.controller;
 
 
+import com.alipay.api.AlipayApiException;
 import com.example.demo2.bean.Order;
 import com.example.demo2.bean.User;
 import com.example.demo2.service.FlightService;
 import com.example.demo2.service.OrderService;
+import com.example.demo2.service.PayService;
 import com.example.demo2.service.UserService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.security.Principal;
 import java.util.Arrays;
@@ -28,6 +31,8 @@ public class OrderController {
     public UserService userService;
     @Autowired
     public FlightService flightService;
+    @Autowired
+    public PayService payService;
 
 
     @RequestMapping("/insertOrder")
@@ -41,7 +46,7 @@ public class OrderController {
         String seat_type = request.getParameter("seat_type");
         String orderTime = request.getParameter("orderTime");
         Integer paymentStatus = Integer.valueOf(request.getParameter("paymentStatus"));
-        Float realPrice = Float.valueOf(request.getParameter("realPrice"));
+        String realPrice = String.valueOf(request.getParameter("realPrice"));
         String order_num = request.getParameter("order_num");
         String change = request.getParameter("change");
 
@@ -85,25 +90,58 @@ public class OrderController {
     @ResponseBody()
     public String findById(HttpServletRequest request) throws IOException{
         Integer order_id = Integer.parseInt(request.getParameter("order_id"));
+        String paymentTime = request.getParameter("paymentTime");
+
         ObjectMapper objectMapper = new ObjectMapper();
-        String strObject = objectMapper.writeValueAsString(orderService.findById(order_id));
-//        System.out.println(strObject);
+        String strObject = objectMapper.writeValueAsString(orderService.findByID(order_id,paymentTime));
         return strObject;
     }
 
-    //改签界面
-    @RequestMapping("/change")
+    //改签补差价
+    @RequestMapping("/change1")
     @ResponseBody()
-    public String rebook(HttpServletRequest request) throws IOException{
-        String change = request.getParameter("change");
+    public String change1(HttpServletRequest request) throws IOException, AlipayApiException {
         Integer order_id = Integer.valueOf(request.getParameter("order_id"));
-
+        String diff =request.getParameter("diff");
         Order order = orderService.findById(order_id);
-        String order_num = order.getOrder_num();
         String passenger_id = order.getPassenger_id();
-        orderService.updateChange(change,order_num,order_id,passenger_id);
-        return "success";
+        String order_num = order.getOrder_num() + passenger_id;
+        Integer updateResult = orderService.updateChange("1",order_num,order_id);
+        if(updateResult == '1'){
+            return "success";
+        }
+        return "fail";
     }
 
+    //改签退差价
+    @RequestMapping("/change2")
+    @ResponseBody()
+    public String change2(HttpServletRequest request) throws IOException, AlipayApiException {
+        Integer order_id = Integer.valueOf(request.getParameter("order_id"));
+        String diff =request.getParameter("diff");
+        Order order = orderService.findById(order_id);
+        String order_num = order.getOrder_num();
+        String payResult = payService.refund(order_num,diff,2);
+        if(payResult == "success"){
+            Integer updateResult = orderService.updateChange("2",order_num,order_id);
+            if(updateResult == '1'){
+                return "success";
+            }
+        }
+        return "fail";
+    }
 
+    //改签无差价
+    @RequestMapping("/change3")
+    @ResponseBody()
+    public String change3(HttpServletRequest request) throws IOException, AlipayApiException {
+        Integer order_id = Integer.valueOf(request.getParameter("order_id"));
+        Order order = orderService.findById(order_id);
+        String order_num = order.getOrder_num();
+        Integer updateResult = orderService.updateChange("3",order_num,order_id);
+        if(updateResult == '1'){
+            return "success";
+        }
+        return "fail";
+    }
 }

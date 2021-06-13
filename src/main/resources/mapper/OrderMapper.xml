@@ -15,7 +15,7 @@
         <result column="paymentTime" jdbcType="VARCHAR" property="paymentTime" />
         <result column="seat_id" jdbcType="INTEGER" property="seat_id" />
         <result column="paymentStatus" property="paymentStatus"/>
-        <result column="realPrice" jdbcType="FLOAT" property="realPrice" />
+        <result column="realPrice" jdbcType="VARCHAR" property="realPrice" />
         <result column="change" jdbcType="VARCHAR" property="change"/>
         <association property="flight" javaType="Flight">
             <id column="flight_id" property="flight_id" />
@@ -90,20 +90,18 @@
         orderTime, paymentStatus, realPrice, order_num)
         values (#{user_id,jdbcType=INTEGER}, #{passenger_id,jdbcType=VARCHAR}, #{user_name,jdbcType=VARCHAR},
         #{flight_id,jdbcType=INTEGER},#{orderTime,jdbcType=VARCHAR}, #{paymentStatus,jdbcType=INTEGER},
-        #{realPrice,jdbcType=FLOAT},#{order_num,jdbcType=VARCHAR})
+        #{realPrice,jdbcType=VARCHAR},#{order_num,jdbcType=VARCHAR})
     </insert>
 
     <select id="findByNum" resultMap="OrderResultMap">
         select * from order_table inner join flight_table on order_table.flight_id = flight_table.flight_id where order_num = #{order_num} and passenger_id = #{passenger_id}
     </select>
 
+
     <select id="findByoNum" resultMap="OrderResultMap">
         select * from order_table inner join flight_table on order_table.flight_id = flight_table.flight_id where order_num = #{order_num}
     </select>
 
-    <select id="findById" resultMap="OrderResultMap">
-        select * from order_table inner join flight_table on order_table.flight_id = flight_table.flight_id where order_id = #{order_id}
-    </select>
 
     <select id="scheduleTable" resultType="String">
         select orderTime from order_table where paymentStatus = 0
@@ -113,7 +111,6 @@
         update order_table
         set is_valid = 1
         where orderTime = #{orderTime} and paymentStatus = 0
-
     </update>
 
 
@@ -123,16 +120,35 @@
         where order_id=#{order_id}
     </update>
 
-    <update id="updateChange" parameterType="com.example.demo2.bean.Order">
-        update order_table
-        set change=#{change},order_num=#{order_num}
-        where order_id=#{order_id}
-    </update>
-
     <update id="updatePaymentTime" parameterType="com.example.demo2.bean.Order">
         update order_table
         set paymentTime=#{paymentTime} , paymentStatus = 1
         where order_num = #{order_num}
+    </update>
+
+
+    <select id="findByNum" resultMap="OrderResultMap">
+        select * from order_table inner join flight_table on order_table.flight_id = flight_table.flight_id where order_num = #{order_num}
+    </select>
+
+    <select id="findById" resultMap="OrderResultMap">
+        select * from order_table inner join flight_table on order_table.flight_id = flight_table.flight_id where order_id = #{order_id}
+    </select>
+
+    <select id="findByID" resultMap="OrderResultMap">
+        select * from order_table inner join flight_table on order_table.flight_id = flight_table.flight_id where order_id = #{order_id}
+    </select>
+
+    <update id="updatePaymentTime" parameterType="com.example.demo2.bean.Order">
+        update order_table
+        set paymentTime=#{paymentTime} , paymentStatus = 1
+        where order_id = #{order_id}
+    </update>
+
+    <update id="updateChange" parameterType="com.example.demo2.bean.Order">
+        update order_table
+        set change=#{change},order_num=#{order_num},seat_id='null',seat_type='2'
+        where order_id=#{order_id}
     </update>
 
     <!--    <select id="findUnpayByid" resultType="com.example.demo2.bean.Order" resultMap="OrderResultMap" >-->

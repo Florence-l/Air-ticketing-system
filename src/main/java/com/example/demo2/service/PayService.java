@@ -56,7 +56,7 @@ public class PayService {
     /**
      *可以部分退款及全额退款
      * @param order_no 订单号
-     * @param refund_amount 退款金额
+     * @param refund_amount 差价金额
      * @param type 0未改签过 1改签过（补差价） 2改签过（退差价）
      * @return success退款成功  msg失败信息
      * @throws AlipayApiException
@@ -77,7 +77,7 @@ public class PayService {
         AlipayTradeRefundResponse response;
 
         //之前没有改签过,直接退款或退差价
-        if(type==0){
+        if(type=='0'){
             model = new AlipayTradeRefundModel();
             model.setOutTradeNo(order_no); //与预授权转支付商户订单号相同，代表对该笔交易退款
             model.setRefundAmount(refund_amount);
@@ -93,7 +93,7 @@ public class PayService {
             }
         }
         //改签过(补差价)
-        else if(type==1){
+        else if(type=='1'){
             //查询订单，取出差价金额
             AlipayTradeQueryRequest request = new AlipayTradeQueryRequest();
             request.setBizContent("{\"out_trade_no\":\"" + order_no + "\"}");

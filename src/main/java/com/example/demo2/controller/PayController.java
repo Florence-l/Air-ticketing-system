@@ -2,7 +2,9 @@ package com.example.demo2.controller;
 
 import com.alipay.api.AlipayApiException;
 import com.alipay.api.internal.util.AlipaySignature;
+import com.example.demo2.bean.Order;
 import com.example.demo2.config.AlipayConfig;
+import com.example.demo2.service.OrderService;
 import com.example.demo2.service.PayService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,8 +22,11 @@ import java.util.*;
 public class PayController {
     @Autowired
     private PayService payService;
+    private OrderService orderService;
 
     private String order_num_;
+    private Integer order_id;
+
     /**
      * web端订单支付
      * @param totalPrice
@@ -33,6 +38,9 @@ public class PayController {
     @ResponseBody
     public void payController(String totalPrice,String subject,String order_num,HttpServletResponse response)throws IOException{
         order_num_ = order_num;
+        Order order = orderService.findByNum(order_num_);
+        order_id = order.getOrder_id();
+
         System.out.println(order_num_);
         payService.pay(totalPrice,subject,order_num,response);
     }
@@ -41,6 +49,13 @@ public class PayController {
     @ResponseBody()
     public String getOd_num(){
         return order_num_;
+    }
+
+
+    @RequestMapping("/getOd_id")
+    @ResponseBody()
+    public Integer getOd_id(){
+        return order_id;
     }
 
     //同步通知
