@@ -8,7 +8,7 @@ import java.math.BigDecimal;
 public class PaymentBO {
     //省略其他的业务参数，如商品id、购买数量等
 
-
+    //商品名称
     private String subject;
 
     //总金额

@@ -60,7 +60,7 @@
         realPrice
         from order_table
         inner join flight_table  on order_table.flight_id = flight_table.flight_id
-        where user_id = #{user_id}
+        where user_id = #{user_id} and is_valid = 0
     </select>
     <select id="findUnpay" resultMap="OrderResultMap">
         select
@@ -96,7 +96,6 @@
     <select id="findByNum" resultMap="OrderResultMap">
         select * from order_table inner join flight_table on order_table.flight_id = flight_table.flight_id where order_num = #{order_num} and passenger_id = #{passenger_id}
     </select>
-
 
     <select id="findByoNum" resultMap="OrderResultMap">
         select * from order_table inner join flight_table on order_table.flight_id = flight_table.flight_id where order_num = #{order_num}
@@ -150,6 +149,12 @@
         set change=#{change},order_num=#{order_num},seat_id='null',seat_type='2'
         where order_id=#{order_id}
     </update>
+
+    <delete id="ReturnTicket" parameterType="java.lang.Integer">
+        delete from order_table
+        where order_id=#{order_id}
+
+    </delete>
 
     <!--    <select id="findUnpayByid" resultType="com.example.demo2.bean.Order" resultMap="OrderResultMap" >-->
 <!--        select * from order_table where user_id = #{user_id} and paymentStatus = 0-->

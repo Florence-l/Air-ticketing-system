@@ -41,4 +41,6 @@ public interface OrderMapper {
     int updateChange(@Param("change")String change, @Param("order_num")String order_num, @Param("order_id")Integer order_id);
 
 
+    void ReturnTicket(@Param("order_id") Integer order_id);
+
 }

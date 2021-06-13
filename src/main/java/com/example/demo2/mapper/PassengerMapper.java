@@ -25,5 +25,7 @@ public interface PassengerMapper {
 
     int countAllPassenger(String user_id);
 
+    void updateTel(String passenger_id,String user_tel);
+
 }
 

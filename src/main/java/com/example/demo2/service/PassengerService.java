@@ -57,4 +57,9 @@ public class PassengerService{
     public Passenger selectById(Passenger passenger) {
         return null;
     }
+
+    public String updateTel(String passenger_id,String user_tel){
+        passengerMapper.updateTel(passenger_id,user_tel);
+        return "success";
+    }
 }
