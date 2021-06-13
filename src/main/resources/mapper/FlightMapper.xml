@@ -63,8 +63,17 @@
     where flight_id=#{flight_id}
   </update>
 
+  <update id="deleteBC" parameterType="com.example.demo2.bean.Order">
+    update flight_table
+    set bc_remaining=bc_remaining+1
+    where flight_id=#{flight_id}
+  </update>
 
-
+  <update id="deleteEC" parameterType="com.example.demo2.bean.Order">
+    update flight_table
+    set ec_remaining=ec_remaining+1
+    where flight_id=#{flight_id}
+  </update>
 
 
 

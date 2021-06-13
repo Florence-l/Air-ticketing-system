@@ -15,6 +15,8 @@ public interface FlightMapper {
     int updateSeatStatus(Integer flight_id,String seat_status);
     int updateBC(Integer flight_id);
     int updateEC(Integer flight_id);
+    int deleteBC(Integer flight_id);
+    int deleteEC(Integer flight_id);
     int countAllFlight();
 
 }

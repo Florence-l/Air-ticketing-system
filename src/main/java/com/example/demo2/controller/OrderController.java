@@ -1,6 +1,5 @@
 package com.example.demo2.controller;
 
-
 import com.alipay.api.AlipayApiException;
 import com.example.demo2.bean.Order;
 import com.example.demo2.bean.User;
@@ -11,7 +10,6 @@ import com.example.demo2.service.UserService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -19,17 +17,19 @@ import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.security.Principal;
 import java.util.Arrays;
-import java.util.Map;
-import java.util.Random;
 
 @Controller
 public class OrderController {
+    public String gseat_status;
+
     @Autowired
     public OrderService orderService;
     @Autowired
     public UserService userService;
     @Autowired
     public PayService payService;
+    @Autowired
+    public FlightService flightService;
 
 
     @RequestMapping("/insertOrder")
@@ -96,9 +96,25 @@ public class OrderController {
     public String ReturnTicket(HttpServletRequest request) throws IOException{
         String order_num = request.getParameter("order_num");
         Float realPrice = Float.parseFloat(request.getParameter("realPrice"))+50;
-        System.out.println(realPrice);
-        String flight_id = request.getParameter("flight_id");
+        Integer flight_id =Integer.parseInt(request.getParameter("flight_id"));
+        Integer seat_id =Integer.parseInt(request.getParameter("seat_id"));
+        Integer seat_type = Integer.parseInt(request.getParameter("seat_type"));
         Integer order_id = Integer.parseInt(request.getParameter("order_id"));
+
+        System.out.println(seat_id);
+        if(seat_id!=null) {
+            gseat_status=flightService.findSeatId(flight_id);
+            deleteSeat(gseat_status,seat_id);
+            flightService.updateSeatStatus(flight_id,gseat_status);
+            System.out.println(gseat_status);
+            if(seat_type==1){
+                flightService.deleteBC(flight_id);
+            }
+            else{
+                flightService.deleteEC(flight_id);
+            }
+        }
+
         try {
             if(payService.refund(order_num,realPrice.toString(),0) == "success"){
                 orderService.ReturnTicket(order_id);
@@ -107,8 +123,15 @@ public class OrderController {
         } catch (AlipayApiException e) {
             e.printStackTrace();
         }
-        return "false";
+       return "false";
 
+    }
+
+    public void deleteSeat(String seat, int id){
+        char[] seatstatus=seat.toCharArray();
+        seatstatus[id-1]='0';
+        seat= Arrays.toString(seatstatus).replaceAll("[\\[\\]\\s,]", "");
+        gseat_status=seat;
     }
 
 
