@@ -39,9 +39,9 @@ public class SeatController {
         gorder_id=order_id;
         gflight_id=flight_id;
         gseat_status=flightService.findSeatId(gflight_id);
-        updateStatus(gseat_status,gseat_id);
+        addSeat(gseat_status,gseat_id);
         flightService.updateSeatStatus(flight_id,gseat_status);
-        if(classid==0){
+        if(classid==1){
             flightService.updateBC(gflight_id);
         }else{
             flightService.updateEC(gflight_id);
@@ -64,7 +64,7 @@ public class SeatController {
 
 
 //更新seat_status
-    public void updateStatus(String seat, int id){
+    public void addSeat(String seat, int id){
         char[] seatstatus=seat.toCharArray();
         seatstatus[id-1]='1';
         seat= Arrays.toString(seatstatus).replaceAll("[\\[\\]\\s,]", "");

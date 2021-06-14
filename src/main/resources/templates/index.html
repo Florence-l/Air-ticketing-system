@@ -423,7 +423,8 @@
                     <input type="hidden" name="realPrice" id="realPrice">
                     <input type="hidden" name="city1" id="city1">
                     <input type="hidden" name="city2" id="city2">
-
+                    <input type="hidden" name="seat_id" id="seat_id_">
+                    <input type="hidden" name="seat_type" id="seat_type_">
 
                 </div>
             </form>
@@ -799,6 +800,9 @@
                                 $("#city2").val(obj.flight.arrivalcity);
                                 $("#flight_id_").val(obj.flight.flight_id);
                                 $("#realPrice").val(obj.realPrice);
+                                $("#seat_id_").val(obj.seat_id);
+                                $("#seat_type_").val(obj.seat_type);
+                                $("#type_").val(obj.type);
                                 $("#orderR_").show();
                             }
                         }
@@ -865,6 +869,8 @@
             var paymentStatus = $('#paymentStatus').val();
             var order_id = $('#order_id_').val();
             var realPrice = $('#realPrice').val();
+            var seat_id=$('#seat_id_').val();
+            var seat_type=$('#seat_type_').val();
             if(paymentStatus === '0') {
                 layui.use('layer', function(){
                    var layer = layui.layer;
@@ -879,7 +885,9 @@
                                 "order_num": order_num,
                                 "realPrice": realPrice,
                                 "flight_id" : flight_id,
-                                "order_id" : order_id
+                                "seat_id" : seat_id,
+                                "order_id" : order_id,
+                                "seat_type":seat_type,
                             },
                             success(res) {
                                 if(res === 'success'){

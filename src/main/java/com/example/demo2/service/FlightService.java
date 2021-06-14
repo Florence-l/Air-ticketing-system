@@ -57,6 +57,16 @@ public class FlightService implements FlightMapper{
     }
 
     @Override
+    public int deleteBC(Integer flight_id){
+        return flightMapper.deleteBC(flight_id);
+    }
+
+    @Override
+    public int deleteEC(Integer flight_id){
+        return flightMapper.deleteEC(flight_id);
+    }
+
+    @Override
     public List<Flight> findByRandom(){
         List<Flight> list = flightMapper.findByRandom();
         if(list!=null){

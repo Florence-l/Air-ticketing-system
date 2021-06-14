@@ -27,8 +27,9 @@
 <script type="text/html" id="tool">
     {{#  if(d.paymentStatus == 1){ }}
    <button id="board" style="width: 50px;" class="layui-btn layui-btn-primary layui-btn-xs layui-border-orange" lay-event="board" >详情</button>
-    {{#  } }}
-
+    {{# } else if(d.paymentStatus == 0 && d.is_valid ==0) { }}
+    <button id="unpay" style="width: 50px;" class="layui-btn layui-btn-primary layui-btn-xs layui-border-blue" lay-event="unpay" >去支付</button>
+    {{# } }}
 </script>
 
 <script th:src="@{layui/layui.js}"></script>
@@ -47,7 +48,6 @@ layui.use(['table'], function(){
       {field: 'order_num', title: '订单号', width:150,fixed:'left'}
       ,{field: 'user_name', title: '乘客姓名', width:100}
       ,{field: 'seat_id', title: '座位号', width: 90}
-          // , {field: 'seat_type', title: '座位类型', width: 90}
       ,{templet:'<div>{{d.flight.departurecity}}</div>', title: '出发城市', width: 100}
       ,{templet:'<div>{{d.flight.arrivalcity}}</div>', title: '到达城市', width: 100}
       ,{templet:'<div>{{d.flight.date}}</div>', title: '日期', width: 130}
@@ -68,7 +68,7 @@ templet:function(d){
     ]]
   });
   table.on('tool(test)', function (obj)  {
-
+        var order_num=obj.data.order_num;
         var date = obj.data.flight.date;
         var seat_id=obj.data.seat_id;
         var user_name=obj.data.user_name;
@@ -79,15 +79,32 @@ templet:function(d){
         var arrival_airport = obj.data.flight.arrival_airport;
         var departure_airport = obj.data.flight.departure_airport;
         var realPrice=obj.data.realPrice;
-        // var seat_type=obj.date.seat_type;
       if (obj.event == 'board') {
           if(isvalid==1){
           window.location.href = "/boardingPass?date="+date+"&sid="+seat_id+"&price="+realPrice+"&name="+user_name+"&dc="+departurecity+"&ac="+arrivalcity+
               "&da="+departure_airport+"&aa="+arrival_airport+"&dt="+departuretime;
       }
+      }
+      else if(obj.event == 'unpay'){
+
+          $.ajax({
+              async : false,
+              type:'post',
+              url:'/pay',
+              data:{
+                  totalPrice: realPrice,
+                  subject: departurecity+"-"+arrivalcity,
+                  order_num: order_num,
+              },
+              success: function(response) {
+                  var newPage = window.open("about:blank", "_self");
+                  newPage.document.write(response);
+              }
+          })
 
       }
     });
+
 
 });
 
