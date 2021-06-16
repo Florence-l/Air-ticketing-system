@@ -80,8 +80,8 @@ public class OrderService {
 
 
 
-    public Order findByNum(String order_num){
-        Order order = orderMapper.findByNum(order_num);
+    public Order searchByNum(String order_num){
+        Order order = orderMapper.searchByNum(order_num);
         if(order != null){
             return order;
         }
@@ -89,8 +89,8 @@ public class OrderService {
     }
 
     //在改签时调用（返回order类型）
-    public Order findById(Integer order_id){
-        Order order = orderMapper.findById(order_id);
+    public Order searchById(Integer order_id){
+        Order order = orderMapper.searchById(order_id);
         if(order != null){
             return order;
         }
@@ -98,8 +98,8 @@ public class OrderService {
     }
 
     //在改签时调用
-    public List<Order> findByID(Integer order_id){
-        List<Order> list = orderMapper.findByID(order_id);
+    public List<Order> searchByID(Integer order_id){
+        List<Order> list = orderMapper.searchByID(order_id);
         if(list != null){
             return list;
         }
@@ -107,9 +107,9 @@ public class OrderService {
     }
 
     //在改签支付完成后调用
-    public List<Order> findByID(Integer order_id,String paymentTime){
-        List<Order> list = orderMapper.findByID(order_id);
-        orderMapper.updatePaymentTime(order_id,paymentTime);
+    public List<Order> searchByID(Integer order_id,String paymentTime){
+        List<Order> list = orderMapper.searchByID(order_id);
+        orderMapper.updatePaymentTIME(order_id,paymentTime);
         if(list != null){
             return list;
         }

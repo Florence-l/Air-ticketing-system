@@ -30,13 +30,13 @@ public interface OrderMapper {
 
 
 
-    Order findByNum(@Param("order_num") String order_num);
+    Order searchByNum(@Param("order_num") String order_num);
 
-    Order findById(@Param("order_id") Integer order_id);
+    Order searchById(@Param("order_id") Integer order_id);
 
-    List<Order> findByID(@Param("order_id") Integer order_id);
+    List<Order> searchByID(@Param("order_id") Integer order_id);
 
-    void updatePaymentTime(@Param("order_id") Integer order_id,@Param("paymentTime") String paymentTime);
+    void updatePaymentTIME(@Param("order_id") Integer order_id,@Param("paymentTime") String paymentTime);
 
     int updateChange(@Param("change")String change, @Param("order_num")String order_num, @Param("order_id")Integer order_id);
 

@@ -126,19 +126,19 @@
     </update>
 
 
-    <select id="findByNum" resultMap="OrderResultMap">
+    <select id="searchByNum" resultMap="OrderResultMap">
         select * from order_table inner join flight_table on order_table.flight_id = flight_table.flight_id where order_num = #{order_num}
     </select>
 
-    <select id="findById" resultMap="OrderResultMap">
+    <select id="searchById" resultMap="OrderResultMap">
         select * from order_table inner join flight_table on order_table.flight_id = flight_table.flight_id where order_id = #{order_id}
     </select>
 
-    <select id="findByID" resultMap="OrderResultMap">
+    <select id="searchByID" resultMap="OrderResultMap">
         select * from order_table inner join flight_table on order_table.flight_id = flight_table.flight_id where order_id = #{order_id}
     </select>
 
-    <update id="updatePaymentTime" parameterType="com.example.demo2.bean.Order">
+    <update id="updatePaymentTIME" parameterType="com.example.demo2.bean.Order">
         update order_table
         set paymentTime=#{paymentTime} , paymentStatus = 1
         where order_id = #{order_id}

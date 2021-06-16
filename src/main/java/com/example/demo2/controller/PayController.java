@@ -39,7 +39,7 @@ public class PayController {
     @ResponseBody
     public void payController(String totalPrice,String subject,String order_num,HttpServletResponse response)throws IOException{
         order_num_ = order_num;
-        Order order = orderService.findByNum(order_num_);
+        Order order = orderService.searchByNum(order_num_);
         order_id = order.getOrder_id();
 
         System.out.println(order_num_);

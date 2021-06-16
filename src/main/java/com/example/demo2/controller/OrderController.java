@@ -1,7 +1,6 @@
 package com.example.demo2.controller;
 
 import com.alipay.api.AlipayApiException;
-
 import com.example.demo2.bean.Order;
 import com.example.demo2.bean.User;
 import com.example.demo2.service.FlightService;
@@ -15,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.security.Principal;
 import java.util.Arrays;
@@ -93,8 +91,7 @@ public class OrderController {
         String paymentTime = request.getParameter("paymentTime");
 
         ObjectMapper objectMapper = new ObjectMapper();
-        String strObject = objectMapper.writeValueAsString(orderService.findById(order_id));
-//        System.out.println(strObject);
+        String strObject = objectMapper.writeValueAsString(orderService.searchByID(order_id,paymentTime));
         return strObject;
     }
 
@@ -104,7 +101,7 @@ public class OrderController {
     public String change1(HttpServletRequest request) throws IOException, AlipayApiException {
         Integer order_id = Integer.valueOf(request.getParameter("order_id"));
         String diff =request.getParameter("diff");
-        Order order = orderService.findById(order_id);
+        Order order = orderService.searchById(order_id);
         String passenger_id = order.getPassenger_id();
         String order_num = order.getOrder_num() + passenger_id;
         Integer updateResult = orderService.updateChange("1",order_num,order_id);
@@ -113,6 +110,41 @@ public class OrderController {
         }
         return "fail";
     }
+
+    //改签退差价
+    @RequestMapping("/change2")
+    @ResponseBody()
+    public String change2(HttpServletRequest request) throws IOException, AlipayApiException {
+        Integer order_id = Integer.valueOf(request.getParameter("order_id"));
+        String diff =request.getParameter("diff");
+        Order order = orderService.searchById(order_id);
+        String order_num = order.getOrder_num();
+        String payResult = payService.refund(order_num,diff,2);
+        if(payResult == "success"){
+            Integer updateResult = orderService.updateChange("2",order_num,order_id);
+            if(updateResult == '1'){
+                return "success";
+            }
+        }
+        return "fail";
+    }
+
+    //改签无差价
+    @RequestMapping("/change3")
+    @ResponseBody()
+    public String change3(HttpServletRequest request) throws IOException, AlipayApiException {
+        Integer order_id = Integer.valueOf(request.getParameter("order_id"));
+        Order order = orderService.searchById(order_id);
+        String order_num = order.getOrder_num();
+        Integer updateResult = orderService.updateChange("3",order_num,order_id);
+        if(updateResult == '1'){
+            return "success";
+        }
+        return "fail";
+    }
+
+
+
     @RequestMapping("/ReturnTicket")
     @ResponseBody()
     public String ReturnTicket(HttpServletRequest request) throws IOException{
@@ -156,36 +188,4 @@ public class OrderController {
         gseat_status=seat;
     }
 
-
-    //改签退差价
-    @RequestMapping("/change2")
-    @ResponseBody()
-    public String change2(HttpServletRequest request) throws IOException, AlipayApiException {
-        Integer order_id = Integer.valueOf(request.getParameter("order_id"));
-        String diff =request.getParameter("diff");
-        Order order = orderService.findById(order_id);
-        String order_num = order.getOrder_num();
-        String payResult = payService.refund(order_num,diff,2);
-        if(payResult == "success"){
-            Integer updateResult = orderService.updateChange("2",order_num,order_id);
-            if(updateResult == '1'){
-                return "success";
-            }
-        }
-        return "fail";
-    }
-
-    //改签无差价
-    @RequestMapping("/change3")
-    @ResponseBody()
-    public String change3(HttpServletRequest request) throws IOException, AlipayApiException {
-        Integer order_id = Integer.valueOf(request.getParameter("order_id"));
-        Order order = orderService.findById(order_id);
-        String order_num = order.getOrder_num();
-        Integer updateResult = orderService.updateChange("3",order_num,order_id);
-        if(updateResult == '1'){
-            return "success";
-        }
-        return "fail";
-    }
 }

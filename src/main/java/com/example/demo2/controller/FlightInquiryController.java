@@ -40,6 +40,11 @@ public class FlightInquiryController {
         return "booking";
     }
 
+    @GetMapping("/change")
+    public String showchange(){
+        return "flightChange";
+    }
+
     @GetMapping("/boardingPass")
     public String board(){
         return "boardingPass";
