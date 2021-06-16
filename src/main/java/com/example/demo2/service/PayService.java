@@ -56,7 +56,7 @@ public class PayService {
     /**
      *可以部分退款及全额退款
      * @param order_no 订单号
-     * @param refund_amount 差价金额
+     * @param refund_amount 退款金额
      * @param type 0未改签过 1改签过（补差价） 2改签过（退差价）
      * @return success退款成功  msg失败信息
      * @throws AlipayApiException

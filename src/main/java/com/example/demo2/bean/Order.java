@@ -55,6 +55,10 @@ public class Order {
         this.change0 = change0;
     }
 
+    public Order(Integer order_id) {
+        this.order_id=order_id;
+    }
+
     public Integer getOrder_id() {
         return order_id;
     }

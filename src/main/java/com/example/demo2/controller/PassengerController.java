@@ -65,6 +65,4 @@ public class PassengerController {
         passengerService.updateTel(passenger_id,user_tel);
         return 1;
     }
-
-
 }

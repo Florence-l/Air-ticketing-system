@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="utf-8">
@@ -302,26 +303,29 @@
                             type:'post',
                             url:'/pay',
                             data:{
-                                diff: diff,
+                                totalPrice: diff,
                                 subject: departurecity+"-"+arrivalcity,
-                                order_num: order_num
+                                order_num: order_num,
+                                change: "1" //
                             },
                             success: function(response) {
-                                if(response === "success"){
-                                    $.ajax({//修改数据库
-                                        type:'post',
-                                        url:'/change1',
-                                        data:{
-                                            order_id: order_id,
-                                            diff: diff
-                                        },
-                                        success:function(res){
-                                            if(res === "success"){
-                                                window.location.href='http://localhost:8080/orderChange';
-                                            }
-                                        }
-                                    })
-                                }
+                                var newPage = window.open("about:blank", "_self");
+                                newPage.document.write(response);
+                                // if(response === "success"){
+                                //     $.ajax({//修改数据库
+                                //         type:'post',
+                                //         url:'/change1',
+                                //         data:{
+                                //             order_id: order_id,
+                                //             diff: diff
+                                //         },
+                                //         success:function(res){
+                                //             if(res === "success"){
+                                //                 window.location.href='http://localhost:8080/orderChange';
+                                //             }
+                                //         }
+                                //     })
+                                // }
                             }
                         })
                     }else if(book_price < originalPrice)
