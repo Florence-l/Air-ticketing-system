@@ -48,6 +48,11 @@ public class FlightInquiryController {
     }
 
 
+    @GetMapping("/orderChange")
+    public String orderChange(){
+        return "orderChange";
+    }
+
     @GetMapping("/boardingPass")
     public String board(){
         return "boardingPass";

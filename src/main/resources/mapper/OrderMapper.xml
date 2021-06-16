@@ -16,7 +16,7 @@
         <result column="seat_id" jdbcType="INTEGER" property="seat_id" />
         <result column="paymentStatus" property="paymentStatus"/>
         <result column="realPrice" jdbcType="VARCHAR" property="realPrice" />
-        <result column="change" jdbcType="VARCHAR" property="change"/>
+        <result column="change0" jdbcType="VARCHAR" property="change0"/>
         <association property="flight" javaType="Flight">
             <id column="flight_id" property="flight_id" />
             <result column="departurecity" property="departurecity"/>
@@ -39,6 +39,7 @@
     <select id="findByid" resultMap="OrderResultMap">
         select
         order_num,
+        order_id,
         user_name,
         orderTime,
         paymentStatus,
@@ -58,10 +59,12 @@
         bc_remaining,
         ec_remaining,
         realPrice
+        change0
         from order_table
         inner join flight_table  on order_table.flight_id = flight_table.flight_id
         where user_id = #{user_id} and is_valid = 0
     </select>
+
     <select id="findUnpay" resultMap="OrderResultMap">
         select
         order_num,
@@ -76,6 +79,7 @@
         departuretime,
         arrivaltime,
         realPrice
+        change0
         from order_table
         inner join flight_table  on order_table.flight_id = flight_table.flight_id
         where user_id = #{user_id} and paymentStatus = 0 and is_valid = 0
@@ -146,7 +150,7 @@
 
     <update id="updateChange" parameterType="com.example.demo2.bean.Order">
         update order_table
-        set change=#{change},order_num=#{order_num},seat_id='null',seat_type='2'
+        set change0=#{change0},order_num=#{order_num},seat_id=null,seat_type=2
         where order_id=#{order_id}
     </update>
 

@@ -108,7 +108,7 @@ public class OrderController {
         String passenger_id = order.getPassenger_id();
         String order_num = order.getOrder_num() + passenger_id;
         Integer updateResult = orderService.updateChange("1",order_num,order_id);
-        if(updateResult == '1'){
+        if(updateResult == 1){
             return "success";
         }
         return "fail";
@@ -125,7 +125,7 @@ public class OrderController {
         String payResult = payService.refund(order_num,diff,2);
         if(payResult == "success"){
             Integer updateResult = orderService.updateChange("2",order_num,order_id);
-            if(updateResult == '1'){
+            if(updateResult == 1){
                 return "success";
             }
         }
@@ -140,7 +140,7 @@ public class OrderController {
         Order order = orderService.searchById(order_id);
         String order_num = order.getOrder_num();
         Integer updateResult = orderService.updateChange("3",order_num,order_id);
-        if(updateResult == '1'){
+        if(updateResult == 1){
             return "success";
         }
         return "fail";

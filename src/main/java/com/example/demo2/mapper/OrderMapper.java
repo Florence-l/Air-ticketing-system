@@ -38,7 +38,7 @@ public interface OrderMapper {
 
     void updatePaymentTIME(@Param("order_id") Integer order_id,@Param("paymentTime") String paymentTime);
 
-    int updateChange(@Param("change")String change, @Param("order_num")String order_num, @Param("order_id")Integer order_id);
+    int updateChange(@Param("change0")String change0, @Param("order_num")String order_num, @Param("order_id")Integer order_id);
 
 
     void ReturnTicket(@Param("order_id") Integer order_id);

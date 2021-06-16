@@ -22,6 +22,7 @@ import java.util.*;
 public class PayController {
     @Autowired
     private PayService payService;
+    @Autowired
     private OrderService orderService;
 
     private String order_num_;
@@ -39,10 +40,11 @@ public class PayController {
     @ResponseBody
     public void payController(String totalPrice,String subject,String order_num,HttpServletResponse response)throws IOException{
         order_num_ = order_num;
+        System.out.println(order_num_);
         Order order = orderService.searchByNum(order_num_);
+        System.out.println(order);
         order_id = order.getOrder_id();
 
-        System.out.println(order_num_);
         payService.pay(totalPrice,subject,order_num,response);
     }
 

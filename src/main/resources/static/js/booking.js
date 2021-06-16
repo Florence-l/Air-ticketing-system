@@ -199,10 +199,11 @@ function next(){
                 order_num:order_num,
             },
             success:function(res){
-                alert("ok");
             }
         })
     }
+
+
     $.ajax({
         async : false,
         type:'post',

@@ -17,7 +17,7 @@ public class Order {
     private String order_num;
     private Integer is_valid;
     private Flight flight;
-    private String change;
+    private String change0;
 
     public Order(){
 
@@ -25,7 +25,7 @@ public class Order {
 
     public Order(Integer order_id,Integer user_id,String passenger_id,
                  Integer flight_id,String orderTime,Integer paymentStatus,String paymentTime,
-                 Integer seat_id, String seat_type, String realPrice,String order_num, String change){
+                 Integer seat_id, String seat_type, String realPrice,String order_num, String change0){
         this.order_id = order_id;
         this.user_id = user_id;
         this.passenger_id = passenger_id;
@@ -37,12 +37,12 @@ public class Order {
         this.seat_type = seat_type;
         this.realPrice = realPrice;
         this.order_num = order_num;
-        this.change = change;
+        this.change0 = change0;
     }
 
     public Order(Integer userid, String user_name, String passenger_id,
                  Integer flght_id, String seat_type,String orderTime, Integer paymentStatus,
-                 String realPrice, String order_num, String change) {
+                 String realPrice, String order_num, String change0) {
         this.user_id = userid;
         this.user_name = user_name;
         this.passenger_id = passenger_id;
@@ -52,7 +52,7 @@ public class Order {
         this.paymentStatus = paymentStatus;
         this.realPrice = realPrice;
         this.order_num = order_num;
-        this.change = change;
+        this.change0 = change0;
     }
 
     public Integer getOrder_id() {
@@ -164,11 +164,11 @@ public class Order {
     public Integer getIs_valid(){return is_valid;}
 
     public String getChange() {
-        return change;
+        return change0;
     }
 
-    public void setChange(String change) {
-        this.change = change;
+    public void setChange(String change0) {
+        this.change0 = change0;
     }
 
 
@@ -188,7 +188,7 @@ public class Order {
                 "realPrice" + realPrice +
                 "order_num" + order_num+
                 "is_valid" + is_valid +
-                "change" + change +
+                "change" + change0 +
                 '}';
     }
 }

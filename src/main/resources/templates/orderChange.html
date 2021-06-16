@@ -338,6 +338,8 @@
                         'paymentTime' : paymentTime
                         },
                         success: function(res){
+                            console.log(id)
+                            console.log(paymentTime)
                             $('#user_name').html(res.user_name);
                             $('#passenger_id').html((res.passenger_id).slice(0,5)+"**********"+(res.passenger_id).slice(16));
                             document.getElementById("links").href='http://localhost:8080/seatchooser?order_id='+res.order_id+"&flight_id="+res.flight_id+"&type="+res.flight.type+"&seat_type="+res.seat_type;
