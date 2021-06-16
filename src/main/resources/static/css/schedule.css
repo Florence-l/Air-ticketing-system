@@ -322,3 +322,95 @@ button {
   background: transparent;
   outline: none;
 }
+
+ * {
+   margin: 0;
+ }
+.schedule-bar {
+  margin: 0 auto;
+  justify-content: center;
+  flex-direction: row;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: 850px;
+  width: 100%;
+  padding-top: 20px;
+}
+.schedule-bar .button-left, .schedule-bar .button-right {
+  height: 138px;
+  padding: 0;
+  max-width: 25px;
+  width: 100%;
+  border: none;
+}
+.schedule-bar .button-left > i, .schedule-bar .button-right > i {
+  color: #5c5c5c;
+}
+.schedule-bar .button-left:hover, .schedule-bar .button-right:hover {
+  cursor: pointer;
+}
+.schedule-bar .button-left {
+  transform: scaleX(-1);
+}
+.schedule-bar .sched-grid {
+  display: flex;
+  list-style: none;
+  padding: 8px 10px;
+}
+.schedule-bar .sched-column {
+  padding: 0 4px;
+  width: 100%;
+}
+.schedule-bar .sched-card {
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 1px 8px 0 rgba(0, 0, 0, 0.1), 0 6px 20px 0 rgba(0, 0, 0, 0);
+  padding: 18px 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-family: "Ubuntu", sans-serif;
+  width: 120px;
+  height: 120px;
+}
+.schedule-bar .sched-card:hover {
+  background-color: rgb(255, 237, 134);
+  cursor: pointer;
+}
+.schedule-bar .sched-card:hover > .heading {
+  color: black;
+}
+.schedule-bar .sched-card:hover > .number {
+  font-weight: 400;
+}
+.schedule-bar .sched-card:hover > .details > .currency,
+.schedule-bar .sched-card:hover > .details > .price {
+  color: black;
+}
+.schedule-bar .sched-card > .heading {
+  margin-top: 0;
+  margin-bottom: 2px;
+  font-size: 14px;
+  color: #b8b8b8;
+}
+.schedule-bar .sched-card > .number {
+  font-weight: 300;
+  font-size: 50px;
+  color: #4e84c4;
+  line-height: 1em;
+  margin-top: 18px;
+}
+.schedule-bar .sched-card > .details {
+  text-align: center;
+  line-height: 1;
+}
+
+.table-header {
+  background-color: #95A5A6;
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}

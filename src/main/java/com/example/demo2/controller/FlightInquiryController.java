@@ -47,6 +47,7 @@ public class FlightInquiryController {
         return "flightChange";
     }
 
+
     @GetMapping("/boardingPass")
     public String board(){
         return "boardingPass";
@@ -79,16 +80,14 @@ public class FlightInquiryController {
         model.addAttribute("departurecity",getdeparturecity);
         model.addAttribute("arrivalcity",getarrivalcity);
         model.addAttribute("date",getdate);
-        System.out.println(getdeparturecity+getarrivalcity+getdate);
-
+        System.out.println("1"+getdeparturecity+getarrivalcity+getdate);
     }
-
 
 
     @RequestMapping("flight")
     @ResponseBody()
     public LayuiTableResultUtil<List> flightresult(HttpServletRequest request) {
-        System.out.println(getdeparturecity+getarrivalcity+getdate);
+        System.out.println("2"+getdeparturecity+getarrivalcity+getdate);
         RequiredUtil Required = new RequiredUtil();
         if (!Required.Required(request.getParameter("limit").trim())) {
             return new LayuiTableResultUtil<List>("分页异常", null, 1, 10);

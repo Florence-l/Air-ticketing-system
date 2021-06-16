@@ -4,119 +4,56 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <title>航班查询结果</title>
-    <link rel="stylesheet" th:href="@{layui/css/layui.css}">
+    <link rel="stylesheet" th:href="@{/css/uinew.css}">
     <link type="text/css" rel="stylesheet" href="/css/jqstyle.css"/>
     <link rel="stylesheet" href="/css/index.css"/>
     <link rel="stylesheet" href="/css/schedule.css"/>
     <script type="text/javascript" src="/js/jquery-1.8.3.min.js"></script>
     <script type="text/javascript" src="/js/getUrl.js"></script>
     <style type="text/css">
-        .btn{
-            width: 100px;
-            height: 30px;
-            background: blue;
-            border: none;
-            color: white;
-            margin: 6px 10px;
+        table {
+            border-collapse: collapse;
+            background: white;
+            border-radius: 6px;
+            overflow: hidden;
+            max-width: 800px;
+            width: 100%;
+            margin: 0 auto;
+            position: relative;
         }
-        .btnStyle1{
-            border-radius: 40px;
+        table * {
+            position: relative;
+        }
+        table td, table th {
+            padding-left: 8px;
+        }
+        table thead tr {
+            height: 60px;
+            background: #91b1df45;
+            font-size: 16px;
+        }
+        table tbody tr {
+            height: 70px;
+            border-bottom: 8px solid rgba(206, 215, 229, 0.2);
+        }
+        table tbody tr:last-child {
+            border: 0;
+        }
+        table td, table th {
+            text-align: left;
+        }
+        ::-webkit-scrollbar {
+            display: none;
         }
     </style>
 </head>
-<style>
-    * {
-        margin: 0;
-    }
-    .schedule-bar {
-        margin: 0 auto;
-        justify-content: center;
-        flex-direction: row;
-        padding: 0;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        max-width: 850px;
-        width: 100%;
-        padding-top: 20px;
-        padding-bottom: 20px;
-    }
-    .schedule-bar .button-left, .schedule-bar .button-right {
-        height: 138px;
-        padding: 0;
-        max-width: 25px;
-        width: 100%;
-        border: none;
-    }
-    .schedule-bar .button-left > i, .schedule-bar .button-right > i {
-        color: #5c5c5c;
-    }
-    .schedule-bar .button-left:hover, .schedule-bar .button-right:hover {
-        cursor: pointer;
-    }
-    .schedule-bar .button-left {
-        transform: scaleX(-1);
-    }
-    .schedule-bar .sched-grid {
-        display: flex;
-        list-style: none;
-        padding: 8px 10px;
-    }
-    .schedule-bar .sched-column {
-        padding: 0 4px;
-        width: 100%;
-    }
-    .schedule-bar .sched-card {
-        background-color: white;
-        display: flex;
-        flex-direction: column;
-        box-shadow: 0 1px 8px 0 rgba(0, 0, 0, 0.1), 0 6px 20px 0 rgba(0, 0, 0, 0);
-        padding: 18px 12px;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        font-family: "Ubuntu", sans-serif;
-        width: 120px;
-        height: 120px;
-    }
-    .schedule-bar .sched-card:hover {
-        background-color: #fee014;
-        cursor: pointer;
-    }
-    .schedule-bar .sched-card:hover > .heading {
-        color: black;
-    }
-    .schedule-bar .sched-card:hover > .number {
-        font-weight: 400;
-    }
-    .schedule-bar .sched-card:hover > .details > .currency,
-    .schedule-bar .sched-card:hover > .details > .price {
-        color: black;
-    }
-    .schedule-bar .sched-card > .heading {
-        margin-top: 0;
-        margin-bottom: 2px;
-        font-size: 14px;
-        color: #b8b8b8;
-    }
-    .schedule-bar .sched-card > .number {
-        font-weight: 300;
-        font-size: 50px;
-        color: #4e84c4;
-        line-height: 1em;
-        margin-top: 18px;
-    }
-    .schedule-bar .sched-card > .details {
-        text-align: center;
-        line-height: 1;
-    }
-</style>
 <body>
 
 
 <th:block th:include="common.html :: header"></th:block>
 
-<!--判断用户是否已经登录-->
+
+    <!--判断用户是否已经登录-->
 <span id="username"  style="display:none;"  th:text="${session.SPRING_SECURITY_CONTEXT?.authentication?.principal?.username}"></span>
 
 <div class="wrapper">
@@ -139,7 +76,7 @@
                         <label style="font-size:14px">日期</label>
                         <input style="font-size:16px" name="date" id="gdate" type="text" required="required" placeholder="格式如：yyyy.mm.dd">
                 </div>
-                <div class="grup submit-group">
+                <div class="group submit-group">
                     <button type="submit" onclick="getid()">查询</button>
                 </div>
             </form>
@@ -154,7 +91,7 @@
         <button class="button-left">
         </button>
         <ul class="sched-grid">
-            <li class="sched-column">
+            <li class="sched-column"  action="/index" method="post" target="iframe" onclick="dateinquiry('2021.06.16')">
                 <div class="sched-card">
                     <div class="heading">Wed | Jun</div>
                     <div class="number">16</div>
@@ -163,7 +100,7 @@
                 </div>
             </li>
 
-            <li class="sched-column">
+            <li class="sched-column" method="post" target="iframe" onclick="dateinquiry('2021.06.17')">
                 <div class="sched-card">
                     <div class="heading">Thu | Jun</div>
                     <div class="number">17</div>
@@ -172,7 +109,7 @@
                 </div>
             </li>
 
-            <li class="sched-column">
+            <li class="sched-column"  method="post" onclick="dateinquiry('2021.06.18')">
                 <div class="sched-card">
                     <div class="heading">Fri | Jun</div>
                     <div class="number">18</div>
@@ -182,7 +119,7 @@
                 </div>
             </li>
 
-            <li class="sched-column">
+            <li class="sched-column" method="post" onclick="dateinquiry('2021.06.19')">
                 <div class="sched-card">
                     <div class="heading">Sar | Jun</div>
                     <div class="number">19</div>
@@ -191,10 +128,19 @@
                 </div>
             </li>
 
-            <li class="sched-column">
+            <li class="sched-column" method="post" onclick="dateinquiry('2021.06.20')">
                 <div class="sched-card">
                     <div class="heading">Sun | Jun</div>
                     <div class="number">20</div>
+                    <div class="details">
+                    </div>
+                </div>
+            </li>
+
+            <li class="sched-column" method="post" onclick="dateinquiry('2021.06.21')">
+                <div class="sched-card">
+                    <div class="heading">Mon | Jun</div>
+                    <div class="number">21</div>
                     <div class="details">
                     </div>
                 </div>
@@ -205,7 +151,7 @@
         </button>
     </div>
 </section>
-<div class="card" style="position: relative;left: 50%;margin-left: -486px;">
+<div class="card" style="position: relative;left: 50%;margin-left: -520px">
     <div class="tab_box">
         <table class="layui-hide" id="flightList" lay-filter="test"></table>
     </div>
@@ -222,6 +168,7 @@
 
 
 <script type="text/javascript">
+
     getid=function (){
         document.getElementById("flightInquiry").submit();
         var a = document.getElementById("gdeparturecity").value;
@@ -246,7 +193,7 @@
             });
         }
         else {
-            window.location.href = 'http://localhost:8080/result?departurecity=' + a + '&arrivalcity=' + b + '&date=' + c;
+            window.location.href = "/result?departurecity=" + a + "&arrivalcity=" + b + "&date=" + c;
         }
     }
     function isvalidate(str)
@@ -257,8 +204,17 @@
         if(r[3].length!=2||r[4].length!=2) return false;
         return (d.getFullYear()==r[1]&&(d.getMonth()+1)==r[3]&&d.getDate()==r[4]);
     }
+    function dateinquiry(res){
+        var a = document.getElementById("gdeparturecity").value;
+        var b= document.getElementById("garrivalcity").value;
+        document.getElementById("gdate").value=res;
+        document.getElementById("flightInquiry").submit();
+        window.location.href="/result?departurecity=" + a + "&arrivalcity=" + b + "&date="+res;
 
-</script>
+    }
+
+
+</script >
 
 
 <script th:src="@{layui/layui.js}"></script>
@@ -273,6 +229,7 @@
         $("#garrivalcity").val(arrivalcity);
         $("#gdate").val(date);
     }
+
 </script>
 
 <script th:inline="none">
@@ -282,13 +239,10 @@
 
         table.render({
             elem: '#flightList'
-            ,height: 500
+            ,height:600
             ,url: 'flight' //数据接口
             ,skin:'nob'
             ,size:'lg'
-            ,limit: 10
-            ,limits: [10, 20, 30, 50]
-            ,page: true //开启分页
             ,cols: [[ //表头
                 {field: 'departurecity', title: '出发城市', width: 100}
                 ,{field: 'arrivalcity', title: '到达城市', width: 100}
