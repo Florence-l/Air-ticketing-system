@@ -243,6 +243,15 @@
             ,url: 'flight' //数据接口
             ,skin:'nob'
             ,size:'lg'
+            ,parseData:function (res) {
+                console.log(res);
+                return {
+                    "code": 0,
+                    "msg": "",
+                    "count": 1000,
+                    data: res,
+                }
+            }
             ,cols: [[ //表头
                 {field: 'departurecity', title: '出发城市', width: 100}
                 ,{field: 'arrivalcity', title: '到达城市', width: 100}

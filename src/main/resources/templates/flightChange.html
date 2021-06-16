@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <title>改签航班查询结果</title>
-    <link rel="stylesheet" th:href="@{layui/css/layui.css}">
+    <link rel="stylesheet" th:href="@{/css/uinew.css}">
     <link type="text/css" rel="stylesheet" href="/css/jqstyle.css"/>
     <link rel="stylesheet" href="/css/index.css"/>
     <link rel="stylesheet" href="/css/schedule.css"/>
@@ -12,16 +12,39 @@
     <script type="text/javascript" src="/js/getUrl.js"></script>
 
     <style type="text/css">
-        .btn{
-            width: 100px;
-            height: 30px;
-            background: blue;
-            border: none;
-            color: white;
-            margin: 6px 10px;
+        table {
+            border-collapse: collapse;
+            background: white;
+            border-radius: 6px;
+            overflow: hidden;
+            max-width: 800px;
+            width: 100%;
+            margin: 0 auto;
+            position: relative;
         }
-        .btnStyle1{
-            border-radius: 40px;
+        table * {
+            position: relative;
+        }
+        table td, table th {
+            padding-left: 8px;
+        }
+        table thead tr {
+            height: 60px;
+            background: #91b1df45;
+            font-size: 16px;
+        }
+        table tbody tr {
+            height: 70px;
+            border-bottom: 8px solid rgba(206, 215, 229, 0.2);
+        }
+        table tbody tr:last-child {
+            border: 0;
+        }
+        table td, table th {
+            text-align: left;
+        }
+        ::-webkit-scrollbar {
+            display: none;
         }
     </style>
 </head>
@@ -183,7 +206,6 @@
 
 <!--            layui.use(['table'], function(){-->
 <!--        var table = layui.table;//使用数据表格-->
-
 <!--        table.render({-->
 <!--            elem: '#flightList'-->
 <!--            ,height: 500-->
@@ -232,9 +254,15 @@
             ,url: 'changeTicket' //数据接口
             ,skin:'nob'
             ,size:'lg'
-            ,limit: 10
-            ,limits: [10, 20, 30, 50]
-            ,page: true //开启分页
+            ,parseData:function (res) {
+                console.log(res);
+                return {
+                    "code": 0,
+                    "msg": "",
+                    "count": 1000,
+                    data: res,
+                }
+            }
             ,cols: [[ //表头
                 {field: 'departurecity', title: '出发城市', width: 100}
                 ,{field: 'arrivalcity', title: '到达城市', width: 100}

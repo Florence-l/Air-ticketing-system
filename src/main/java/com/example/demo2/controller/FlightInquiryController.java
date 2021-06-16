@@ -86,27 +86,10 @@ public class FlightInquiryController {
 
     @RequestMapping("flight")
     @ResponseBody()
-    public LayuiTableResultUtil<List> flightresult(HttpServletRequest request) {
+    public List<Flight> flightresult(HttpServletRequest request) {
         System.out.println("2"+getdeparturecity+getarrivalcity+getdate);
-        RequiredUtil Required = new RequiredUtil();
-        if (!Required.Required(request.getParameter("limit").trim())) {
-            return new LayuiTableResultUtil<List>("分页异常", null, 1, 10);
-        }
-        if (!Required.Required(request.getParameter("page").trim())) {
-            return new LayuiTableResultUtil<List>("分页异常", null, 1, 10);
-        }
-        int limit = Integer.parseInt(request.getParameter("limit").trim());
-        int page = Integer.parseInt(request.getParameter("page").trim());
-
-
-        List<Flight> flightList = flightService.findByRequired(getdeparturecity,getarrivalcity,getdate ,page, limit);
-        int countflight = flightService.countAllFlight();
-
-        LayuiTableResultUtil<List> list = new LayuiTableResultUtil<List>("", flightList, 0, countflight);
-        if (flightList != null) {
-            return list;
-        }
-        return null;
+        List<Flight> flightList = flightService.findByRequired(getdeparturecity,getarrivalcity,getdate);
+        return flightList;
     }
 
     @RequestMapping("postDAA")
@@ -118,30 +101,13 @@ public class FlightInquiryController {
 
     @RequestMapping("changeTicket")
     @ResponseBody()
-    public LayuiTableResultUtil<List> changeTicket(HttpServletRequest request) {
+    public List<Flight> changeTicket(HttpServletRequest request) {
 
         System.out.println("hahaha"+departurecity);
-        RequiredUtil Required = new RequiredUtil();
-        if (!Required.Required(request.getParameter("limit").trim())) {
-            return new LayuiTableResultUtil<List>("分页异常", null, 1, 10);
-        }
-        if (!Required.Required(request.getParameter("page").trim())) {
-            return new LayuiTableResultUtil<List>("分页异常", null, 1, 10);
-        }
-        int limit = Integer.parseInt(request.getParameter("limit").trim());
-        int page = Integer.parseInt(request.getParameter("page").trim());
-
-
-        List<Flight> flightList = flightService.findByDAA(departurecity,arrivalcity,page, limit);
-        int countflight = flightService.countAllFlight();
-
-        LayuiTableResultUtil<List> list = new LayuiTableResultUtil<List>("", flightList, 0, countflight);
+        List<Flight> flightList = flightService.findByDAA(departurecity,arrivalcity);
         if (flightList != null) {
-            return list;
+            return flightList;
         }
         return null;
     }
-
-
-
 }

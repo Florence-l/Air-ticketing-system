@@ -20,16 +20,16 @@ public class FlightService implements FlightMapper{
     private FlightMapper flightMapper;
 
     @Override
-    public List<Flight> findByRequired(String departurecity, String arrivalcity, String date,int page, int limits) {
-        List<Flight> list = flightMapper.findByRequired(departurecity,arrivalcity,date,(limits-1)*page,page);
+    public List<Flight> findByRequired(String departurecity, String arrivalcity, String date) {
+        List<Flight> list = flightMapper.findByRequired(departurecity,arrivalcity,date);
         if(list!=null){
             return list;
         }
         return null;
     }
     @Override
-    public List<Flight> findByDAA(String departurecity, String arrivalcity, int page, int limits) {
-        List<Flight> list = flightMapper.findByDAA(departurecity,arrivalcity,(limits-1)*page,page);
+    public List<Flight> findByDAA(String departurecity, String arrivalcity) {
+        List<Flight> list = flightMapper.findByDAA(departurecity,arrivalcity);
         if(list!=null){
             return list;
         }
