@@ -28,6 +28,14 @@ public class FlightService implements FlightMapper{
         return null;
     }
     @Override
+    public List<Flight> findByDAA(String departurecity, String arrivalcity, int page, int limits) {
+        List<Flight> list = flightMapper.findByDAA(departurecity,arrivalcity,(limits-1)*page,page);
+        if(list!=null){
+            return list;
+        }
+        return null;
+    }
+    @Override
     public int countAllFlight() {
         int count = flightMapper.countAllFlight();
         if(count>0){

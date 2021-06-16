@@ -29,6 +29,11 @@
 
   </select>
 
+  <select id="findByDAA" resultMap="FlightResultMap" resultType="com.example.demo2.bean.Flight" >
+    select * from flight_table where (bc_remaining+ec_remaining)>0 and departurecity = #{departurecity} and arrivalcity = #{arrivalcity}
+
+  </select>
+
   <select id="findSeatId" resultType="String">
     select seat_status from flight_table where flight_id = #{flight_id}
   </select>

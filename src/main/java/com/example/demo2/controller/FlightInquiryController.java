@@ -19,6 +19,8 @@ public class FlightInquiryController {
     public static String getdeparturecity;
     public static String getarrivalcity;
     public static String getdate;
+    public static String departurecity;
+    public static String arrivalcity;
 
     @Autowired
     public FlightService flightService;
@@ -81,6 +83,8 @@ public class FlightInquiryController {
 
     }
 
+
+
     @RequestMapping("flight")
     @ResponseBody()
     public LayuiTableResultUtil<List> flightresult(HttpServletRequest request) {
@@ -97,6 +101,39 @@ public class FlightInquiryController {
 
 
         List<Flight> flightList = flightService.findByRequired(getdeparturecity,getarrivalcity,getdate ,page, limit);
+        int countflight = flightService.countAllFlight();
+
+        LayuiTableResultUtil<List> list = new LayuiTableResultUtil<List>("", flightList, 0, countflight);
+        if (flightList != null) {
+            return list;
+        }
+        return null;
+    }
+
+    @RequestMapping("postDAA")
+    @ResponseBody()
+    public void postDAA(HttpServletRequest request){
+        departurecity = request.getParameter("departurecity");
+        arrivalcity = request.getParameter("arrivalcity");
+    }
+
+    @RequestMapping("changeTicket")
+    @ResponseBody()
+    public LayuiTableResultUtil<List> changeTicket(HttpServletRequest request) {
+
+        System.out.println("hahaha"+departurecity);
+        RequiredUtil Required = new RequiredUtil();
+        if (!Required.Required(request.getParameter("limit").trim())) {
+            return new LayuiTableResultUtil<List>("分页异常", null, 1, 10);
+        }
+        if (!Required.Required(request.getParameter("page").trim())) {
+            return new LayuiTableResultUtil<List>("分页异常", null, 1, 10);
+        }
+        int limit = Integer.parseInt(request.getParameter("limit").trim());
+        int page = Integer.parseInt(request.getParameter("page").trim());
+
+
+        List<Flight> flightList = flightService.findByDAA(departurecity,arrivalcity,page, limit);
         int countflight = flightService.countAllFlight();
 
         LayuiTableResultUtil<List> list = new LayuiTableResultUtil<List>("", flightList, 0, countflight);
