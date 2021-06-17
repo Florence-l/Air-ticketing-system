@@ -63,21 +63,21 @@
             <h1>
                 Flight Schedule Details
             </h1>
-            <form id="flightInquiry"  method="post" target="iframe">
+            <form id="flightInquiry" action="/index" method="post" target="iframe">
                 <div class="group card-number">
                     <label style="font-size:14px">出发地</label>
-                    <span style="font-size:16px" name="departurecity" id="gdeparturecity" type="text"></span>
+                    <input style="font-size:16px" name="departurecity" id="gdeparturecity" type="text" readonly="readonly">
                 </div>
                 <div class="group card-name">
                     <label style="font-size:14px">目的地</label>
-                    <span style="font-size:16px" name="arrivalcity" id="garrivalcity" type="text"></span>
+                    <input style="font-size:16px" name="arrivalcity" id="garrivalcity" type="text" readonly="readonly">
                 </div>
                 <div class="group card-name">
                     <label style="font-size:14px">日期</label>
                     <input style="font-size:16px" name="date" id="gdate" type="text" required="required" placeholder="格式如：yyyy.mm.dd">
                 </div>
                 <div class="grup submit-group">
-                    <button onclick="selectBydate()" type="submit">查询</button>
+                    <button onclick="getid()" type="submit">查询</button>
                 </div>
             </form>
             <iframe id="iframe" name="iframe" style="display:none;" ></iframe>
@@ -85,9 +85,72 @@
         <div class="part bg"></div>
     </div>
 </div>
+<section class="schedule">
+    <div class="schedule-bar">
+        <button class="button-left">
+        </button>
+        <ul class="sched-grid">
+            <li class="sched-column"  action="/index" method="post" target="iframe" onclick="dateinquiry('2021.06.16')">
+                <div class="sched-card">
+                    <div class="heading">Wed | Jun</div>
+                    <div class="number">16</div>
+                    <div class="details">
+                    </div>
+                </div>
+            </li>
 
+            <li class="sched-column" method="post" target="iframe" onclick="dateinquiry('2021.06.17')">
+                <div class="sched-card">
+                    <div class="heading">Thu | Jun</div>
+                    <div class="number">17</div>
+                    <div class="details">
+                    </div>
+                </div>
+            </li>
+
+            <li class="sched-column"  method="post" onclick="dateinquiry('2021.06.18')">
+                <div class="sched-card">
+                    <div class="heading">Fri | Jun</div>
+                    <div class="number">18</div>
+                    <div class="details">
+
+                    </div>
+                </div>
+            </li>
+
+            <li class="sched-column" method="post" onclick="dateinquiry('2021.06.19')">
+                <div class="sched-card">
+                    <div class="heading">Sar | Jun</div>
+                    <div class="number">19</div>
+                    <div class="details">
+                    </div>
+                </div>
+            </li>
+
+            <li class="sched-column" method="post" onclick="dateinquiry('2021.06.20')">
+                <div class="sched-card">
+                    <div class="heading">Sun | Jun</div>
+                    <div class="number">20</div>
+                    <div class="details">
+                    </div>
+                </div>
+            </li>
+
+            <li class="sched-column" method="post" onclick="dateinquiry('2021.06.21')">
+                <div class="sched-card">
+                    <div class="heading">Mon | Jun</div>
+                    <div class="number">21</div>
+                    <div class="details">
+                    </div>
+                </div>
+            </li>
+
+        </ul>
+        <button class="button-right">
+        </button>
+    </div>
+</section>
 <div class="card" style="position: relative;left: 50%;margin-left: -486px;">
-    <h2 style="font-size: 18px">改签航班查询结果</h2>
     <div class="tab_box">
         <table class="layui-hide" id="flightList" lay-filter="test"></table>
     </div>
@@ -105,28 +168,13 @@
 <script th:src="@{layui/layui.js}"></script>
 
 <script>
-
     var departurecity = $.getUrlParam('departurecity');
     var arrivalcity = $.getUrlParam('arrivalcity');
-    var originalPrice = parseInt($.getUrlParam('realPrice'))
-    var order_id = $.getUrlParam('order_id')
-    var order_num = $.getUrlParam('order_num')
+    var originalPrice = parseInt($.getUrlParam('realPrice'));
+
+    var order_id = $.getUrlParam('order_id');
+    var order_num = $.getUrlParam('order_num');
     var date= $.getUrlParam('date');
-    $.ajax({
-        type: 'post',
-        url: 'postDAA',
-        data: { // 提交数据
-            "departurecity": departurecity,
-            "arrivalcity": arrivalcity,
-        },
-        success(res){
-
-            }
-    })
-
-
-    document.getElementById('gdeparturecity').innerText = departurecity;
-    document.getElementById('garrivalcity').innerText = arrivalcity;
 
     window.onload = function() {
         $("#gdeparturecity").val(departurecity);
@@ -134,34 +182,33 @@
         $("#gdate").val(date);
     }
 
-
-
-
-    //查询按钮
-<!--    selectBydate=function (-->
-<!--        var c = document.getElementById("gdate").value;-->
-<!--        console.log("查询按钮")-->
-<!--        console.log(a)-->
-<!--        console.log(b)-->
-<!--        console.log(c)-->
-
-<!--        if(a.length==0||b.length==0||c.length==0){-->
-<!--            layui.use('layer', function(){-->
-<!--                var layer = layui.layer;-->
-<!--                layer.msg('请输入查询日期');-->
-<!--            });-->
-<!--        }-->
-<!--        else if(isvalidate(c)==false){-->
-<!--            layui.use('layer', function(){-->
-<!--                var layer = layui.layer;-->
-<!--                layer.msg('请输入正确格式的日期');-->
-<!--            });-->
-<!--        }-->
-<!--        else {-->
-// <!--            window.location.href = 'http://localhost:8080/change?departurecity=' + a + '&arrivalcity=' + b + '&date=' + c;-->
-// <!--        }-->
-// <!--    }-->
-
+    getid=function (){
+        document.getElementById("flightInquiry").submit();
+        var a = document.getElementById("gdeparturecity").value;
+        var b= document.getElementById("garrivalcity").value;
+        var c = document.getElementById("gdate").value;
+        if(a.length==0||b.length==0||c.length==0){
+            layui.use('layer', function(){
+                var layer = layui.layer;
+                layer.msg('请输入查询信息');
+            });
+        }
+        else if(/^[\u4e00-\u9fa5]+$/.test(a)==false||/^[\u4e00-\u9fa5]+$/.test(b)==false){
+            layui.use('layer', function(){
+                var layer = layui.layer;
+                layer.msg('请输入中文');
+            });
+        }
+        else if(isvalidate(c)==false){
+            layui.use('layer', function(){
+                var layer = layui.layer;
+                layer.msg('请输入正确格式的日期');
+            });
+        }
+        else {
+            window.location.href = "/change?departurecity=" + a + "&arrivalcity=" +b+"&realPrice="+originalPrice+"&order_id="+order_id+"&order_num="+order_num+"&date="+c;
+        }
+    }
     //判断日期格式
     function isvalidate(str)
     {
@@ -171,73 +218,21 @@
         if(r[3].length!=2||r[4].length!=2) return false;
         return (d.getFullYear()==r[1]&&(d.getMonth()+1)==r[3]&&d.getDate()==r[4]);
     }
+    function dateinquiry(res){
+        var a = document.getElementById("gdeparturecity").value;
+        var b= document.getElementById("garrivalcity").value;
+        document.getElementById("gdate").value=res;
+        document.getElementById("flightInquiry").submit();
+        window.location.href="/change?departurecity=" + a + "&arrivalcity=" +b+"&realPrice="+originalPrice+"&order_id="+order_id+"&order_num="+order_num+"&date="+res;
+    }
+
 
 
 </script>
 
-<!--<script type="text/javascript">-->
-<!--    var originalPrice = parseInt($.getUrlParam('realPrice'))-->
-<!--    var order_id = $.getUrlParam('order_id')-->
-<!--    var order_num = $.getUrlParam('order_num')-->
-<!--    selectBydate=function (){-->
-<!--        document.getElementById("flightInquiry").submit();-->
-<!--        var a = document.getElementById("gdeparturecity").value;-->
-<!--        var b= document.getElementById("garrivalcity").value;-->
-<!--        var c = document.getElementById("gdate").value;-->
-<!--        if(c.length==0){-->
-<!--            layui.use('layer', function(){-->
-<!--                var layer = layui.layer;-->
-<!--                layer.msg('请输入查询日期');-->
-<!--            });-->
-<!--        }-->
-<!--        else if(isvalidate(c)==false){-->
-<!--            layui.use('layer', function(){-->
-<!--                var layer = layui.layer;-->
-<!--                layer.msg('请输入正确格式的日期');-->
-<!--            });-->
-<!--        }-->
-<!--        else {-->
-
-<!--            layui.use(['table'], function(){-->
-<!--        var table = layui.table;//使用数据表格-->
-<!--        table.render({-->
-<!--            elem: '#flightList'-->
-<!--            ,height: 500-->
-<!--            ,url: 'flight' //数据接口-->
-<!--            ,skin:'nob'-->
-<!--            ,size:'lg'-->
-<!--            ,limit: 10-->
-<!--            ,limits: [10, 20, 30, 50]-->
-<!--            ,page: true //开启分页-->
-<!--            ,cols: [[ //表头-->
-<!--                {field: 'departurecity', title: '出发城市', width: 100}-->
-<!--                ,{field: 'arrivalcity', title: '到达城市', width: 100}-->
-<!--                ,{field: 'departuretime', title: '出发时间',sort: true, width: 110}-->
-<!--                ,{field: 'arrivaltime', title: '到达时间', width: 110}-->
-<!--                ,{field: 'date', title: '日期', width: 120}-->
-<!--                ,{field: 'arrival_airport', title: '到达机场', width: 120}-->
-<!--                ,{field: 'departure_airport', title: '出发机场', width: 120}-->
-<!--                ,{field: 'price', title: '价格', width: 100,sort: true,templet:function (d) {return '<span style="color:#23a9de;font-size: 16px;font-weight: bold">'+"￥"+d.price;}}-->
-<!--                ,{title: '剩余量', width: 80,templet:function (d){return (d.bc_remaining+d.ec_remaining);-->
-<!--                    }}-->
-<!--                ,{fixed: '', title:'改签', toolbar: "#toolbtn", width:80}-->
-<!--            ]]-->
-<!--        });-->
-<!--        )}-->
-<!--        }-->
-<!--    }-->
-<!--    function isvalidate(str)-->
-<!--    {-->
-<!--        var r = str.match(/^(\d{1,4})(.|\/)(\d{1,2})\2(\d{1,2})$/);-->
-<!--        if(r==null)return false;-->
-<!--        var d= new Date(r[1], r[3]-1, r[4]);-->
-<!--        if(r[3].length!=2||r[4].length!=2) return false;-->
-<!--        return (d.getFullYear()==r[1]&&(d.getMonth()+1)==r[3]&&d.getDate()==r[4]);-->
-<!--    }-->
-
-<!--</script>-->
 
 <script th:inline="none">
+
     var id;
     layui.use(['table'], function(){
         var table = layui.table;//使用数据表格
@@ -245,11 +240,10 @@
         table.render({
             elem: '#flightList'
             ,height: 500
-            ,url: 'changeTicket' //数据接口
+            ,url: 'flight' //数据接口
             ,skin:'nob'
             ,size:'lg'
             ,parseData:function (res) {
-                console.log(res);
                 return {
                     "code": 0,
                     "msg": "",
@@ -271,6 +265,7 @@
                 ,{fixed: '', title:'改签', toolbar: "#toolbtn", width:80}
             ]]
         });
+
     table.on('tool(test)', function (obj)  {
         var book_date = obj.data.date;
         var book_departurecity = obj.data.departurecity;
@@ -281,6 +276,8 @@
         var book_departure_airport = obj.data.departure_airport;
         var book_price=parseInt(obj.data.price);
         var book_flight_id=obj.data.flight_id;
+
+
         if (obj.event === 'change') {
             var username=$('#username').html();
             if(compareNow(book_date)==false){
@@ -307,7 +304,9 @@
                                 subject: departurecity+"-"+arrivalcity,
                                 order_num: order_num,
                                 order_id: order_id,
-                                change: "1" //
+                                change: "1",
+
+
                             },
                             success: function(response) {
                                 var newPage = window.open("about:blank", "_self");

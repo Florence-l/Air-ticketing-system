@@ -423,8 +423,10 @@
                     <input type="hidden" name="realPrice" id="realPrice">
                     <input type="hidden" name="city1" id="city1">
                     <input type="hidden" name="city2" id="city2">
+                    <input type="hidden" name="daten" id="daten">
                     <input type="hidden" name="seat_id" id="seat_id_">
                     <input type="hidden" name="seat_type" id="seat_type_">
+
 
                 </div>
             </form>
@@ -804,6 +806,8 @@
                                 $("#seat_type_").val(obj.seat_type);
                                 $("#type_").val(obj.type);
                                 $("#orderR_").show();
+                                $("#daten").val(obj.flight.date);
+
                             }
                         }
                     })
@@ -858,9 +862,11 @@
             var realPrice = $('#realPrice').val();
             var order_id = $('#order_id_').val();
             var order_num = $('#orderNum_').val();
-            var date = $('#date_').val();
+            var date = $('#daten').val();
+            console.log(realPrice);
+            console.log(date);
             window.location.href='http://localhost:8080/change?departurecity='+departurecity+'&arrivalcity='+arrivalcity+'&realPrice='
-            +realPrice+'&order_id='+order_id+'&order_num='+order_num+'&data'+date;
+            +realPrice+'&order_id='+order_id+'&order_num='+order_num+'&date='+date;
         }
 
         function tp(){
