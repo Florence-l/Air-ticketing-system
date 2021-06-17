@@ -107,7 +107,9 @@ public class OrderController {
         Order order = orderService.searchById(order_id);
         String passenger_id = order.getPassenger_id();
         String order_num = order.getOrder_num() + passenger_id;
-        Integer updateResult = orderService.updateChange("1",order_num,order_id);
+        Integer price = Integer.parseInt(order.getRealPrice()) + Integer.parseInt(diff);
+        String realPrice = String.valueOf(price);
+        Integer updateResult = orderService.updateChange("1",order_num,order_id,realPrice);
         if(updateResult == 1){
             return "success";
         }
@@ -122,9 +124,11 @@ public class OrderController {
         String diff =request.getParameter("diff");
         Order order = orderService.searchById(order_id);
         String order_num = order.getOrder_num();
-        String payResult = payService.refund(order_num,diff,2);
+        Integer price = Integer.parseInt(order.getRealPrice()) - Integer.parseInt(diff);
+        String realPrice = String.valueOf(price);
+        String payResult = payService.refund(order_num,diff,0);
         if(payResult == "success"){
-            Integer updateResult = orderService.updateChange("2",order_num,order_id);
+            Integer updateResult = orderService.updateChange("2",order_num,order_id,realPrice);
             if(updateResult == 1){
                 return "success";
             }
@@ -139,7 +143,8 @@ public class OrderController {
         Integer order_id = Integer.valueOf(request.getParameter("order_id"));
         Order order = orderService.searchById(order_id);
         String order_num = order.getOrder_num();
-        Integer updateResult = orderService.updateChange("3",order_num,order_id);
+        String realPrice = order.getRealPrice();
+        Integer updateResult = orderService.updateChange("3",order_num,order_id,realPrice);
         if(updateResult == 1){
             return "success";
         }
