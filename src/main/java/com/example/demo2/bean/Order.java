@@ -18,6 +18,7 @@ public class Order {
     private Integer is_valid;
     private Flight flight;
     private String change0;
+    private Integer is_finish;
 
     public Order(){
 
@@ -175,6 +176,10 @@ public class Order {
         this.change0 = change0;
     }
 
+    public Integer getIs_finish() {return is_finish;}
+
+    public void setIs_finish(Integer is_finish){this.is_finish = is_finish;}
+
 
     @Override
     public String toString() {
@@ -193,6 +198,7 @@ public class Order {
                 "order_num" + order_num+
                 "is_valid" + is_valid +
                 "change0" + change0 +
+                "is_finish" + is_finish +
                 '}';
     }
 }

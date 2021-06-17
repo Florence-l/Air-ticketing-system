@@ -24,9 +24,13 @@ public interface OrderMapper {
 
     List<Order> findByoNum(@Param("order_num") String order_num);
 
+    List<Order> goTime();
+
     List<String> scheduleTable();
 
     void updateStatus(@Param("orderTime") String orderTime);
+
+    void updateGo(@Param("order_id")Integer order_id);
 
     void updatePaymentTime(@Param("order_num") String order_num,@Param("paymentTime") String paymentTime);
 

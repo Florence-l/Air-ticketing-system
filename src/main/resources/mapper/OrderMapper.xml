@@ -5,6 +5,7 @@
         <id column="order_id"  property="order_id" />
         <result column="order_num" jdbcType="VARCHAR" property="order_num"/>
         <result column="is_valid" jdbcType="INTEGER" property="is_valid"/>
+        <result column="is_finish" jdbcType="INTEGER" property="is_finish"/>
         <result column="user_name" jdbcType="VARCHAR" property="user_name" />
         <result column="passenger_id" jdbcType="VARCHAR" property="passenger_id"/>
 <!--        <result column="user_id" javaType="INTEGER" property="user_id" />-->
@@ -114,12 +115,21 @@
         select orderTime from order_table where paymentStatus = 0
     </select>
 
+    <select id="goTime" resultMap="OrderResultMap">
+        select date, departuretime,order_id from order_table inner join flight_table on order_table.flight_id = flight_table.flight_id where is_valid = 0
+    </select>
+
     <update id="updateStatus" parameterType="com.example.demo2.bean.Order">
         update order_table
         set is_valid = 1
         where orderTime = #{orderTime} and paymentStatus = 0
     </update>
 
+    <update id="updateGo" parameterType="com.example.demo2.bean.Order">
+        update order_table
+        set is_finish = 1
+        where order_id=#{order_id} and is_valid = 0
+    </update>
 
     <update id="updateSeat" parameterType="com.example.demo2.bean.Order">
         update order_table

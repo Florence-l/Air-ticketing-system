@@ -347,6 +347,7 @@
                     <input type="hidden" name="seat_id" id="seat_id">
                     <input type="hidden" name="type" id="type">
                     <input type="hidden" name="seat_type" id="seat_type">
+                    <input type="hidden" name="is_finish" id="is_finish">
                 </div>
             </form>
             <div id="orderR" style="background:#eef3f7;margin-left:100px;display:none;">
@@ -418,6 +419,7 @@
                 <div>
                     <input type="button" onclick="os_()" value="查询" class="otherButton">
                     <input type="hidden" name="order_id_" id="order_id_">
+                    <input type="hidden" name="is_finish_" id="is_finish_">
                     <input type="hidden" name="paymentStatus_" id="paymentStatus_">
                     <input type="hidden" name="flight_id_" id="flight_id_">
                     <input type="hidden" name="realPrice" id="realPrice">
@@ -733,6 +735,7 @@
                                 $("#type").val(obj.flight.type);
                                 $("#seat_id").val(obj.seat_id);
                                 $("#seat_type").val(obj.seat_type);
+                                $("#is_finish").val(obj.is_finish);
                                 $("#orderR").show();
                             }
                         }
@@ -800,6 +803,7 @@
                                 $('#arrival_airport_').html(obj.flight.arrival_airport);
                                 $('#user_name_').html(obj.user_name);
                                 $("#order_id_").val(obj.order_id);
+                                $("#is_finish_").val(obj.is_finish);
                                 $("#paymentStatus_").val(obj.paymentStatus);
                                 $("#city1").val(obj.flight.departurecity);
                                 $("#city2").val(obj.flight.arrivalcity);
@@ -826,11 +830,18 @@
                 var seat_id=document.getElementById("seat_id").value;
                 var type=document.getElementById("type").value;
                 var seat_type=document.getElementById("seat_type").value;
+                var is_finish = document.getElementById("is_finish").value;
             //var 类型
                 if(paymentStatus === "0"){
                    layui.use('layer', function(){
                    var layer = layui.layer;
                    layer.msg('您未完成支付,不能进入选座服务');
+                    });
+                }
+                else if(is_finish === "1"){
+                     layui.use('layer', function(){
+                   var layer = layui.layer;
+                   layer.msg('您已完成此次出行');
                     });
                 }
                 else if(seat_id>0){
@@ -869,9 +880,17 @@
             var flight_id=$('#flight_id_').val();
             var date = $('#daten').val();
             var change0 = $('#change0_').val();
+            var is_finish = $('#is_finish_').val();
 
 
-            if(change0 != ""){
+            if(is_finish === "1"){
+
+            layui.use('layer', function () {
+                    var layer = layui.layer;
+                    layer.msg('您已完成此次出行');
+                });
+            }
+            else if(change0 != ""){
             layui.use('layer', function () {
                     var layer = layui.layer;
                     layer.msg('同一订单不能改签多次哦');
@@ -900,8 +919,15 @@
             var seat_id=$('#seat_id_').val();
             var seat_type=$('#seat_type_').val();
             var change0 = $('#change0_').val();
+            var is_finish = $('#is_finish_').val();
 
-            if(paymentStatus === "0") {
+            if(is_finish === "1"){
+                layui.use('layer', function(){
+                   var layer = layui.layer;
+                   layer.msg('您已完成此次出行');
+                    });
+            }
+            else if(paymentStatus === "0") {
                 layui.use('layer', function(){
                    var layer = layui.layer;
                    layer.msg('该订单未完成支付，无需退票');

@@ -85,10 +85,14 @@ public class OrderService {
     public List<String> scheduleTable(){
         return orderMapper.scheduleTable();
     }
+    public List<Order> goTime(){
+        return orderMapper.goTime();
+    }
 
     public void updateStatus(String orderTime){
         orderMapper.updateStatus(orderTime);
     }
+    public void updateGo(Integer order_id){ orderMapper.updateGo(order_id);}
 
 
 
