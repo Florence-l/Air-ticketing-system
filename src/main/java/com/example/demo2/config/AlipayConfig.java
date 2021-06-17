@@ -14,10 +14,10 @@ public class AlipayConfig {
     public static String ALIPAY_PUBLIC_KEY = "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAgTPFbaPAa01jtOuSm765qNAq4dUez5X3d/bsQYd1Mbh0HZPJloEinuyZY7kvWDuKbdzDBzybpDVZc6CDSHNqPQKn1bhyTCY0nNrIbiq6lhVr/njI7rCL4039uoHieLJsMaOhfaTwv+a5aiZfDlxiKxFe4P6omB4G5vstAG2I5SrPWNeMKWswI5V9cfvzZ42aoIsI5T24QOFBEEEAde4lGx7srywc83ISbYY7v7LAc2V2dJfRhzsGzRxvz89jNgWLSEE93QtTh90G29VLZ0y52sOiMN+vujVkP7fszHvCPgHqSeYnc1wf8SG0+hwd9aQeA0racK7R/nHocLgGhBWIWwIDAQAB";
 
     // 服务器异步通知页面路径  需http://格式的完整路径，不能加?id=123这类自定义参数，必须外网可以正常访问
-    public static String notify_url = "http://airticket.vipgz4.idcfengye.com/payNotify";
+    public static String notify_url = "http://localhost:8080/payNotify";
 
     // 页面跳转同步通知页面路径 需http://格式的完整路径，不能加?id=123这类自定义参数，必须外网可以正常访问(其实就是支付成功后返回的页面)
-    public static String return_url = "http://airticket.vipgz4.idcfengye.com/payReturn";
+    public static String return_url = "http://localhost:8080/payReturn";
     // 签名方式
     public static String sign_type = "RSA2";
 
