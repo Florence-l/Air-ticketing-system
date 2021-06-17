@@ -318,7 +318,8 @@
                                 url:'/change2',
                                 data:{
                                     order_id: order_id,
-                                    diff: diff
+                                    diff: diff,
+                                    book_flight_id:book_flight_id
                                 },
                                 success:function(res){
                                     if(res === "success"){
@@ -337,7 +338,8 @@
                                 url:'/change3',
                                 data:{
                                     order_id: order_id,
-                                    diff: 0
+                                    diff: 0,
+                                    book_flight_id:book_flight_id
                                 },
                                 success:function(res){
                                     if(res === "success"){

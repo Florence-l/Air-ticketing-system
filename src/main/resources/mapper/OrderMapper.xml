@@ -154,7 +154,7 @@
 
     <update id="updateChange" parameterType="com.example.demo2.bean.Order">
         update order_table
-        set change0=#{change0},order_num=#{order_num},seat_id=null,seat_type=2,realPrice=#{realPrice}
+        set change0=#{change0},order_num=#{order_num},seat_id=null,seat_type=2,realPrice=#{realPrice},flight_id=#{flight_id}
         where order_id=#{order_id}
     </update>
 

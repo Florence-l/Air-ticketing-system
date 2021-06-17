@@ -104,12 +104,13 @@ public class OrderController {
     public String change1(HttpServletRequest request) throws IOException, AlipayApiException {
         Integer order_id = Integer.valueOf(request.getParameter("order_id"));
         String diff =request.getParameter("diff");
+        Integer flight_id=Integer.valueOf(request.getParameter("book_flight_id"));
         Order order = orderService.searchById(order_id);
         String passenger_id = order.getPassenger_id();
         String order_num = order.getOrder_num() + passenger_id;
         Integer price = Integer.parseInt(order.getRealPrice()) + Integer.parseInt(diff);
         String realPrice = String.valueOf(price);
-        Integer updateResult = orderService.updateChange("1",order_num,order_id,realPrice);
+        Integer updateResult = orderService.updateChange("1",order_num,order_id,realPrice,flight_id);
         if(updateResult == 1){
             return "success";
         }
@@ -122,13 +123,14 @@ public class OrderController {
     public String change2(HttpServletRequest request) throws IOException, AlipayApiException {
         Integer order_id = Integer.valueOf(request.getParameter("order_id"));
         String diff =request.getParameter("diff");
+        Integer flight_id=Integer.valueOf(request.getParameter("book_flight_id"));
         Order order = orderService.searchById(order_id);
         String order_num = order.getOrder_num();
         Integer price = Integer.parseInt(order.getRealPrice()) - Integer.parseInt(diff);
         String realPrice = String.valueOf(price);
         String payResult = payService.refund(order_num,diff,0);
         if(payResult == "success"){
-            Integer updateResult = orderService.updateChange("2",order_num,order_id,realPrice);
+            Integer updateResult = orderService.updateChange("2",order_num,order_id,realPrice,flight_id);
             if(updateResult == 1){
                 return "success";
             }
@@ -141,10 +143,11 @@ public class OrderController {
     @ResponseBody()
     public String change3(HttpServletRequest request) throws IOException, AlipayApiException {
         Integer order_id = Integer.valueOf(request.getParameter("order_id"));
+        Integer flight_id=Integer.valueOf(request.getParameter("book_flight_id"));
         Order order = orderService.searchById(order_id);
         String order_num = order.getOrder_num();
         String realPrice = order.getRealPrice();
-        Integer updateResult = orderService.updateChange("3",order_num,order_id,realPrice);
+        Integer updateResult = orderService.updateChange("3",order_num,order_id,realPrice,flight_id);
         if(updateResult == 1){
             return "success";
         }
