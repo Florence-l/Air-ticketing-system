@@ -81,9 +81,12 @@ public class MineController {
         User user = userService.selectUserByName(principal.getName());
         Integer userid = user.getUserId();
         List<Order> orderList = orderService.findByid(userid,page,limit);
-        if(orderList.size()>3) list_rel = orderList.subList(0,3);
-        else list_rel = orderList;
-        int countOrder = orderService.countAllOrder();
+        if(orderList.size()>3) {
+            list_rel = orderList.subList(0,3);
+        } else {
+            list_rel = orderList;
+        }
+        int countOrder = orderService.countAllOrder(userid);
 
         LayuiTableResultUtil<List> list = new LayuiTableResultUtil<List>("",list_rel,0,countOrder);
         if(orderList!=null){
@@ -110,7 +113,7 @@ public class MineController {
         User user = userService.selectUserByName(principal.getName());
         Integer userid = user.getUserId();
         List<Order> orderList = orderService.findByid(userid,page,limit);
-        int countOrder = orderService.countAllOrder();
+        int countOrder = orderService.countAllOrder(userid);
 
         LayuiTableResultUtil<List> list = new LayuiTableResultUtil<List>("",orderList,0,countOrder);
         if(orderList!=null){
@@ -142,7 +145,7 @@ public class MineController {
         } else {
             list_rel = orderList;
         }
-        int countOrder = orderService.countAllOrder();
+        int countOrder = orderService.countUnpayOrder(userid);
 
         LayuiTableResultUtil<List> list = new LayuiTableResultUtil<List>("",list_rel,0,countOrder);
         if(orderList!=null){
@@ -168,7 +171,7 @@ public class MineController {
         User user = userService.selectUserByName(principal.getName());
         Integer userid = user.getUserId();
         List<Order> orderList = orderService.findUnpay(userid,page,limit);
-        int countOrder = orderService.countAllOrder();
+        int countOrder = orderService.countUnpayOrder(userid);
 
         LayuiTableResultUtil<List> list = new LayuiTableResultUtil<List>("",orderList,0,countOrder);
         if(orderList!=null){

@@ -36,12 +36,21 @@ public class OrderService {
         return null;
     }
 
-    public int countAllOrder() {
-        int count = orderMapper.countAllOrder();
+    public int countAllOrder(Integer user_id) {
+        int count = orderMapper.countAllOrder(user_id);
         if(count>0){
             return count;
         }
         return 0;
+    }
+
+    public  int countUnpayOrder(Integer user_id){
+        int count = orderMapper.countUnpayOrder(user_id);
+        if(count>0){
+            return count;
+        }
+        return 0;
+
     }
 
     public List<Order> findUnpay(Integer user_id, int page, int limits){

@@ -10,7 +10,9 @@ import java.util.List;
 public interface OrderMapper {
     List<Order> findByid(@Param("user_id") Integer user_id,@Param("page") int page,@Param("limits") int limits);
 
-    int countAllOrder();
+    int countAllOrder(@Param("user_id") Integer user_id);
+
+    int countUnpayOrder(@Param("user_id") Integer user_id);
 
     List<Order> findUnpay(@Param("user_id") Integer user_id,@Param("page") int page,@Param("limits") int limits);
 

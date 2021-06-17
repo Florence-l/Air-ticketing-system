@@ -86,7 +86,11 @@
     </select>
 
     <select id="countAllOrder" resultType="int">
-        select count(order_id) from order_table
+        select count(order_id) from order_table where user_id = #{user_id} and is_valid = 0
+    </select>
+
+    <select id="countUnpayOrder" resultType="int">
+        select count(order_id) from order_table where user_id = #{user_id} and is_valid = 0 and paymentStatus = 0
     </select>
 
     <insert id="insertOrder" parameterType="com.example.demo2.bean.Order">
