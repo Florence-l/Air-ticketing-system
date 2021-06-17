@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.naming.InsufficientResourcesException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -32,8 +33,11 @@ public class PayController {
 
     private String order_num_;
     private Integer order_id;
-
     private Order order1;
+    public String gseat_status;
+    public Integer gseat_id;
+    public String gseat_type;
+    public Integer gflight_id;
 
     /**
      * web端订单支付
@@ -51,9 +55,21 @@ public class PayController {
             Flight flight= flightService.findById(book_flight_id);
             order1=orderService.selectById(Integer.valueOf(order_id));
             String order_num_=order_num+(order1.getPassenger_id()).substring(order1.getPassenger_id().length()-4);
+            gseat_id = order1.getSeat_id();
+            gseat_type = order1.getSeat_type();
+            gflight_id = order1.getFlight_id();
+            System.out.println(order1);
+            if(gseat_id!=null){
+                gseat_status=flightService.findSeatId(gflight_id);
+                deleteSeat(gseat_status,gseat_id);
+
+            }
+
+
             order1.setOrder_num(order_num_);
             order1.setFlight(flight);
             order1.setFlight_id(flight.getFlight_id());
+
             order1.setSeat_id(null);
             String price=order1.getRealPrice();
             order1.setRealPrice(String.valueOf(Float.parseFloat(totalPrice)+Float.parseFloat(price)));//改签后的价格
@@ -95,7 +111,16 @@ public class PayController {
             //改签后的价格
             order1.setRealPrice(String.valueOf(Float.parseFloat(order1.getRealPrice())));
             //更新数据库
-            order_num_=order1.getOrder_num();
+            if(gseat_type=="1"){
+                flightService.deleteBC(gflight_id);
+            }
+            else{
+                flightService.deleteEC(gflight_id);
+            }
+            order_num_ = order1.getOrder_num();
+            flightService.updateSeatStatus(gflight_id,gseat_status);
+
+
             orderService.updateAfterChange(order1.getFlight_id(),order1.getSeat_id(),order1.getChange(), order1.getOrder_num(), order1.getOrder_id(),order1.getRealPrice());
             return "orderDetail";
         }
@@ -175,6 +200,13 @@ public class PayController {
             return "booking";
         }
         return "orderDetail";
+    }
+
+    public void deleteSeat(String seat, int id){
+        char[] seatstatus=seat.toCharArray();
+        seatstatus[id-1]='0';
+        seat= Arrays.toString(seatstatus).replaceAll("[\\[\\]\\s,]", "");
+        gseat_status=seat;
     }
 
 }

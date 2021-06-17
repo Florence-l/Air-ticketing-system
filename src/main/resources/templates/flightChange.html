@@ -281,7 +281,7 @@
 
             if (obj.event === 'change') {
                 var username=$('#username').html();
-                if(compareNow(book_date)==false){
+                if(compareNow(book_date)==1||(compareNow(book_date)==2&&comparetime(book_departuretime)==true)){
                     layui.use('layer', function(){
                         var layer = layui.layer;
                         layer.msg('当前日期无法改签！');
@@ -378,7 +378,15 @@
         var queryDate= new Date(r[1], r[3]-1, r[4]);
         console.log(nowDate);
         console.log(queryDate);
-        if(queryDate<nowDate) return false;
+        if(queryDate<nowDate){return 1}
+        else if(queryDate==nowDate){return 2};
+    }
+    function comparetime(str){
+        var time= new Date();
+        var nowtime=(time.getHours()-2)+":"+time.getMinutes()+":"+time.getSeconds()
+        if(nowtime>str)
+            return true
+
     }
 </script>
 
