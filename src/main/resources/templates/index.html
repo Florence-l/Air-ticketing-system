@@ -482,7 +482,7 @@
                                         <span>&#12288 &#12288 &#12288 &#12288 &#12288</span></p>
                                 </div>
                                 <button method="post" onclick="tp()" class="otherButton" style="margin-right: 20px;">我要退票</button>
-                                <button method="post" onclick="gq()" class="otherButton">我要改签</button>
+                                <button action="/index" method="post" onclick="gq()" class="otherButton">我要改签</button>
                             </div>
                         </div>
                     </div>
@@ -810,6 +810,7 @@
                                 $("#type_").val(obj.type);
                                 $("#change0_").val(obj.change);
                                 $("#orderR_").show();
+                                $("#daten").val(obj.flight.date);
                             }
                         }
                     })
@@ -868,7 +869,8 @@
             var date = $('#daten').val();
             var change0 = $('#change0_').val();
 
-            if(change0 != "0"){
+
+            if(change0 != ""){
             layui.use('layer', function () {
                     var layer = layui.layer;
                     layer.msg('同一订单不能改签多次哦');
@@ -888,8 +890,8 @@
             var seat_id=$('#seat_id_').val();
             var seat_type=$('#seat_type_').val();
             var change0 = $('#change0_').val();
-            alert(change0);
-            if(paymentStatus === '0') {
+
+            if(paymentStatus === '') {
                 layui.use('layer', function(){
                    var layer = layui.layer;
                    layer.msg('该订单未完成支付，无需退票');
