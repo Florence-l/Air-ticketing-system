@@ -142,7 +142,7 @@ public class PayService {
         //之前改签过(退差价)
         else{
             //直接退款
-            order_no=order_no.substring(0,order_no.length()-18);//获取原订单的订单号
+            order_no=order_no.substring(0,order_no.length()-4);//获取原订单的订单号
             System.out.printf("\n"+order_no);
             model = new AlipayTradeRefundModel();
             model.setOutTradeNo(order_no);
