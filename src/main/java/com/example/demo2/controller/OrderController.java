@@ -154,14 +154,16 @@ public class OrderController {
         String order_num = request.getParameter("order_num");
         Float realPrice = Float.parseFloat(request.getParameter("realPrice"))+50;
         Integer flight_id =Integer.parseInt(request.getParameter("flight_id"));
-        Integer seat_id =Integer.parseInt(request.getParameter("seat_id"));
         Integer seat_type = Integer.parseInt(request.getParameter("seat_type"));
         Integer order_id = Integer.parseInt(request.getParameter("order_id"));
-        System.out.println(seat_id);
+        Integer seat_id=0;
+        if(request.getParameter("seat_id")!=""){
+            seat_id=Integer.parseInt(request.getParameter("seat_id"));
+        }
 
         try {
             if(payService.refund(order_num,realPrice.toString(),0) == "success"){
-                if(seat_id!=null) {
+                if(seat_id!=0) {
                     gseat_status=flightService.findSeatId(flight_id);
                     deleteSeat(gseat_status,seat_id);
                     flightService.updateSeatStatus(flight_id,gseat_status);
