@@ -7,12 +7,31 @@
 <script type="text/javascript" src="/js/jquery-1.8.3.min.js"></script>
   <script type="text/javascript" src="/js/getUrl.js"></script>
 <script th:src="@{layui/layui.js}"></script>
+  <style>
+    .otherButton{
+    width: 110px;
+    height: 35px;
+    border: 1px solid #FF9224;
+    float: right;
+    cursor: pointer;
+    margin-top: 100px;
+    background: transparent;
+    outline: none;
+}
+  </style>
 
 </head>
 <body style="background-color: rgba(206,215,229,0.19);">
 <div class="header-wrapper">
   <h2 style="padding-left: 40px;"><a href="/orderdetail" style="color: #0C0C0C">返回</a></h2>
 </div>
+
+<div>
+  <button style="margin-right:300px" method="post" onclick="tp()" class="otherButton">我要退票</button>
+  <button style="margin-right:50px" method="post" onclick="xz()" class="otherButton">前去选座</button>
+
+</div>
+
 <div class="box">
   <ul class="left">
     <li></li>
@@ -187,6 +206,13 @@
   var arrival_airport = $.getUrlParam('aa');
   var departure_airport = $.getUrlParam('da');
   var realPrice=$.getUrlParam('price');
+  var order_id=$.getUrlParam('order_id');
+  var flight_id=$.getUrlParam('flight_id');
+  var type=$.getUrlParam('type');
+  var seat_type=$.getUrlParam('seat_type');
+  var order_num=$.getUrlParam('order_num');
+  var is_finish=$.getUrlParam('is_finish');
+  var change0=$.getUrlParam('change0');
   // var seat_type=$.getUrlParam('ty');
 
   var ldeparturecity=pinyin.getFullChars(departurecity);
@@ -203,6 +229,77 @@
   document.getElementById('date').innerHTML = date;
   document.getElementById('dt').innerHTML = departuretime;
   document.getElementById('da').innerHTML = departure_airport;
+
+  function xz(){
+            //var 类型
+
+            if(is_finish === "1"){
+                layui.use('layer', function(){
+                   var layer = layui.layer;
+                   layer.msg('您已完成此次出行');
+                    });
+            }
+            else if(seat_id>0){
+                    layui.use('layer', function(){
+                        var layer = layui.layer;
+                        layer.msg('您已完成选座');
+                    });
+                }
+                else {
+                        window.location.href='http://localhost:8080/seatchooser?order_id='+order_id+"&flight_id="+flight_id+"&type="+type+"&seat_type="+seat_type;
+                        }
+                }
+
+  function tp(){
+
+            if(is_finish === "1"){
+                layui.use('layer', function(){
+                   var layer = layui.layer;
+                   layer.msg('您已完成此次出行');
+                    });
+            }
+            else{
+                        $.ajax({
+                            type: 'post',
+                            url: '/ReturnTicket',
+                            data: { // 提交数据
+                                "order_num": order_num,
+                                "realPrice": realPrice,
+                                "flight_id" : flight_id,
+                                "seat_id" : seat_id,
+                                "order_id" : order_id,
+                                "seat_type":seat_type,
+                                "change0":change0,
+
+                            },
+                            success(res) {
+                                if(res === 'success'){
+                                    layui.use('layer', function(){
+                                    layer.confirm('退票成功！', {title:'提示',btn: ['确定'],btn1:function(index,layero){
+                                    layer.close(index);
+                                    window.location.href='http://localhost:8080/orderdetail';
+                                    }});
+                                    });
+
+                                } else{
+
+                                     layui.use('layer', function(){
+                                    layer.confirm('系统繁忙，退票失败！', {title:'提示',btn: ['确定'],btn1:function(index,layero){
+                                    layer.close(index);
+                                    }});
+
+                                    });
+
+                                }
+
+                            }
+                        })
+
+            }
+
+
+
+        }
 
   // document.getElementById('ty').innerHTML = seat_type;
 

@@ -42,6 +42,9 @@ public class MineController {
         return "orderUnpay";
     }
 
+    @GetMapping("/orderungo")
+    public String orderungo() {return "orderUngo";}
+
     @GetMapping("/mine")
     public String mine(){
         return "mine";
@@ -148,6 +151,32 @@ public class MineController {
         int countOrder = orderService.countUnpayOrder(userid);
 
         LayuiTableResultUtil<List> list = new LayuiTableResultUtil<List>("",list_rel,0,countOrder);
+        if(orderList!=null){
+            return list;
+        }
+        return null;
+    }
+
+    @RequestMapping("ungoAll")
+    @ResponseBody()
+    public LayuiTableResultUtil<List> ungoAll(Principal principal,HttpServletRequest request)
+    {
+        RequiredUtil Required = new RequiredUtil();
+        if(!Required.Required(request.getParameter("limit").trim())){
+            return new LayuiTableResultUtil<List>("分页异常",null,1,10);
+        }
+        if(!Required.Required(request.getParameter("page").trim())){
+            return new LayuiTableResultUtil<List>("分页异常",null,1,10);
+        }
+        int limit = Integer.parseInt(request.getParameter("limit").trim());
+        int page = Integer.parseInt(request.getParameter("page").trim());
+
+        User user = userService.selectUserByName(principal.getName());
+        Integer userid = user.getUserId();
+        List<Order> orderList = orderService.findUngo(userid,page,limit);
+        int countOrder = orderService.countUngo(userid);
+
+        LayuiTableResultUtil<List> list = new LayuiTableResultUtil<List>("",orderList,0,countOrder);
         if(orderList!=null){
             return list;
         }

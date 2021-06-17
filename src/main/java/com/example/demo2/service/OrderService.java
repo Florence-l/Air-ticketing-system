@@ -53,10 +53,26 @@ public class OrderService {
 
     }
 
+    public int countUngo(Integer user_id){
+        int count = orderMapper.countUngo(user_id);
+        if(count>0){
+            return count;
+        }
+        return 0;
+    }
+
     public List<Order> findUnpay(Integer user_id, int page, int limits){
 //        User user = userMapper.selectUserByName(user_name);
 //        Integer user_id=user.getUserId();
         List<Order> list = orderMapper.findUnpay(user_id,(limits-1)*page,page);
+        if(list!=null){
+            return list;
+        }
+        return null;
+    }
+
+    public List<Order> findUngo(Integer user_id,int page, int limits){
+        List<Order> list = orderMapper.findUngo(user_id,(limits-1)*page,page);
         if(list!=null){
             return list;
         }

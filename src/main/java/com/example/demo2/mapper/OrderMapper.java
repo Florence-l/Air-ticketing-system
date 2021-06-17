@@ -14,7 +14,11 @@ public interface OrderMapper {
 
     int countUnpayOrder(@Param("user_id") Integer user_id);
 
+    int countUngo(@Param("user_id") Integer user_id);
+
     List<Order> findUnpay(@Param("user_id") Integer user_id,@Param("page") int page,@Param("limits") int limits);
+
+    List<Order> findUngo(@Param("user-id") Integer user_id,@Param("page") int page,@Param("limits") int limits);
 
     int insertOrder(Order order);
 

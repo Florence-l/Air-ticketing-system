@@ -51,6 +51,7 @@
         departurecity,
         arrivalcity,
         date,
+        order_table.flight_id,
         arrival_airport,
         departure_airport,
         departuretime,
@@ -60,9 +61,10 @@
         bc_remaining,
         ec_remaining,
         realPrice,
-        change0
+        change0,
+        is_finish
         from order_table
-        inner join flight_table  on order_table.flight_id = flight_table.flight_id
+        inner join flight_table  on  order_table.flight_id = flight_table.flight_id
         where user_id = #{user_id} and is_valid = 0
     </select>
 
@@ -86,12 +88,46 @@
         where user_id = #{user_id} and paymentStatus = 0 and is_valid = 0
     </select>
 
+    <select id="findUngo" resultMap="OrderResultMap">
+        select
+        order_num,
+        order_id,
+        user_name,
+        orderTime,
+        paymentStatus,
+        paymentTime,
+        seat_id,
+        is_valid,
+        seat_type,
+        departurecity,
+        arrivalcity,
+        date,
+        order_table.flight_id,
+        arrival_airport,
+        departure_airport,
+        departuretime,
+        arrivaltime,
+        seat_status,
+        type,
+        bc_remaining,
+        ec_remaining,
+        realPrice,
+        change0,
+        is_finish
+        from order_table
+        inner join flight_table  on order_table.flight_id = flight_table.flight_id
+        where user_id = #{user_id} and is_finish = 0 and paymentStatus = 0 and is_valid = 0
+    </select>
+
     <select id="countAllOrder" resultType="int">
         select count(order_id) from order_table where user_id = #{user_id} and is_valid = 0
     </select>
 
     <select id="countUnpayOrder" resultType="int">
         select count(order_id) from order_table where user_id = #{user_id} and is_valid = 0 and paymentStatus = 0
+    </select>
+    <select id="countUngo" resultType="int">
+        select count(order_id) from order_table where user_id = #{user_id} and paymentStatus = 1 and is_finish = 0
     </select>
 
     <insert id="insertOrder" parameterType="com.example.demo2.bean.Order">

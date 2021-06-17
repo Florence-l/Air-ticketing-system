@@ -15,7 +15,7 @@
     <div style="padding: 15px;">
 
         <fieldset class="layui-elem-field layui-field-title" style="margin-top: 30px;">
-            <legend>全部订单</legend>
+            <legend>未出行订单</legend>
         </fieldset>
         <div class="layui-low">
             <table class="layui-hide" id="orderList" lay-filter="test"></table>
@@ -24,14 +24,10 @@
 
 </div>
 <!--<th:block th:include="common.html :: footer"></th:block>-->
-<script type="text/html" id="tool">
-    {{#  if(d.paymentStatus == 1){ }}
-   <button id="board" style="width: 50px;" class="layui-btn layui-btn-primary layui-btn-xs layui-border-orange" lay-event="board" >详情</button>
-    {{# } else if(d.paymentStatus == 0 && d.is_valid ==0) { }}
-    <button id="unpay" style="width: 50px;" class="layui-btn layui-btn-primary layui-btn-xs layui-border-blue" lay-event="unpay" >去支付</button>
-    {{# } }}
-</script>
 
+<script type="text/html" id="tool">
+    <button id="board" style="width: 50px;" class="layui-btn layui-btn-primary layui-btn-xs layui-border-orange" lay-event="board" >详情</button>
+</script>
 <script th:src="@{layui/layui.js}"></script>
 <script th:inline="none">
 layui.use(['table'], function(){
@@ -40,34 +36,23 @@ layui.use(['table'], function(){
   table.render({
     elem: '#orderList'
     ,height: 500
-    ,url: 'orderAll' //数据接口
+    ,url: 'ungoAll' //数据接口
     ,limit: 10
     ,limits: [10, 20, 30, 50]
     ,page: true //开启分页
     ,cols: [[ //表头
-      {field: 'order_num', title: '订单号', width:150,fixed:'left'}
+      {field: 'order_num', title: '订单号', width:150,  fixed: 'left'}
       ,{field: 'user_name', title: '乘客姓名', width:100}
       ,{field: 'seat_id', title: '座位号', width: 90}
       ,{templet:'<div>{{d.flight.departurecity}}</div>', title: '出发城市', width: 100}
       ,{templet:'<div>{{d.flight.arrivalcity}}</div>', title: '到达城市', width: 100}
       ,{templet:'<div>{{d.flight.date}}</div>', title: '日期', width: 130}
       ,{templet:'<div>{{d.flight.departuretime}}</div>', title: '出发时间', width: 130}
-      ,{field: 'realPrice', title: '全部金额', width: 135}
-      ,{field:'is_valid', width:8+'%', title: '订单状态',
-
-templet:function(d){
-          if(d.is_valid ==1)
-              return '已失效'
-          else if(d.paymentStatus == 1)
-              return '已支付'
-          else
-              return '未支付';
-}
-}
-          ,{fixed: '', title:'操作', toolbar: "#tool",width:80}
+      ,{field: 'realPrice', title: '应付金额', width: 135}
+      ,{fixed: '', title:'操作', toolbar: "#tool",width:80}
     ]]
   });
-  table.on('tool(test)', function (obj)  {
+    table.on('tool(test)', function (obj)  {
         var order_num = obj.data.order_num;
         var order_id = obj.data.order_id;
         var order_num=obj.data.order_num;
@@ -86,34 +71,15 @@ templet:function(d){
         var seat_type = obj.data.seat_type;
         var is_finish = obj.data.is_finish;
         var change0 = obj.data.change;
-      if (obj.event == 'board') {
-          if(isvalid==1){
-          window.location.href = "/boardingPass?date="+date+"&sid="+seat_id+"&price="+realPrice+"&name="+user_name+"&dc="+departurecity+"&ac="+arrivalcity+
+
+       if(obj.event == 'board'){
+
+        window.location.href = "/boardingPass?date="+date+"&sid="+seat_id+"&price="+realPrice+"&name="+user_name+"&dc="+departurecity+"&ac="+arrivalcity+
               "&da="+departure_airport+"&aa="+arrival_airport+"&dt="+departuretime+"&order_id="+order_id+"&flight_id="+flight_id+"&type="+type+"&seat_type="+
               seat_type+"&order_num="+order_num+"&is_finish="+is_finish+"&change0="+change0;
-      }
-      }
-      else if(obj.event == 'unpay'){
-          $.ajax({
-              async : false,
-              type:'post',
-              url:'/pay',
-              data:{
-                  totalPrice: realPrice,
-                  subject: departurecity+"-"+arrivalcity,
-                  order_num: order_num,
-              },
 
-
-              success: function(response) {
-                  var newPage = window.open("about:blank", "_self");
-                  newPage.document.write(response);
-              }
-          })
-
-      }
+        }
     });
-
 
 });
 

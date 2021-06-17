@@ -17,6 +17,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.security.Principal;
 import java.util.Arrays;
+import java.util.Objects;
 
 @Controller
 public class OrderController {
@@ -164,7 +165,7 @@ public class OrderController {
         Integer order_id = Integer.parseInt(request.getParameter("order_id"));
         Integer seat_id=0;
         String change0 = request.getParameter("change0");
-        if(request.getParameter("seat_id")!=""){
+        if(request.getParameter("seat_id")!="" && !Objects.equals(request.getParameter("seat_id"), "null")){
             seat_id=Integer.parseInt(request.getParameter("seat_id"));
         }
 
