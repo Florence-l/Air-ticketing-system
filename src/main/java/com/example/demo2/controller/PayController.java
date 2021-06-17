@@ -91,29 +91,12 @@ public class PayController {
     public String returnCall(HttpServletRequest request) throws AlipayApiException {
         System.out.println("支付成功, 进入同步通知接口...");
         if(order1!=null) {
-            //获取支付宝GET过来反馈信息
-            String totalPrice = null;
-            Map<String, String[]> requestParams = request.getParameterMap();
-            for (Iterator<String> iter = requestParams.keySet().iterator(); iter.hasNext(); ) {
-                String name = (String) iter.next();
-                if (name.equals("total_amount")) {
-                    String[] values = (String[]) requestParams.get(name);
-                    String valueStr = "";
-                    for (int i = 0; i < values.length; i++) {
-                        valueStr = (i == values.length - 1) ? valueStr + values[i]
-                                : valueStr + values[i] + ",";
-                    }
-                    totalPrice = valueStr;
-                    System.out.printf("\n退款金额："+String.valueOf(Float.parseFloat(order1.getRealPrice())));
-                    //改签后的价格+50
-                    order1.setRealPrice(String.valueOf(Float.parseFloat(order1.getRealPrice())));
-                    System.out.printf("\n realprice"+String.valueOf(Float.parseFloat(order1.getRealPrice()) + Float.parseFloat(totalPrice)));
-                    //更新数据库
-                    order_num_=order1.getOrder_num();
-                    orderService.updateAfterChange(order1.getFlight_id(),order1.getSeat_id(),order1.getChange(), order1.getOrder_num(), order1.getOrder_id(),order1.getRealPrice());
-                    break;
-                }
-            }
+            System.out.printf("\n退款金额："+String.valueOf(Float.parseFloat(order1.getRealPrice())+50));
+            //改签后的价格
+            order1.setRealPrice(String.valueOf(Float.parseFloat(order1.getRealPrice())));
+            //更新数据库
+            order_num_=order1.getOrder_num();
+            orderService.updateAfterChange(order1.getFlight_id(),order1.getSeat_id(),order1.getChange(), order1.getOrder_num(), order1.getOrder_id(),order1.getRealPrice());
             return "orderDetail";
         }
         else{
