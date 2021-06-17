@@ -133,8 +133,8 @@ public class OrderService {
     }
 
     //在改签时调用
-    public int updateChange(String change0,String order_num,Integer order_id){
-        orderMapper.updateChange(change0,order_num,order_id);
+    public int updateChange(String change0,String order_num,Integer order_id, String realPrice, Integer flight_id){
+        orderMapper.updateChange(change0,order_num,order_id,realPrice,flight_id);
         return 1;
     }
 

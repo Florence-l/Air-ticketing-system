@@ -290,10 +290,6 @@
                     if (username != ''){
                         if(book_price > originalPrice)
                         {
-                            layui.use('layer', function(){
-                                var layer = layui.layer;
-                                layer.msg('友情提示：乘客改签当前航班需补差价哦');
-                            })
                             change = "1";
                             var diff = book_price - originalPrice;
                             $.ajax({//支付
@@ -315,10 +311,6 @@
                             })
                         }else if(book_price < originalPrice)
                         {
-                            layui.use('layer', function(){
-                                var layer = layui.layer;
-                                layer.msg('友情提示：乘客改签当前航班会退差价哦');
-                            })
                             change = "2";
                             var diff = originalPrice - book_price;
                             $.ajax({
@@ -326,33 +318,35 @@
                                 url:'/change2',
                                 data:{
                                     order_id: order_id,
-                                    diff: diff
+                                    diff: diff,
+                                    book_flight_id:book_flight_id
                                 },
                                 success:function(res){
                                     if(res === "success"){
-                                        window.setTimeout(window.location.href, 1000);
-                                        window.location.href='http://localhost:8080/orderChange';
+                                        layui.use('layer', function(){
+                                            var layer = layui.layer;
+                                            layer.msg('提示：您已改签成功！');
+                                        })
                                     }
                                 }
                             })
                         }else if(book_price === originalPrice)
                         {
-                            layui.use('layer', function(){
-                                var layer = layui.layer;
-                                layer.msg('友情提示：乘客改签当前航班无差价哦');
-                            })
                             change = "3";
                             $.ajax({
                                 type:'post',
                                 url:'/change3',
                                 data:{
                                     order_id: order_id,
-                                    diff: 0
+                                    diff: 0,
+                                    book_flight_id:book_flight_id
                                 },
                                 success:function(res){
                                     if(res === "success"){
-                                        window.setTimeout(window.location.href, 1000);
-                                        window.location.href='http://localhost:8080/orderChange';
+                                        layui.use('layer', function(){
+                                            var layer = layui.layer;
+                                            layer.msg('提示：您已改签成功！');
+                                        })
                                     }
                                 }
                             })
