@@ -175,6 +175,7 @@
     var order_id = $.getUrlParam('order_id');
     var order_num = $.getUrlParam('order_num');
     var date= $.getUrlParam('date');
+    var flight_id=$.getUrlParam('flight_id');
 
     window.onload = function() {
         $("#gdeparturecity").val(departurecity);
@@ -206,7 +207,7 @@
             });
         }
         else {
-            window.location.href = "/change?departurecity=" + a + "&arrivalcity=" +b+"&realPrice="+originalPrice+"&order_id="+order_id+"&order_num="+order_num+"&date="+c;
+            window.location.href = "/change?departurecity=" + a + "&arrivalcity=" +b+"&realPrice="+originalPrice+"&order_id="+order_id+"&order_num="+order_num+"&date="+c+"&flight_id="+flight_id;
         }
     }
     //判断日期格式
@@ -223,7 +224,7 @@
         var b= document.getElementById("garrivalcity").value;
         document.getElementById("gdate").value=res;
         document.getElementById("flightInquiry").submit();
-        window.location.href="/change?departurecity=" + a + "&arrivalcity=" +b+"&realPrice="+originalPrice+"&order_id="+order_id+"&order_num="+order_num+"&date="+res;
+        window.location.href="/change?departurecity=" + a + "&arrivalcity=" +b+"&realPrice="+originalPrice+"&order_id="+order_id+"&order_num="+order_num+"&date="+res+"&flight_id="+flight_id;
     }
 
 
