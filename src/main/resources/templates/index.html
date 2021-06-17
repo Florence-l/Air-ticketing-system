@@ -808,6 +808,7 @@
                                 $("#seat_id_").val(obj.seat_id);
                                 $("#seat_type_").val(obj.seat_type);
                                 $("#type_").val(obj.type);
+                                $("#change0_").val(obj.change);
                                 $("#orderR_").show();
                             }
                         }
@@ -886,6 +887,8 @@
             var realPrice = $('#realPrice').val();
             var seat_id=$('#seat_id_').val();
             var seat_type=$('#seat_type_').val();
+            var change0 = $('#change0_').val();
+            alert(change0);
             if(paymentStatus === '0') {
                 layui.use('layer', function(){
                    var layer = layui.layer;
@@ -903,6 +906,8 @@
                                 "seat_id" : seat_id,
                                 "order_id" : order_id,
                                 "seat_type":seat_type,
+                                "change0":change0,
+
                             },
                             success(res) {
                                 if(res === 'success'){

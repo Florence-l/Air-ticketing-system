@@ -111,11 +111,14 @@ public class PayService {
                 refundRequest = new AlipayTradeRefundRequest();
                 refundRequest.setBizModel(model);
                 response= alipayClient.execute(refundRequest);
-                if(!response.isSuccess()) return response.getMsg();
-                else System.out.printf("\nsuccess 退款:"+response.getRefundFee());
+                if(!response.isSuccess()) {
+                    return response.getMsg();
+                } else {
+                    System.out.printf("\nsuccess 退款:"+response.getRefundFee());
+                }
 
                 //再从原订单退款
-                order_no=order_no.substring(order_no.length()-4);//获取原订单的订单号
+                order_no=order_no.substring(0,order_no.length()-4);//获取原订单的订单号
                 model = new AlipayTradeRefundModel();
                 model.setOutTradeNo(order_no);
                 model.setRefundAmount(String.valueOf(refund-diff_amount_f));//剩下的金额从原订单扣
@@ -123,8 +126,11 @@ public class PayService {
                 refundRequest = new AlipayTradeRefundRequest();
                 refundRequest.setBizModel(model);
                 response = alipayClient.execute(refundRequest);
-                if(!response.isSuccess()) return response.getMsg();
-                else System.out.printf("\nsuccess 退款:"+response.getRefundFee());
+                if(!response.isSuccess()) {
+                    return response.getMsg();
+                } else {
+                    System.out.printf("\nsuccess 退款:"+response.getRefundFee());
+                }
             }
             else{//差价金额大于等于实际退款金额，直接从差价订单里扣款
                 System.out.printf("\nrefund<=diff_amount_f");
@@ -135,8 +141,11 @@ public class PayService {
                 refundRequest = new AlipayTradeRefundRequest();
                 refundRequest.setBizModel(model);
                 response = alipayClient.execute(refundRequest);
-                if(!response.isSuccess()) return response.getMsg();
-                else System.out.printf("\nsuccess 退款:"+response.getRefundFee());
+                if(!response.isSuccess()) {
+                    return response.getMsg();
+                } else {
+                    System.out.printf("\nsuccess 退款:"+response.getRefundFee());
+                }
             }
         }
         //之前改签过(退差价)
@@ -151,8 +160,11 @@ public class PayService {
             refundRequest = new AlipayTradeRefundRequest();
             refundRequest.setBizModel(model);
             response = alipayClient.execute(refundRequest);
-            if(!response.isSuccess()) return response.getMsg();
-            else System.out.printf("\nsuccess 退款:"+response.getRefundFee());
+            if(!response.isSuccess()) {
+                return response.getMsg();
+            } else {
+                System.out.printf("\nsuccess 退款:"+response.getRefundFee());
+            }
         }
         return "success";
     }

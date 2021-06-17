@@ -58,6 +58,7 @@ public class PayController {
             order1.setRealPrice(totalPrice);
             if (change != null) {
                 order1.setChange(change);
+
             } else order1.setChange("0");
             payService.pay(totalPrice, subject,order_num_, response);
         }
@@ -102,6 +103,7 @@ public class PayController {
                     totalPrice = valueStr;
                     //原价+差价
                     order1.setRealPrice(String.valueOf(Float.parseFloat(order1.getRealPrice()) + Float.parseFloat(totalPrice)));
+                    System.out.printf("\n realprice"+String.valueOf(Float.parseFloat(order1.getRealPrice()) + Float.parseFloat(totalPrice)));
                     //更新数据库
                     order_num_=order1.getOrder_num();
                     orderService.updateAfterChange(order1.getFlight_id(),order1.getSeat_id(),order1.getChange(), order1.getOrder_num(), order1.getOrder_id(),order1.getRealPrice());
