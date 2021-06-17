@@ -117,7 +117,6 @@
     </div>
 </div>
 
-<!--<th:block th:include="common.html :: footer"></th:block>-->
 
 
 <script th:src="@{layui/layui.js}"></script>
@@ -154,8 +153,6 @@ else
 return '未支付';
 }
 }
-        ,{field:'', title: '操作', toolbar: "#bar"}
-
     ]]
   });
   table.render({
@@ -176,7 +173,6 @@ return '未支付';
       ,{templet:'<div>{{d.flight.date}}</div>', title: '日期', width: 130}
       ,{templet:'<div>{{d.flight.departuretime}}</div>', title: '出发时间', width: 130}
       ,{field: 'realPrice', title: '全部金额', width: 100}
-      ,{field:'', title: '操作', toolbar: "#bar"}
     ]]
   });
 });
@@ -189,9 +185,7 @@ return '未支付';
 
 
 </script>
-<script type="text/html" id="bar">
-    <button class="layui-btn layui-btn-normal layui-btn-sm" lay-event="detail" >查看</button>
-</script>
+
 <script>
     layui.use(['element', 'table'], function () {
     var $ = layui.jquery, table = layui.table, element = layui.element;
