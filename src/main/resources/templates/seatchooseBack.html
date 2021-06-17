@@ -230,23 +230,23 @@
             "order_id": order_id,
             },
          success: function (data){
-               obj = JSON.parse(data);
-               $('#order_num').html("订单号：  " + obj.order_num);
-               $('#seat_id').html("选座成功  您的座位号为：" + obj.seat_id);
-               $('#city').html(obj.flight.departurecity+" ➡️ "+obj.flight.arrivalcity);
-               $('#departurecity').html(obj.flight.departurecity);
-               $('#arrivalcity').html(obj.flight.arrivalcity);
-               $('#date').html(obj.flight.date);
-               $('#departuretime').html((obj.flight.departuretime).slice(0,-3));
-               $('#arrivaltime').html((obj.flight.arrivaltime).slice(0,-3));
-               $('#departure_airport').html(obj.flight.departure_airport);
-               $('#arrival_airport').html(obj.flight.arrival_airport);
-               $('#orderTime').html((obj.orderTime).slice(0,-3));
-               $('#realPrice').html(obj.realPrice);
-               $('#realPrice1').html(obj.realPrice);
-               $('#price_be').html((parseInt(obj.realPrice)-50).toString());
-               $('#passenger_id').html(obj.passenger_id);
-               $('#user_name').html(obj.user_name);
+               var obj = JSON.parse(data);
+               $('#order_num').html("订单号：  " + obj[0].order_num);
+               $('#seat_id').html("选座成功  您的座位号为：" + obj[0].seat_id);
+               $('#city').html(obj[0].flight.departurecity+" ➡️ "+obj[0].flight.arrivalcity);
+               $('#departurecity').html(obj[0].flight.departurecity);
+               $('#arrivalcity').html(obj[0].flight.arrivalcity);
+               $('#date').html(obj[0].flight.date);
+               $('#departuretime').html((obj[0].flight.departuretime).slice(0,-3));
+               $('#arrivaltime').html((obj[0].flight.arrivaltime).slice(0,-3));
+               $('#departure_airport').html(obj[0].flight.departure_airport);
+               $('#arrival_airport').html(obj[0].flight.arrival_airport);
+               $('#orderTime').html((obj[0].orderTime).slice(0,-3));
+               $('#realPrice').html(obj[0].realPrice);
+               $('#realPrice1').html(obj[0].realPrice);
+               $('#price_be').html((parseInt(obj[0].realPrice)-50).toString());
+               $('#passenger_id').html(obj[0].passenger_id);
+               $('#user_name').html(obj[0].user_name);
 
          }
 
