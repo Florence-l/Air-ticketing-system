@@ -425,6 +425,7 @@
                     <input type="hidden" name="city2" id="city2">
                     <input type="hidden" name="seat_id" id="seat_id_">
                     <input type="hidden" name="seat_type" id="seat_type_">
+                    <input type="hidden" name="change0_" id="change0_">
 
                 </div>
             </form>
@@ -739,6 +740,8 @@
             }
         }
 
+
+
         function os_(){
         var order_num = $('#orderNum_').val();
             var passenger_id = $('#IDcard_').val();
@@ -803,6 +806,8 @@
                                 $("#seat_id_").val(obj.seat_id);
                                 $("#seat_type_").val(obj.seat_type);
                                 $("#type_").val(obj.type);
+                                $("#change0_").val(obj.change);
+
                                 $("#orderR_").show();
                             }
                         }
@@ -859,8 +864,17 @@
             var order_id = $('#order_id_').val();
             var order_num = $('#orderNum_').val();
             var date = $('#date_').val();
+            var change0 = $('#change0_').val();
+
+            if(change0 != "0"){
+            layui.use('layer', function () {
+                    var layer = layui.layer;
+                    layer.msg('同一订单不能改签多次哦');
+                });
+            }
+            else{
             window.location.href='http://localhost:8080/change?departurecity='+departurecity+'&arrivalcity='+arrivalcity+'&realPrice='
-            +realPrice+'&order_id='+order_id+'&order_num='+order_num+'&data'+date;
+            +realPrice+'&order_id='+order_id+'&order_num='+order_num+'&data'+date;}
         }
 
         function tp(){

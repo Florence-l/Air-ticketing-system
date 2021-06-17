@@ -192,7 +192,7 @@ public class Order {
                 "realPrice" + realPrice +
                 "order_num" + order_num+
                 "is_valid" + is_valid +
-                "change" + change0 +
+                "change0" + change0 +
                 '}';
     }
 }
