@@ -59,7 +59,9 @@ public class PayController {
             if (change != null) {
                 order1.setChange(change);
 
-            } else order1.setChange("0");
+            } else {
+                order1.setChange("0");
+            }
             payService.pay(totalPrice, subject,order_num_, response);
         }
 

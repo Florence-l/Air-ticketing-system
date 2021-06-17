@@ -861,6 +861,7 @@
         function gq(){
             var departurecity = $('#city1').val();
             var arrivalcity = $('#city2').val();
+            var paymentStatus = $('#paymentStatus').val();
             var realPrice = $('#realPrice').val();
             var order_id = $('#order_id_').val();
             var order_num = $('#orderNum_').val();
@@ -868,12 +869,23 @@
             var date = $('#daten').val();
             var change0 = $('#change0_').val();
 
+
+
             if(change0 != "0"){
             layui.use('layer', function () {
                     var layer = layui.layer;
                     layer.msg('同一订单不能改签多次哦');
                 });
             }
+
+            else if(paymentStatus === '') {
+                layui.use('layer', function(){
+                   var layer = layui.layer;
+                   layer.msg('该订单未完成支付，不能改签');
+                    });
+            }
+
+
             else{
             window.location.href='http://localhost:8080/change?departurecity='+departurecity+'&arrivalcity='+arrivalcity+'&realPrice='
             +realPrice+'&order_id='+order_id+'&order_num='+order_num+'&date='+date+'&flight_id='+flight_id;}
@@ -888,8 +900,8 @@
             var seat_id=$('#seat_id_').val();
             var seat_type=$('#seat_type_').val();
             var change0 = $('#change0_').val();
-            alert(change0);
-            if(paymentStatus === '0') {
+
+            if(paymentStatus === '') {
                 layui.use('layer', function(){
                    var layer = layui.layer;
                    layer.msg('该订单未完成支付，无需退票');
