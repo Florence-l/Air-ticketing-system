@@ -13,9 +13,9 @@
 
         <!--数据库链接地址账号密码-->
         <jdbcConnection driverClass="com.mysql.cj.jdbc.Driver"
-                        connectionURL="jdbc:mysql://8.140.42.123:3306/Air"
-                        password="Air123456."
-                        userId="root">
+                        connectionURL="jdbc:mysql://49.232.190.253/Air"
+                        password="Air123456"
+                        userId="kouun">
             <property name="nullCatalogMeansCurrent" value="true"/>
         </jdbcConnection>
 

@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.demo2.mapper.OrderMapper">
     <resultMap id="OrderResultMap" type="com.example.demo2.bean.Order">
-        <id column="order_id" jdbcType="INTEGER" property="order_id" />
+        <id column="order_id"  property="order_id" />
         <result column="order_num" jdbcType="VARCHAR" property="order_num"/>
         <result column="is_valid" jdbcType="INTEGER" property="is_valid"/>
         <result column="user_name" jdbcType="VARCHAR" property="user_name" />
@@ -151,6 +151,12 @@
     <update id="updateChange" parameterType="com.example.demo2.bean.Order">
         update order_table
         set change0=#{change0},order_num=#{order_num},seat_id=null,seat_type=2
+        where order_id=#{order_id}
+    </update>
+
+    <update id="updateAfterChange" parameterType="com.example.demo2.bean.Order">
+        update order_table
+        set change0=#{change0},order_num=#{order_num},realPrice=#{realPrice}
         where order_id=#{order_id}
     </update>
 

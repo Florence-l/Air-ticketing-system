@@ -40,6 +40,8 @@ public interface OrderMapper {
 
     int updateChange(@Param("change0")String change0, @Param("order_num")String order_num, @Param("order_id")Integer order_id);
 
+    int updateAfterChange(String change0, String order_num, Integer order_id,String realPrice);
+
 
     void ReturnTicket(@Param("order_id") Integer order_id);
 

@@ -7,12 +7,15 @@ import com.example.demo2.mapper.UserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
+
+import javax.annotation.Resource;
+import javax.annotation.Resources;
 import java.util.List;
 
 @Component
 @Service
 public class OrderService {
-    @Autowired
+    @Resource
     private OrderMapper orderMapper;
 //    private UserMapper userMapper;
 
@@ -125,6 +128,15 @@ public class OrderService {
 
 
     public void ReturnTicket(Integer order_id){orderMapper.ReturnTicket(order_id);}
+
+    public Order selectById(Integer order_id) {
+        return orderMapper.searchById(order_id);
+    }
+
+    public int updateAfterChange(String change, String order_num, Integer order_id, String realPrice) {
+        return orderMapper.updateAfterChange(change,order_num,order_id,realPrice);
+    }
+
 
 //    @Override
 //    public List<Order> findUnpayByid(Integer userid) {

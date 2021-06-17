@@ -29,7 +29,7 @@ public class PayController {
     private String order_num_;
     private Integer order_id;
 
-    private Order order;
+    private Order order1;
 
 
     /**
@@ -41,28 +41,30 @@ public class PayController {
      */
     @RequestMapping("/pay")
     @ResponseBody
-    public void payController(String totalPrice,  String subject, String order_num,String change,HttpServletResponse response)throws IOException{
+    public void payController(String totalPrice,String subject,String order_num,String change,String order_id,HttpServletResponse response)throws IOException{
         order_num_ = order_num;
-        System.out.println(order_num_);
-//        Order order = orderService.searchByNum(order_num_);
-//        System.out.println(order);
-//        order_id = order.getOrder_id();
-//
-//        //将信息封装在order里
-//        order=new Order(order_id);
-//        order.setOrder_num(order_num);
-//        order.setRealPrice(totalPrice);
-//        if(change!=null){
-//            order.setChange(change);
-//        }
+        //改签时使用
+        if(order_id!=null) {
+            order1=orderService.selectById(Integer.valueOf(order_id));
+            order1.setOrder_num(order_num+order1.getFlight_id());
+            String order_num_=order_num+order1.getFlight_id();
+            order1.setRealPrice(totalPrice);
+            if (change != null) {
+                order1.setChange(change);
+            } else order1.setChange("0");
+            payService.pay(totalPrice, subject,order_num_, response);
+        }
 
-        System.out.println(order_num_);
-        payService.pay(totalPrice,subject,order_num,response);
+        else {
+            order1=null;
+            payService.pay(totalPrice, subject, order_num, response);
+        }
     }
 
     @RequestMapping("/getOd_num")
     @ResponseBody()
     public String getOd_num(){
+        System.out.printf("\n order_num="+order_num_);
         return order_num_;
     }
 
@@ -77,56 +79,33 @@ public class PayController {
     @RequestMapping("/payReturn")
     public String returnCall(HttpServletRequest request) throws AlipayApiException {
         System.out.println("支付成功, 进入同步通知接口...");
-
-        //支付差价后更新数据库
-        //获取支付宝GET过来反馈信息
-//        Map<String, String> params = new HashMap<String, String>();
-//        Map<String, String[]> requestParams = request.getParameterMap();
-//        for (Iterator<String> iter = requestParams.keySet().iterator(); iter.hasNext(); ) {
-//            String name = (String) iter.next();
-//            String[] values = (String[]) requestParams.get(name);
-//            String valueStr = "";
-//            for (int i = 0; i < values.length; i++) {
-//                valueStr = (i == values.length - 1) ? valueStr + values[i]
-//                        : valueStr + values[i] + ",";
-//            }
-//            params.put(name, valueStr);
-//        }
-//
-//        String totalPrice=params.get("totalPrice");
-//        System.out.printf("\n....return totalprice"+totalPrice);
-//        if(order.getChange()=="1"){
-//            //原价+差价
-//            order.setRealPrice(String.valueOf(Float.parseFloat(order.getRealPrice())+Float.parseFloat(totalPrice)));
-//            //更新数据库?为什么参数里不加上金额
-//            orderService.updateChange(order.getChange(),order.getOrder_num(),order.getOrder_id());
-//        }
-//        //更新结束
-
-        return "orderDetail";
-//
-//        // 调用SDK验证签名
-//        boolean signVerified = AlipaySignature.rsaCheckV1(params,
-//                AlipayConfig.ALIPAY_PUBLIC_KEY,
-//                AlipayConfig.CHARSET,
-//                AlipayConfig.sign_type);
-//
-//        // 验签成功
-//        if (signVerified) {
-//            // 同步通知返回的参数（部分说明）
-//            // out_trade_no :   商户订单号
-//            // trade_no : 支付宝交易号
-//            // total_amount ： 交易金额
-//            // auth_app_id/app_id : 商户APPID
-//            // seller_id ：收款支付宝账号对应的支付宝唯一用户号(商户UID )
-//            System.out.println("****************** 支付宝同步通知成功   ******************");
-//            System.out.println("同步通知返回参数：" + params.toString());
-//            System.out.println("****************** 支付宝同步通知成功   ******************");
-//            return "orderDetail";
-//        } else {
-//            System.out.println("支付, 验签失败...");
-//            return "booking";
-//        }
+        if(order1!=null) {
+            //获取支付宝GET过来反馈信息
+            String totalPrice = null;
+            Map<String, String[]> requestParams = request.getParameterMap();
+            for (Iterator<String> iter = requestParams.keySet().iterator(); iter.hasNext(); ) {
+                String name = (String) iter.next();
+                if (name.equals("total_amount")) {
+                    String[] values = (String[]) requestParams.get(name);
+                    String valueStr = "";
+                    for (int i = 0; i < values.length; i++) {
+                        valueStr = (i == values.length - 1) ? valueStr + values[i]
+                                : valueStr + values[i] + ",";
+                    }
+                    totalPrice = valueStr;
+                    //原价+差价
+                    order1.setRealPrice(String.valueOf(Float.parseFloat(order1.getRealPrice()) + Float.parseFloat(totalPrice)));
+                    //更新数据库
+                    order_num_=order1.getOrder_num();
+                    orderService.updateAfterChange(order1.getChange(), order1.getOrder_num(), order1.getOrder_id(),order1.getRealPrice());
+                    break;
+                }
+            }
+            return "orderDetail";
+        }
+        else{
+            return "orderDetail";
+        }
     }
 
     //异步通知

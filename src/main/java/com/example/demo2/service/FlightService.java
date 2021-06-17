@@ -29,8 +29,10 @@ public class FlightService implements FlightMapper{
     }
     @Override
     public List<Flight> findByDAA(String departurecity, String arrivalcity) {
+        System.out.printf("\n "+departurecity+arrivalcity);
         List<Flight> list = flightMapper.findByDAA(departurecity,arrivalcity);
         if(list!=null){
+            System.out.printf("\n the size of list is "+list.size());
             return list;
         }
         return null;
