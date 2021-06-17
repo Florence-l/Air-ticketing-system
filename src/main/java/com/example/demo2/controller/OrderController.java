@@ -157,23 +157,22 @@ public class OrderController {
         Integer seat_id =Integer.parseInt(request.getParameter("seat_id"));
         Integer seat_type = Integer.parseInt(request.getParameter("seat_type"));
         Integer order_id = Integer.parseInt(request.getParameter("order_id"));
-
         System.out.println(seat_id);
-        if(seat_id!=null) {
-            gseat_status=flightService.findSeatId(flight_id);
-            deleteSeat(gseat_status,seat_id);
-            flightService.updateSeatStatus(flight_id,gseat_status);
-            System.out.println(gseat_status);
-            if(seat_type==1){
-                flightService.deleteBC(flight_id);
-            }
-            else{
-                flightService.deleteEC(flight_id);
-            }
-        }
 
         try {
             if(payService.refund(order_num,realPrice.toString(),0) == "success"){
+                if(seat_id!=null) {
+                    gseat_status=flightService.findSeatId(flight_id);
+                    deleteSeat(gseat_status,seat_id);
+                    flightService.updateSeatStatus(flight_id,gseat_status);
+                    System.out.println(gseat_status);
+                    if(seat_type==1){
+                        flightService.deleteBC(flight_id);
+                    }
+                    else{
+                        flightService.deleteEC(flight_id);
+                    }
+                }
                 orderService.ReturnTicket(order_id);
                 return "success";
             }

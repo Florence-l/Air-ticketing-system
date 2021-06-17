@@ -276,6 +276,8 @@
         var book_departure_airport = obj.data.departure_airport;
         var book_price=obj.data.price;
         var book_flight_id=obj.data.flight_id;
+        var book_bc_remaining=obj.data.bc_remaining;
+        var book_ec_remaining=obj.data.ec_remaining;
         if (obj.event === 'book') {
             var username=$('#username').html();
             if(compareNow(book_date)==false){
@@ -289,7 +291,7 @@
                         + escape(book_arrivalcity) + "&book_departuretime=" + escape(book_departuretime) + "&book_arrivaltime="
                         + escape(book_arrivaltime) + "&book_arrival_airport=" + escape(book_arrival_airport) + "&book_departure_airport="
                         + escape(book_departure_airport) + "&book_date=" + escape(book_date) + "&book_price=" + escape(book_price)
-                        + "&book_flight_id=" + escape(book_flight_id);
+                        + "&book_flight_id=" + escape(book_flight_id)+ "&ec=" + escape(book_ec_remaining)+"&bc=" + escape(book_bc_remaining);
                 } else {
                     layer.open({
                         type: 2,
@@ -300,7 +302,7 @@
                             + escape(book_arrivalcity) + "&book_departuretime=" + escape(book_departuretime) + "&book_arrivaltime="
                             + escape(book_arrivaltime) + "&book_arrival_airport=" + escape(book_arrival_airport) + "&book_departure_airport="
                             + escape(book_departure_airport) + "&book_date=" + escape(book_date) + "&book_price=" + escape(book_price)
-                            + "&book_flight_id=" + escape(book_flight_id),
+                            + "&book_flight_id=" + escape(book_flight_id)+"&ec=" + escape(book_ec_remaining)+"&bc=" + escape(book_bc_remaining),
                     });
                 }
             }

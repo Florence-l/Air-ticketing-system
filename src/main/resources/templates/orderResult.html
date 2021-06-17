@@ -86,7 +86,6 @@ templet:function(d){
       }
       }
       else if(obj.event == 'unpay'){
-
           $.ajax({
               async : false,
               type:'post',
@@ -96,6 +95,8 @@ templet:function(d){
                   subject: departurecity+"-"+arrivalcity,
                   order_num: order_num,
               },
+
+
               success: function(response) {
                   var newPage = window.open("about:blank", "_self");
                   newPage.document.write(response);

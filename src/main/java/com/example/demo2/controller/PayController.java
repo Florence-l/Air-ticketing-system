@@ -41,20 +41,20 @@ public class PayController {
      */
     @RequestMapping("/pay")
     @ResponseBody
-    public void payController(@RequestParam String totalPrice,@RequestParam  String subject,@RequestParam String order_num,String change,HttpServletResponse response)throws IOException{
+    public void payController(String totalPrice,  String subject, String order_num,String change,HttpServletResponse response)throws IOException{
         order_num_ = order_num;
         System.out.println(order_num_);
-        Order order = orderService.searchByNum(order_num_);
-        System.out.println(order);
-        order_id = order.getOrder_id();
-
-        //将信息封装在order里
-        order=new Order(order_id);
-        order.setOrder_num(order_num);
-        order.setRealPrice(totalPrice);
-        if(change!=null){
-            order.setChange(change);
-        }
+//        Order order = orderService.searchByNum(order_num_);
+//        System.out.println(order);
+//        order_id = order.getOrder_id();
+//
+//        //将信息封装在order里
+//        order=new Order(order_id);
+//        order.setOrder_num(order_num);
+//        order.setRealPrice(totalPrice);
+//        if(change!=null){
+//            order.setChange(change);
+//        }
 
         System.out.println(order_num_);
         payService.pay(totalPrice,subject,order_num,response);
@@ -80,28 +80,28 @@ public class PayController {
 
         //支付差价后更新数据库
         //获取支付宝GET过来反馈信息
-        Map<String, String> params = new HashMap<String, String>();
-        Map<String, String[]> requestParams = request.getParameterMap();
-        for (Iterator<String> iter = requestParams.keySet().iterator(); iter.hasNext(); ) {
-            String name = (String) iter.next();
-            String[] values = (String[]) requestParams.get(name);
-            String valueStr = "";
-            for (int i = 0; i < values.length; i++) {
-                valueStr = (i == values.length - 1) ? valueStr + values[i]
-                        : valueStr + values[i] + ",";
-            }
-            params.put(name, valueStr);
-        }
-
-        String totalPrice=params.get("totalPrice");
-        System.out.printf("\n....return totalprice"+totalPrice);
-        if(order.getChange()=="1"){
-            //原价+差价
-            order.setRealPrice(String.valueOf(Float.parseFloat(order.getRealPrice())+Float.parseFloat(totalPrice)));
-            //更新数据库?为什么参数里不加上金额
-            orderService.updateChange(order.getChange(),order.getOrder_num(),order.getOrder_id());
-        }
-        //更新结束
+//        Map<String, String> params = new HashMap<String, String>();
+//        Map<String, String[]> requestParams = request.getParameterMap();
+//        for (Iterator<String> iter = requestParams.keySet().iterator(); iter.hasNext(); ) {
+//            String name = (String) iter.next();
+//            String[] values = (String[]) requestParams.get(name);
+//            String valueStr = "";
+//            for (int i = 0; i < values.length; i++) {
+//                valueStr = (i == values.length - 1) ? valueStr + values[i]
+//                        : valueStr + values[i] + ",";
+//            }
+//            params.put(name, valueStr);
+//        }
+//
+//        String totalPrice=params.get("totalPrice");
+//        System.out.printf("\n....return totalprice"+totalPrice);
+//        if(order.getChange()=="1"){
+//            //原价+差价
+//            order.setRealPrice(String.valueOf(Float.parseFloat(order.getRealPrice())+Float.parseFloat(totalPrice)));
+//            //更新数据库?为什么参数里不加上金额
+//            orderService.updateChange(order.getChange(),order.getOrder_num(),order.getOrder_id());
+//        }
+//        //更新结束
 
         return "orderDetail";
 //

@@ -19,7 +19,9 @@
         var flight_id = unescape(getQueryString("book_flight_id"));
         var departure_airport = unescape(getQueryString("book_departure_airport"));
         var price = unescape(getQueryString("book_price"));
+
         var totalPrice = parseInt(price)+parseInt(50);
+
         document.getElementById('date').innerHTML = date;
         document.getElementById('d_city').innerHTML = departurecity;
         document.getElementById('a_city').innerHTML = arrivalcity;
@@ -38,7 +40,8 @@ function add(){
     var telArray = document.getElementsByName("user_tel");
     var length = nameArray.length;
     var n = length;
-
+    var ec=unescape(getQueryString("ec"));
+    var bc=unescape(getQueryString("bc"));
     //记录乘客的舱位选择情况
     var allInput = document.getElementsByTagName("input"); //获得所有的input
     var loopTime = allInput.length; //获得数量
@@ -55,6 +58,7 @@ function add(){
     //根据乘客信息计算实际票价
     var l = seatArray.length;
     var seatType = seatArray[l-1];
+    //console.log(seatType);
     var age = getAge(idArray[length-1].value);
     var price = unescape(getQueryString("book_price"));
     var real_price = priceCalculate(seatType, age, price);
@@ -62,13 +66,21 @@ function add(){
 
     //获取已有的乘客信息表单并检查每个字段是否为空
     for(var i=1;i<length;i++) {
+        if(seatType==1&&bc==0||seatType==2&&ec==0){
+            layui.use('layer', function(){
+                var layer = layui.layer;
+                layer.msg('当前舱位没有余量！');
+            });
+            return
+        }
         if (nameArray[i].value === "" || checkName(nameArray[i])===false){
             layui.use('layer', function(){
                 var layer = layui.layer;
                 layer.msg('请正确填写姓名字段！');
             });
             return
-        }else{
+        }
+        else{
             if(idArray[i].value === "" || checkId(idArray[i])===false){
                 layui.use('layer', function(){
                     var layer = layui.layer;
@@ -113,6 +125,9 @@ function next(){
     var totalPrice=document.getElementById("J_totalPrice").innerHTML;
     var des=document.getElementById('d_city').innerHTML;
     var arrival=document.getElementById('a_city').innerHTML;
+    var ec=unescape(getQueryString("ec"));
+    var bc=unescape(getQueryString("bc"));
+    console.log(ec);
 
     var nowDate = new Date();
     var orderTime = nowDate.getFullYear()+"."+(parseInt(nowDate.getMonth())+1)+"."+nowDate.getDate()
@@ -124,47 +139,61 @@ function next(){
     //记录乘客的舱位选择情况
     var allInput = document.getElementsByTagName("input"); //获得所有的input
     var loopTime = allInput.length; //获得数量
+
     var seatArray = new Array();//存储选项的值
     var count=0;
-            for(i = 1;i < loopTime;i++){
-                if(allInput[i].type == "radio")//只对radio进行检查
+    for(i = 1;i < loopTime;i++){
+        if(allInput[i].type == "radio")//只对radio进行检查
             if(allInput[i].checked==true){ //如果被选择
-                seatArray[count++]=allInput[i].value;//记录所选的值
+                seatArray[count]=allInput[i].value;//记录所选的值
+                count++;
             }
     }
+console.log(seatArray);
+    //根据乘客信息计算实际票价
+    var l = seatArray.length;
+    var seatType = seatArray[l-1];
 
-    //提交时重新验空 保证准确性
-    for(var i=1;i<length;i++) {
-        if (nameArray[i].value === "" || checkName(nameArray[i])===false){
-            layui.use('layer', function(){
-                var layer = layui.layer;
-                layer.msg('请正确填写姓名字段！');
-            });
-            return
-        }else{
-            if(idArray[i].value === "" || checkId(idArray[i])===false){
+
+        //提交时重新验空 保证准确性
+        for (var i = 1; i < length; i++) {
+            if(seatType==1&&bc==0||seatType==2&&ec==0){
                 layui.use('layer', function(){
                     var layer = layui.layer;
-                    layer.msg('请正确填写长度为15或18的身份证字段！');
+                    layer.msg('当前舱位没有余量！');
                 });
                 return
-            }else if(idArray[i].value === idArray[i-1].value){
-                layui.use('layer', function(){
+            }
+            if (nameArray[i].value === "" || checkName(nameArray[i]) === false) {
+                layui.use('layer', function () {
                     var layer = layui.layer;
-                    layer.msg('身份证字段重复！请检查后重新填写');
+                    layer.msg('请正确填写姓名字段！');
                 });
                 return
-            }else{
-                if(telArray[i].value === "" || checkTel(telArray[i])===false){
-                    layui.use('layer', function(){
+            } else {
+                if (idArray[i].value === "" || checkId(idArray[i]) === false) {
+                    layui.use('layer', function () {
                         var layer = layui.layer;
-                        layer.msg('请正确填写长度为11的号码字段！');
+                        layer.msg('请正确填写长度为15或18的身份证字段！');
                     });
                     return
+                } else if (idArray[i].value === idArray[i - 1].value) {
+                    layui.use('layer', function () {
+                        var layer = layui.layer;
+                        layer.msg('身份证字段重复！请检查后重新填写');
+                    });
+                    return
+                } else {
+                    if (telArray[i].value === "" || checkTel(telArray[i]) === false) {
+                        layui.use('layer', function () {
+                            var layer = layui.layer;
+                            layer.msg('请正确填写长度为11的号码字段！');
+                        });
+                        return
+                    }
                 }
             }
         }
-    }
 
     //将乘客信息录入数据库
     for(var i=1; i<length; i++){

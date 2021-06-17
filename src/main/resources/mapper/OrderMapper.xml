@@ -58,7 +58,7 @@
         type,
         bc_remaining,
         ec_remaining,
-        realPrice
+        realPrice,
         change0
         from order_table
         inner join flight_table  on order_table.flight_id = flight_table.flight_id
@@ -78,7 +78,7 @@
         date,
         departuretime,
         arrivaltime,
-        realPrice
+        realPrice,
         change0
         from order_table
         inner join flight_table  on order_table.flight_id = flight_table.flight_id

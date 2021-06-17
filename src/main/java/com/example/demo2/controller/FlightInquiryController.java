@@ -62,15 +62,16 @@ public class FlightInquiryController {
     //航班推荐(随机)
     @RequestMapping("/index/re")
     @ResponseBody()
-    public List<Flight> recommend( Flight flight){
+    public List<Flight> recommend(){
         List<Flight> recommendlist=flightService.findByRandom();
         return recommendlist;
     }
 
     @RequestMapping("/index/pr")
     @ResponseBody()
-    public List<Flight> price(Flight flight){
+    public List<Flight> price(){
         List<Flight> pricelist=flightService.findByPrice();
+        System.out.println(pricelist);
         return pricelist;
     }
 
@@ -91,11 +92,12 @@ public class FlightInquiryController {
 
     @RequestMapping("flight")
     @ResponseBody()
-    public List<Flight> flightresult(HttpServletRequest request) {
+    public List<Flight> flightresult() {
         System.out.println("2"+getdeparturecity+getarrivalcity+getdate);
         List<Flight> flightList = flightService.findByRequired(getdeparturecity,getarrivalcity,getdate);
         return flightList;
     }
+
 
     @RequestMapping("postDAA")
     @ResponseBody()
@@ -106,7 +108,7 @@ public class FlightInquiryController {
 
     @RequestMapping("changeTicket")
     @ResponseBody()
-    public List<Flight> changeTicket(HttpServletRequest request) {
+    public List<Flight> changeTicket() {
 
         System.out.println("hahaha"+departurecity);
         List<Flight> flightList = flightService.findByDAA(departurecity,arrivalcity);
