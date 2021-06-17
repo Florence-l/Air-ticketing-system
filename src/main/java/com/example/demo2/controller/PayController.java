@@ -55,7 +55,8 @@ public class PayController {
             order1.setFlight(flight);
             order1.setFlight_id(flight.getFlight_id());
             order1.setSeat_id(null);
-            order1.setRealPrice(totalPrice);
+            String price=order1.getRealPrice();
+            order1.setRealPrice(String.valueOf(Float.parseFloat(totalPrice)+Float.parseFloat(price)));//改签后的价格
             if (change != null) {
                 order1.setChange(change);
 
@@ -103,8 +104,9 @@ public class PayController {
                                 : valueStr + values[i] + ",";
                     }
                     totalPrice = valueStr;
-                    //原价+差价
-                    order1.setRealPrice(String.valueOf(Float.parseFloat(order1.getRealPrice()) + Float.parseFloat(totalPrice)));
+                    System.out.printf("\n退款金额："+String.valueOf(Float.parseFloat(order1.getRealPrice())));
+                    //改签后的价格+50
+                    order1.setRealPrice(String.valueOf(Float.parseFloat(order1.getRealPrice())));
                     System.out.printf("\n realprice"+String.valueOf(Float.parseFloat(order1.getRealPrice()) + Float.parseFloat(totalPrice)));
                     //更新数据库
                     order_num_=order1.getOrder_num();
