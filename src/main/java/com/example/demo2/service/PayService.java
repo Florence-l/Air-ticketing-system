@@ -115,7 +115,7 @@ public class PayService {
                 else System.out.printf("\nsuccess 退款:"+response.getRefundFee());
 
                 //再从原订单退款
-                order_no=order_no.substring(0,order_no.length()-18);//获取原订单的订单号
+                order_no=order_no.substring(order_no.length()-4);//获取原订单的订单号
                 model = new AlipayTradeRefundModel();
                 model.setOutTradeNo(order_no);
                 model.setRefundAmount(String.valueOf(refund-diff_amount_f));//剩下的金额从原订单扣

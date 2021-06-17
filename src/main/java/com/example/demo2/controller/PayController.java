@@ -2,8 +2,10 @@ package com.example.demo2.controller;
 
 import com.alipay.api.AlipayApiException;
 import com.alipay.api.internal.util.AlipaySignature;
+import com.example.demo2.bean.Flight;
 import com.example.demo2.bean.Order;
 import com.example.demo2.config.AlipayConfig;
+import com.example.demo2.service.FlightService;
 import com.example.demo2.service.OrderService;
 import com.example.demo2.service.PayService;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -25,6 +27,8 @@ public class PayController {
     private PayService payService;
     @Autowired
     private OrderService orderService;
+    @Autowired
+    private FlightService flightService;
 
     private String order_num_;
     private Integer order_id;
@@ -41,13 +45,17 @@ public class PayController {
      */
     @RequestMapping("/pay")
     @ResponseBody
-    public void payController(String totalPrice,String subject,String order_num,String change,String order_id,HttpServletResponse response)throws IOException{
+    public void payController(String totalPrice,String subject,String order_num,String change,String order_id,String book_flight_id,HttpServletResponse response)throws IOException{
         order_num_ = order_num;
         //改签时使用
         if(order_id!=null) {
+            Flight flight= flightService.findById(book_flight_id);
             order1=orderService.selectById(Integer.valueOf(order_id));
-            order1.setOrder_num(order_num+order1.getFlight_id());
-            String order_num_=order_num+order1.getFlight_id();
+            String order_num_=order_num+(order1.getPassenger_id()).substring(order1.getPassenger_id().length()-4);
+            order1.setOrder_num(order_num_);
+            order1.setFlight(flight);
+            order1.setFlight_id(flight.getFlight_id());
+            order1.setSeat_id(null);
             order1.setRealPrice(totalPrice);
             if (change != null) {
                 order1.setChange(change);
@@ -65,7 +73,7 @@ public class PayController {
     @ResponseBody()
     public String getOd_num(){
         System.out.printf("\n order_num="+order_num_);
-        return order_num_;
+        return String.valueOf(order_num_);
     }
 
 
@@ -97,7 +105,7 @@ public class PayController {
                     order1.setRealPrice(String.valueOf(Float.parseFloat(order1.getRealPrice()) + Float.parseFloat(totalPrice)));
                     //更新数据库
                     order_num_=order1.getOrder_num();
-                    orderService.updateAfterChange(order1.getChange(), order1.getOrder_num(), order1.getOrder_id(),order1.getRealPrice());
+                    orderService.updateAfterChange(order1.getFlight_id(),order1.getSeat_id(),order1.getChange(), order1.getOrder_num(), order1.getOrder_id(),order1.getRealPrice());
                     break;
                 }
             }

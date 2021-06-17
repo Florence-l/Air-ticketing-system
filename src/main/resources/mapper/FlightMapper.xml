@@ -49,6 +49,10 @@
     select * from flight_table where (bc_remaining+ec_remaining)>0 order by price limit 5
   </select>
 
+  <select id="findById" resultType="com.example.demo2.bean.Flight" resultMap="FlightResultMap">
+    select * from flight_table where flight_id = #{flight_id}
+  </select>
+
   <update id="updateSeatStatus" parameterType="com.example.demo2.bean.Order">
     update flight_table
     set seat_status=#{seat_status}
@@ -78,6 +82,8 @@
     set ec_remaining=ec_remaining+1
     where flight_id=#{flight_id}
   </update>
+
+
 
 
 

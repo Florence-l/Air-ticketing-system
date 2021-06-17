@@ -19,6 +19,10 @@ public class FlightService implements FlightMapper{
     @Resource
     private FlightMapper flightMapper;
 
+    public  Flight findById(String book_flight_id) {
+        return flightMapper.findById(book_flight_id);
+    }
+
     @Override
     public List<Flight> findByRequired(String departurecity, String arrivalcity, String date) {
         List<Flight> list = flightMapper.findByRequired(departurecity,arrivalcity,date);

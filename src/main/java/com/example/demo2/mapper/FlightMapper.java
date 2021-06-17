@@ -8,6 +8,8 @@ import org.apache.ibatis.annotations.Param;
 import java.util.List;
 @Mapper
 public interface FlightMapper {
+    Flight findById(String book_flight_id);
+
     List<Flight> findByRequired(@Param("departurecity")String departurecity, @Param("arrivalcity")String arrivalcity, @Param("date") String date);
     List<Flight> findByDAA(@Param("departurecity")String departurecity, @Param("arrivalcity")String arrivalcity);
     String findSeatId(@Param("flight_id") Integer flight_id);

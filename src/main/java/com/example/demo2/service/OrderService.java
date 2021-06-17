@@ -142,8 +142,8 @@ public class OrderService {
         return orderMapper.searchById(order_id);
     }
 
-    public int updateAfterChange(String change, String order_num, Integer order_id, String realPrice) {
-        return orderMapper.updateAfterChange(change,order_num,order_id,realPrice);
+    public int updateAfterChange(Integer flight_id,Integer seat_id,String change, String order_num, Integer order_id, String realPrice) {
+        return orderMapper.updateAfterChange(flight_id,seat_id,change,order_num,order_id,realPrice);
     }
 
 

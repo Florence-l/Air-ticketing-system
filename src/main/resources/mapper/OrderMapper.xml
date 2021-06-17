@@ -160,7 +160,7 @@
 
     <update id="updateAfterChange" parameterType="com.example.demo2.bean.Order">
         update order_table
-        set change0=#{change0},order_num=#{order_num},realPrice=#{realPrice}
+        set flight_id=#{flight_id},seat_id=#{seat_id},change0=#{change0},order_num=#{order_num},realPrice=#{realPrice}
         where order_id=#{order_id}
     </update>
 

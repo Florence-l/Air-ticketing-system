@@ -13,7 +13,6 @@
   <sql id="Base_Column_List">
     user_id, username, password, email
   </sql>
-
   <insert id="insert" parameterType="com.example.demo2.bean.User">
     insert into user (user_id, username, password,email)
     values (#{userId,jdbcType=INTEGER}, #{username,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR},#{email,jdbcType=VARCHAR})

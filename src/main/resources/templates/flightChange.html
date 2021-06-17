@@ -267,133 +267,117 @@
             ]]
         });
 
-    table.on('tool(test)', function (obj)  {
-        var book_date = obj.data.date;
-        var book_departurecity = obj.data.departurecity;
-        var book_arrivalcity = obj.data.arrivalcity;
-        var book_departuretime = obj.data.departuretime;
-        var book_arrivaltime = obj.data.arrivaltime;
-        var book_arrival_airport = obj.data.arrival_airport;
-        var book_departure_airport = obj.data.departure_airport;
-        var book_price=parseInt(obj.data.price);
-        var book_flight_id=obj.data.flight_id;
+        table.on('tool(test)', function (obj)  {
+            var book_date = obj.data.date;
+            var book_departurecity = obj.data.departurecity;
+            var book_arrivalcity = obj.data.arrivalcity;
+            var book_departuretime = obj.data.departuretime;
+            var book_arrivaltime = obj.data.arrivaltime;
+            var book_arrival_airport = obj.data.arrival_airport;
+            var book_departure_airport = obj.data.departure_airport;
+            var book_price=parseInt(obj.data.price);
+            var book_flight_id=obj.data.flight_id;
 
 
-        if (obj.event === 'change') {
-            var username=$('#username').html();
-            if(compareNow(book_date)==false){
-                layui.use('layer', function(){
-                    var layer = layui.layer;
-                    layer.msg('当前日期无法改签！');
-                });
-            }else {
-                if (username != ''){
-                    if(book_price > originalPrice)
-                    {
-                        layui.use('layer', function(){
-                            var layer = layui.layer;
-                            layer.msg('友情提示：乘客改签当前航班需补差价哦');
-                        })
-                        change = "1";
-                        var diff = book_price - originalPrice;
-                        $.ajax({//支付
-                            async : false,
-                            type:'post',
-                            url:'/pay',
-                            data:{
-                                totalPrice: diff,
-                                subject: departurecity+"-"+arrivalcity,
-                                order_num: order_num,
-                                order_id: order_id,
-                                change: "1",
-
-
-                            },
-                            success: function(response) {
-                                var newPage = window.open("about:blank", "_self");
-                                newPage.document.write(response);
-                                // if(response === "success"){
-                                //     $.ajax({//修改数据库
-                                //         type:'post',
-                                //         url:'/change1',
-                                //         data:{
-                                //             order_id: order_id,
-                                //             diff: diff
-                                //         },
-                                //         success:function(res){
-                                //             if(res === "success"){
-                                //                 window.location.href='http://localhost:8080/orderChange';
-                                //             }
-                                //         }
-                                //     })
-                                // }
-                            }
-                        })
-                    }else if(book_price < originalPrice)
-                    {
-                        layui.use('layer', function(){
-                            var layer = layui.layer;
-                            layer.msg('友情提示：乘客改签当前航班会退差价哦');
-                        })
-                        change = "2";
-                        var diff = originalPrice - book_price;
-                        $.ajax({
-                            type:'post',
-                            url:'/change2',
-                            data:{
-                                order_id: order_id,
-                                diff: diff
-                            },
-                            success:function(res){
-                                if(res === "success"){
-                                    window.setTimeout(window.location.href, 1000);
-                                    window.location.href='http://localhost:8080/orderChange';
-                                }
-                            }
-                        })
-                    }else if(book_price === originalPrice)
-                    {
-                        layui.use('layer', function(){
-                            var layer = layui.layer;
-                            layer.msg('友情提示：乘客改签当前航班无差价哦');
-                        })
-                        change = "3";
-                        $.ajax({
-                            type:'post',
-                            url:'/change3',
-                            data:{
-                                order_id: order_id,
-                                diff: 0
-                            },
-                            success:function(res){
-                                if(res === "success"){
-                                    window.setTimeout(window.location.href, 1000);
-                                    window.location.href='http://localhost:8080/orderChange';
-                                }
-                            }
-                        })
-                    }
-                }else {
-                    layer.open({
-                        type: 2,
-                        area: ["500px", "600px"],
-                        title: "请先登录",
-                        closeBtn: 1,
-                        content: "/loginModal?book_departurecity=" + escape(book_departurecity) + "&book_arrivalcity="
-                            + escape(book_arrivalcity) + "&book_departuretime=" + escape(book_departuretime) + "&book_arrivaltime="
-                            + escape(book_arrivaltime) + "&book_arrival_airport=" + escape(book_arrival_airport) + "&book_departure_airport="
-                            + escape(book_departure_airport) + "&book_date=" + escape(book_date) + "&book_price=" + escape(book_price)
-                            + "&book_flight_id=" + escape(book_flight_id),
+            if (obj.event === 'change') {
+                var username=$('#username').html();
+                if(compareNow(book_date)==false){
+                    layui.use('layer', function(){
+                        var layer = layui.layer;
+                        layer.msg('当前日期无法改签！');
                     });
+                }else {
+                    if (username != ''){
+                        if(book_price > originalPrice)
+                        {
+                            layui.use('layer', function(){
+                                var layer = layui.layer;
+                                layer.msg('友情提示：乘客改签当前航班需补差价哦');
+                            })
+                            change = "1";
+                            var diff = book_price - originalPrice;
+                            $.ajax({//支付
+                                async : false,
+                                type:'post',
+                                url:'/pay',
+                                data:{
+                                    totalPrice: diff,
+                                    subject: departurecity+"-"+arrivalcity,
+                                    order_num: order_num,
+                                    order_id: order_id,
+                                    change: "1",
+                                    book_flight_id:book_flight_id
+                                },
+                                success: function(response) {
+                                    var newPage = window.open("about:blank", "_self");
+                                    newPage.document.write(response);
+                                }
+                            })
+                        }else if(book_price < originalPrice)
+                        {
+                            layui.use('layer', function(){
+                                var layer = layui.layer;
+                                layer.msg('友情提示：乘客改签当前航班会退差价哦');
+                            })
+                            change = "2";
+                            var diff = originalPrice - book_price;
+                            $.ajax({
+                                type:'post',
+                                url:'/change2',
+                                data:{
+                                    order_id: order_id,
+                                    diff: diff
+                                },
+                                success:function(res){
+                                    if(res === "success"){
+                                        window.setTimeout(window.location.href, 1000);
+                                        window.location.href='http://localhost:8080/orderChange';
+                                    }
+                                }
+                            })
+                        }else if(book_price === originalPrice)
+                        {
+                            layui.use('layer', function(){
+                                var layer = layui.layer;
+                                layer.msg('友情提示：乘客改签当前航班无差价哦');
+                            })
+                            change = "3";
+                            $.ajax({
+                                type:'post',
+                                url:'/change3',
+                                data:{
+                                    order_id: order_id,
+                                    diff: 0
+                                },
+                                success:function(res){
+                                    if(res === "success"){
+                                        window.setTimeout(window.location.href, 1000);
+                                        window.location.href='http://localhost:8080/orderChange';
+                                    }
+                                }
+                            })
+                        }
+                    }else {
+                        layer.open({
+                            type: 2,
+                            area: ["500px", "600px"],
+                            title: "请先登录",
+                            closeBtn: 1,
+                            content: "/loginModal?book_departurecity=" + escape(book_departurecity) + "&book_arrivalcity="
+                                + escape(book_arrivalcity) + "&book_departuretime=" + escape(book_departuretime) + "&book_arrivaltime="
+                                + escape(book_arrivaltime) + "&book_arrival_airport=" + escape(book_arrival_airport) + "&book_departure_airport="
+                                + escape(book_departure_airport) + "&book_date=" + escape(book_date) + "&book_price=" + escape(book_price)
+                                + "&book_flight_id=" + escape(book_flight_id),
+                        });
+                    }
                 }
             }
-        }
-    });
+        });
 
     });
 
 
-var now= new Date();
+    var now= new Date();
     function compareNow(str)
     {   var nowDate = new Date(now.getFullYear()+'/'+(now.getMonth()+1)+'/'+now.getDate());
         var r = str.match(/^(\d{1,4})(.|\/)(\d{1,2})\2(\d{1,2})$/);
