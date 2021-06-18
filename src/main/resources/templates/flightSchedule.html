@@ -281,11 +281,13 @@
         var book_ec_remaining=obj.data.ec_remaining;
         if (obj.event === 'book') {
             var username=$('#username').html();
-            if(compareNow(book_date)==1||(compareNow(book_date)==2&&comparetime(book_departuretime)==true)){
-                layui.use('layer', function(){
-                    var layer = layui.layer;
-                    layer.msg('当前日期无法预定！');
-                });
+
+            if(compareNow(book_date,book_departuretime)==true){
+                    layui.use('layer', function(){
+                        var layer = layui.layer;
+                        layer.msg('当前日期无法预定，请提前两小时！');
+                    });
+
             }else {
                 if (username != '') {
                     window.location.href = "/book?book_departurecity=" + escape(book_departurecity) + "&book_arrivalcity="
@@ -312,22 +314,17 @@
 
     });
 var now= new Date();
-    function compareNow(str)
-    {   var nowDate = new Date(now.getFullYear()+'/'+(now.getMonth()+1)+'/'+now.getDate());
-        var r = str.match(/^(\d{1,4})(.|\/)(\d{1,2})\2(\d{1,2})$/);
-        var queryDate= new Date(r[1], r[3]-1, r[4]);
-        console.log(nowDate);
-        console.log(queryDate);
-        if(queryDate<nowDate){return 1}
-        else if(queryDate==nowDate){return 2};
+var now1=new Date(now.setHours(now.getHours()+2));
 
-    }
-    function comparetime(str){
-        var time= new Date();
-        var nowtime=(time.getHours()-2)+":"+time.getMinutes()+":"+time.getSeconds()
-        if(nowtime>str)
+
+    function compareNow(str,str2) {
+        var querytime = str + " " + str2;
+        querytime = querytime.replace(".", "/");
+        console.log(querytime)
+        var thi = new Date(Date.parse(querytime));
+        if (now1 > thi) {
             return true
-
+        }
     }
 </script>
 
