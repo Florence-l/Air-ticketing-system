@@ -83,7 +83,7 @@
       <div class="sub-content">
         <span class="watermark">CHINA</span>
         <span class="name">PASSENGER NAME<br><span id="name"></span></span>
-        <span class="flight">FLIGHT N<br><span>FM9102</span></span>
+        <span class="flight">FLIGHT N<br><span id="flight_id"></span></span>
         <span class="gate">GATE<br><span>11B</span></span>
         <span class="seat">SEAT<br><span>N</span><span id="sid"></span></span>
         <span class="price">PRICE<br><span>¥ </span><span id="price"></span></span>
@@ -93,7 +93,7 @@
 
 <!--        <span class="class">Class<br><span id="ty"></span></span>-->
 
-        <span class="flight flightslip">航班号<br><span>FM9102</span></span>
+        <span class="flight flightslip">航班号<br><span id="fli_id"></span></span>
         <span class="seat seatslip">座位<br><span>N</span><span id="sid_"></span></span>
         <span class="name nameslip">乘客姓名<br><span id="name_"></span></span>
       </div>
@@ -229,8 +229,10 @@
   document.getElementById('date').innerHTML = date;
   document.getElementById('dt').innerHTML = departuretime;
   document.getElementById('da').innerHTML = departure_airport;
+  document.getElementById('flight_id').innerHTML =flight_id;
+  document.getElementById('fli_id').innerHTML =flight_id;
 
-  function xz(){
+          function xz(){
             //var 类型
 
             if(is_finish === "1"){

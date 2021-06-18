@@ -132,10 +132,10 @@
 
     <insert id="insertOrder" parameterType="com.example.demo2.bean.Order">
         insert into order_table (user_id, passenger_id, user_name, flight_id,
-        orderTime, paymentStatus, realPrice, order_num)
+        orderTime, paymentStatus, realPrice, order_num,seat_type)
         values (#{user_id,jdbcType=INTEGER}, #{passenger_id,jdbcType=VARCHAR}, #{user_name,jdbcType=VARCHAR},
         #{flight_id,jdbcType=INTEGER},#{orderTime,jdbcType=VARCHAR}, #{paymentStatus,jdbcType=INTEGER},
-        #{realPrice,jdbcType=VARCHAR},#{order_num,jdbcType=VARCHAR})
+        #{realPrice,jdbcType=VARCHAR},#{order_num,jdbcType=VARCHAR},#{seat_type,jdbcType=VARCHAR})
     </insert>
 
     <select id="findByNum" resultMap="OrderResultMap">

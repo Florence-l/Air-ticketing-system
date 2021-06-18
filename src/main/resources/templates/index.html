@@ -922,7 +922,11 @@
                                 "change0":change0,
 
                             },
+                            beforeSend: function () {
+                                loading = layer.msg('处理中，请稍后', {icon: 16})
+                            },
                             success(res) {
+                                layer.close(loading);
                                 if(res === 'success'){
                                     layui.use('layer', function(){
                                     layer.confirm('退票成功！', {title:'提示',btn: ['确定'],btn1:function(index,layero){
