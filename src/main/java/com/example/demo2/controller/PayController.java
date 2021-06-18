@@ -65,7 +65,6 @@ public class PayController {
 
             }
 
-
             order1.setOrder_num(order_num_);
             order1.setFlight(flight);
             order1.setFlight_id(flight.getFlight_id());
@@ -118,8 +117,9 @@ public class PayController {
                 flightService.deleteEC(gflight_id);
             }
             order_num_ = order1.getOrder_num();
-            flightService.updateSeatStatus(gflight_id,gseat_status);
-
+            if(gseat_status!=null) {
+                flightService.updateSeatStatus(gflight_id, gseat_status);
+            }
 
             orderService.updateAfterChange(order1.getFlight_id(),order1.getSeat_id(),order1.getChange(), order1.getOrder_num(), order1.getOrder_id(),order1.getRealPrice());
             return "orderDetail";
