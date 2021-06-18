@@ -131,6 +131,7 @@ public class OrderController {
         String realPrice = String.valueOf(price);
         String payResult = payService.refund(order_num,diff,0);
         if(payResult == "success"){
+            order_num = order.getOrder_num()+(order.getPassenger_id()).substring(order.getPassenger_id().length()-4);
             Integer updateResult = orderService.updateChange("2",order_num,order_id,realPrice,flight_id);
             if(updateResult == 1){
                 return "success";
