@@ -1,7 +1,5 @@
 package com.example.demo2.controller;
 
-import com.example.demo2.Util.LayuiTableResultUtil;
-import com.example.demo2.Util.RequiredUtil;
 import com.example.demo2.bean.Flight;
 import com.example.demo2.service.FlightService;
 import com.example.demo2.service.OrderService;
@@ -11,7 +9,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
-import java.security.Principal;
 import java.util.List;
 
 @Controller
@@ -57,7 +54,6 @@ public class FlightInquiryController {
     public String board(){
         return "boardingPass";
     }
-
 
     //航班推荐(随机)
     @RequestMapping("/index/re")

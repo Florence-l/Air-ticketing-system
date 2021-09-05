@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>数据分析</title>
+    <link rel="stylesheet" href="/css/file.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"/>
+    <script type="text/javascript" src="/js/jquery-1.8.3.min.js"></script>
+    <script type="text/javascript" src="/js/xlsx.core.min.js"></script>
+    <script type="text/javascript" src="/js/dataAnalysis.js"></script>
+    <script th:src="@{layui/layui.js}"></script>
+    <script src="https://cdn.bootcdn.net/ajax/libs/echarts/5.1.0/echarts.min.js"></script>
+    <style>
+        .left {
+            float: left;
+            width: 400px;
+            height: 500px;
+        }
+        .right {
+            margin-left: 310px;
+            height: 500px;
+        }
+    </style>
+</head>
+<h2 style="padding-left: 20px;padding-top: 20px">数据分析</h2>
+<div class="header">
+    <h2 style="padding-left: 20px;padding-top: 20px"><a href="/index" style="color: #0C0C0C">返回</a></h2>
+</div>
+<div class="left">
+    <input type="submit" value="开始上传" class="bt" onclick="start()">
+<div class="wrapper">
+    <form id="fileform" method="post" action="/upload" enctype="multipart/form-data">
+        <input class="file-input" type="file" name="file" hidden>
+        <i class="fas fa-cloud-upload-alt"></i>
+        <p>上传文件</p>
+        <br>
+    </form>
+
+    <section class="progress-area"></section>
+    <section class="uploaded-area"></section>
+</div>
+<!--<button></button>-->
+</div>
+<div class="right">
+<div id="header">
+    <span class="fileinput-button" id="btnLine">
+		<span>选择文件</span>
+		<input type="file" id="inputLine"
+               accept="application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+               onchange="excelToECharts(this)" onclick="this.value=''">
+	</span>
+        </div>
+
+        <div id="ECharts_main">
+<!--            <div id="select_tip">请选择文件</div>-->
+        </div>
+</div>
+<body>
+<script>
+    function start(){
+        document.getElementById("fileform").submit();//表单提交
+    }
+    var formData = new FormData();
+    $(function () {
+        $("#upload").click(function () {
+            var formData = new FormData($('#uploadForm')[0]);
+            $.ajax({
+                type: 'post',
+                url: "/upload", //上传文件的请求路径必须是绝对路劲
+                data: formData,
+                cache: false,
+                processData: false,
+                contentType: false,
+                success:function(res){
+                    if(res==="error"){
+                        layui.use('layer', function () {
+                            var layer = layui.layer;
+                            layer.msg('未选择文件');
+                        });
+                    }else if(res==="success"){
+                        layui.use('layer', function () {
+                            var layer = layui.layer;
+                            layer.msg('上传成功');
+                        });
+                    }else if(res==="fail"){
+                        layui.use('layer', function () {
+                            var layer = layui.layer;
+                            layer.msg('上传失败');
+                        });
+                    }
+
+
+                }
+            })
+        });
+    });
+</script>
+
+
+<script>
+    var fname;
+    const form = document.querySelector("form"),
+        fileInput = document.querySelector(".file-input"),
+        progressArea = document.querySelector(".progress-area"),
+        uploadedArea = document.querySelector(".uploaded-area");
+
+    // form click event
+    form.addEventListener("click", () =>{
+        fileInput.click();
+    });
+
+    fileInput.onchange = ({target})=>{
+        let file = target.files[0]; //getting file [0] this means if user has selected multiple files then get first one only
+        if(file){
+            let fileName = file.name; //getting file name
+            if(fileName.length >= 12){ //if file name length is greater than 12 then split it and add ...
+                let splitName = fileName.split('.');
+                fileName = splitName[0].substring(0, 13) + "... ." + splitName[1];
+            }
+            uploadFile(fileName); //calling uploadFile with passing file name as an argument
+        }
+    }
+
+    // file upload function
+    function uploadFile(name){
+        let xhr = new XMLHttpRequest(); //creating new xhr object (AJAX)
+        xhr.open("POST", "php/upload.php"); //sending post request to the specified URL
+        xhr.upload.addEventListener("progress", ({loaded, total}) =>{ //file uploading progress event
+            let fileLoaded = Math.floor((loaded / total) * 100);  //getting percentage of loaded file size
+            let fileTotal = Math.floor(total / 1000); //gettting total file size in KB from bytes
+            let fileSize;
+            // if file size is less than 1024 then add only KB else convert this KB into MB
+            (fileTotal < 1024) ? fileSize = fileTotal + " KB" : fileSize = (loaded / (1024*1024)).toFixed(2) + " MB";
+            let progressHTML = `<li class="row">
+                          <i class="fas fa-file-alt"></i>
+                          <div class="content">
+                            <div class="details">
+                              <span class="name">${name} • 正在上传</span>
+                              <span class="percent">${fileLoaded}%</span>
+                            </div>
+                            <div class="progress-bar">
+                              <div class="progress" style="width: ${fileLoaded}%"></div>
+                            </div>
+                          </div>
+                        </li>`;
+            uploadedArea.classList.add("onprogress");
+            progressArea.innerHTML = progressHTML;
+            if(loaded == total){
+                progressArea.innerHTML = "";
+                let uploadedHTML = `<li class="row">
+                            <div class="content upload">
+                              <i class="fas fa-file-alt"></i>
+                              <div class="details">
+                                <span class="name">${name} • 加载成功</span>
+                                <span class="size">${fileSize}</span>
+                              </div>
+                            </div>
+                            <i class="fas fa-check"></i>
+                          </li>`;
+                fname=name;
+                console.log(fname);
+                uploadedArea.classList.remove("onprogress");
+                uploadedArea.insertAdjacentHTML("afterbegin", uploadedHTML);
+            }
+        });
+        let data = new FormData(form);
+        xhr.send(data);
+    }
+
+</script>
+
+<script>
+    // 数据处理入口
+    function excelToECharts(obj) {
+        excelToData(obj);
+    }
+
+    // 读取Excel转换为json
+    function excelToData(obj) {
+        // 获取input标签的id，用这个来控制显示什么图咯
+        let inputId = obj.id;
+        // 获取文件对象
+        let files = obj.files;
+        // 如果有文件
+        if (files.length) {
+            // 初始化一个FileReader实例
+            let reader = new FileReader();
+            let file = files[0];
+            // 看下文件是不是xls或者xlsx的
+            let fullName = file.name;   // 全名
+            let filename = fullName.substring(0, fullName.lastIndexOf("."));    // 文件名
+            let fixName = fullName.substring(fullName.lastIndexOf("."), fullName.length);   // 后缀名
+            // 处理excel表格
+            if (fixName == ".xls" || fixName == ".xlsx") {
+                reader.onload = function (ev) {
+                    let data = ev.target.result;
+                    // 获取到excel
+                    let excel = XLSX.read(data, {type: 'binary'});
+                    // 获取第一个标签页名字
+                    let sheetName = excel.SheetNames[0];
+                    // 根据第一个标签页名，获取第一个标签页的内容
+                    let sheet = excel.Sheets[sheetName];
+                    // 转换为JSON
+                    let sheetJson = XLSX.utils.sheet_to_json(sheet);
+
+                    // 转换成json后，根据对应的图，转成对应的格式
+                    if (inputId == 'inputLine') {
+                        // 线图
+                        getLineChartFromJson(sheetJson, filename);
+                    } else if (inputId == 'inputPie') {
+                        // 饼图
+                        getPieChartFromJson(sheetJson, filename);
+                    }
+
+                }
+            } else {
+                alert("起开，只支持excel")
+            }
+            reader.readAsBinaryString(file);
+        }
+    }
+
+    // 通过表格数据的json，获取列名，返回列名的数组
+    function getColName(sheetJson) {
+        // 遍历json的第一行，获取key
+        let keys = [];
+        for (let key in sheetJson[0]) {
+            keys.push(key)
+        }
+        return keys;
+    }
+
+    // 线图的数据封装及显示
+    function getLineChartFromJson(sheetJson, filename) {
+
+        // 如果有结果，处理结果
+        if (sheetJson.length) {
+            // 获取所有列名
+            let keys = getColName(sheetJson);
+
+            // 处理一下作为x轴的列名和数据
+            let xZhou = {};
+            xZhou.name = keys.splice(0, 1);
+            let xDatas = [];
+            for (let i in sheetJson) {
+                xDatas.push(sheetJson[i][xZhou.name]);
+            }
+            xZhou.data = xDatas;
+
+            // 处理主体数据
+            let datas = [];
+            for (let i in keys) {
+                let one = {};       // 一组
+                one.name = keys[i]; // 名称
+                one.type = 'line';  // 图表类型
+                one.smooth = true;  // 平滑的线
+                let point = [];     // 记录这一组的所有点
+                for (let idx in sheetJson) {
+                    // 把这组的点push到数组中
+                    point.push(sheetJson[idx][one.name]);
+                }
+                one.data = point;
+                // 把这组数据添加到主体数据中
+                datas.push(one)
+            }
+            // 调用展现的方法
+            dataToLineChart(filename, keys, xZhou, datas);
+
+        }
+    }
+
+    // 线图数据展现
+    function dataToLineChart(title, keys, xZhou, datas) {
+        document.getElementById('ECharts_main').innerHTML = "";
+        document.getElementById('ECharts_main').removeAttribute('_echarts_instance_');
+
+        //初始化echarts实例
+        var myChart = echarts.init(document.getElementById('ECharts_main'));
+
+        //指定图表的配置项和数据
+        var option = {
+            title: {
+                text: title,
+                x: 'center',
+                y: 'bottom'
+            },
+            tooltip: {
+                trigger: 'axis'
+            },
+            legend: {
+                data: keys,
+                orient: 'vertical',
+                x: 'right',
+                y: 'center'
+            },
+            xAxis: xZhou,
+            yAxis: {},
+            series: datas,
+            toolbox: {
+                show: true,
+                left: 'right',
+                feature: {
+                    dataView: {},
+                    magicType: {
+                        type: ['line', 'bar', 'stack', 'tiled']
+                    },
+                    saveAsImage: {}
+                }
+            }
+        };
+
+        // 使用刚指定的配置项和数据显示图表。
+        myChart.setOption(option);
+    }
+</script>
+</body>
+</html>
