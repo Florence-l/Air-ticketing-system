@@ -2,8 +2,14 @@ package com.example.demo2.service;
 
 import com.example.demo2.bean.Flight;
 import com.example.demo2.mapper.FlightMapper;
+import org.springframework.cache.annotation.CacheConfig;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.cache.annotation.Caching;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import javax.annotation.Resource;
 
 import java.text.ParseException;
@@ -15,6 +21,7 @@ import java.util.Random;
 
 @Component
 @Service
+//@CacheConfig(cacheNames = "flights")
 public class FlightService implements FlightMapper{
     @Resource
     private FlightMapper flightMapper;
@@ -23,24 +30,32 @@ public class FlightService implements FlightMapper{
         return flightMapper.findById(book_flight_id);
     }
 
+
     @Override
+//    @Transactional
+//    @Cacheable(value="flight",key="#departurecity+'-'+#arrivalcity+'-'+#date")
     public List<Flight> findByRequired(String departurecity, String arrivalcity, String date) {
+        System.out.printf("没有使用缓存\n");
         List<Flight> list = flightMapper.findByRequired(departurecity,arrivalcity,date);
         if(list!=null){
             return list;
         }
         return null;
     }
+
     @Override
+//    @Cacheable(value="flight",key="#departurecity+'-'+#arrivalcity")
     public List<Flight> findByDAA(String departurecity, String arrivalcity) {
         System.out.printf("\n "+departurecity+arrivalcity);
         List<Flight> list = flightMapper.findByDAA(departurecity,arrivalcity);
+        System.out.printf("没有使用缓存\n");
         if(list!=null){
             System.out.printf("\n the size of list is "+list.size());
             return list;
         }
         return null;
     }
+
     @Override
     public int countAllFlight() {
         int count = flightMapper.countAllFlight();
