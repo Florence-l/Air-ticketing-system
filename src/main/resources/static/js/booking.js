@@ -164,6 +164,19 @@ console.log(seatArray);
                 });
                 return
             }
+
+            var baby = 0;
+            for(var c = 1; c < length; c++){
+                if(getAge(idArray[c].value)>2){
+                    return
+                }else{
+                    if(getAge(idArray[c].value)===0 || getAge(idArray[c].value) ===1 || getAge(idArray[c].value) ===2){
+                        baby = 1;
+                        console.log(1);
+                    }
+                }
+            }
+
             if (nameArray[i].value === "" || checkName(nameArray[i]) === false) {
                 layui.use('layer', function () {
                     var layer = layui.layer;
@@ -188,6 +201,12 @@ console.log(seatArray);
                         layui.use('layer', function () {
                             var layer = layui.layer;
                             layer.msg('请正确填写长度为11的号码字段！');
+                        });
+                        return
+                    }else if(baby === 1){
+                        layui.use('layer', function () {
+                            var layer = layui.layer;
+                            layer.msg('婴儿必须要有至少一名成人陪同！');
                         });
                         return
                     }
@@ -324,9 +343,9 @@ function priceCalculate(seatType, age, price){
      //根据舱位 经济舱6.7折
      if(seatType === "2") price*=0.67;
      //判断是否为儿童[2,12) 5折
-     if(2<=age&&age<12) price*=0.5;
+     if(2<age&&age<12) price*=0.5;
      //判断是否为婴儿(0,2) 1折
-     if(0<age&&age<2) price*=0.1;
+     if(0<=age&&age<=2) price*=0.1;
 
     var flyDate = (unescape(getQueryString("book_date")));//起飞时间，年月日格式日期
     flyDate=flyDate.replaceAll(".","/");//转换为yyyy/MM/dd格式
