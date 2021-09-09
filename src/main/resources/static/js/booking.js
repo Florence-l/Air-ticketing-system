@@ -154,6 +154,19 @@ console.log(seatArray);
     var l = seatArray.length;
     var seatType = seatArray[l-1];
 
+    var baby = 0;
+    var bAge=0;
+    for(var c = 1; c < length; c++){
+        bAge = getAge(idArray[c].value);
+        if(bAge=== 0 || bAge === 1 || bAge === 2){
+            baby = 1;
+            console.log(1);
+        }
+        if(bAge>2){
+            baby = 0;
+            break
+        }
+    }
 
         //提交时重新验空 保证准确性
         for (var i = 1; i < length; i++) {
@@ -164,19 +177,6 @@ console.log(seatArray);
                 });
                 return
             }
-
-            var baby = 0;
-            for(var c = 1; c < length; c++){
-                if(getAge(idArray[c].value)>2){
-                    return
-                }else{
-                    if(getAge(idArray[c].value)===0 || getAge(idArray[c].value) ===1 || getAge(idArray[c].value) ===2){
-                        baby = 1;
-                        console.log(1);
-                    }
-                }
-            }
-
             if (nameArray[i].value === "" || checkName(nameArray[i]) === false) {
                 layui.use('layer', function () {
                     var layer = layui.layer;
@@ -226,6 +226,7 @@ console.log(seatArray);
             },
             success:function(res){
                 if(res==="success"){
+                    console.log(111111)
                 }
             }
         })
@@ -247,6 +248,7 @@ console.log(seatArray);
                 order_num:order_num,
             },
             success:function(res){
+                console.log(222222)
             }
         })
     }
@@ -262,6 +264,7 @@ console.log(seatArray);
             order_num: order_num
         },
         success: function(response) {
+            console.log(1234567)
             var newPage = window.open("about:blank", "_self");
             newPage.document.write(response);
         }
