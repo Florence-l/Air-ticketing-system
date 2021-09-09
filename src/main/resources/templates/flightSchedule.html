@@ -157,18 +157,25 @@
     </div>
 </div>
 
-
-
-
 <th:block th:include="common.html :: footer"></th:block>
 
 <script type="text/html" id="toolbtn">
     <button id="book" style="width: 50px;" class="layui-btn layui-btn-xs layui-btn-radius layui-btn-primary" lay-event="book" >预定</button>
 </script>
 
+<script>
+    var departurecity = $.getUrlParam('departurecity');
+    var arrivalcity = $.getUrlParam('arrivalcity');
+    var date= $.getUrlParam('date');
+
+    window.onload = function(){
+        $("#gdeparturecity").val(departurecity);
+        $("#garrivalcity").val(arrivalcity);
+        $("#gdate").val(date);
+    }
+</script>
 
 <script type="text/javascript">
-
     getid=function (){
         document.getElementById("flightInquiry").submit();
         var a = document.getElementById("gdeparturecity").value;
@@ -213,31 +220,32 @@
         window.location.href="/result?departurecity=" + a + "&arrivalcity=" + b + "&date="+res;
 
     }
-
-
 </script >
 
 
 <script th:src="@{layui/layui.js}"></script>
 
-<script>
-    var departurecity = $.getUrlParam('departurecity');
-    var arrivalcity = $.getUrlParam('arrivalcity');
-    var date= $.getUrlParam('date');
-
-    window.onload = function(){
-        $("#gdeparturecity").val(departurecity);
-        $("#garrivalcity").val(arrivalcity);
-        $("#gdate").val(date);
-    }
-
-</script>
-
 <script th:inline="none">
     var id;
+    if(departurecity.length==0||arrivalcity.length==0||date.length==0);
+    else if(departurecity==null||arrivalcity==null||date.length==null);
+    else if(/^[\u4e00-\u9fa5]+$/.test(departurecity)==false||/^[\u4e00-\u9fa5]+$/.test(arrivalcity)==false);
+    else if(isvalidate(date)==false);
+    else {
+        $.ajax({
+            type: 'POST',
+            url: '/index',
+            async:false,
+            data: {
+                'departurecity': departurecity,
+                'arrivalcity': arrivalcity,
+                'date':date
+            }
+        })
+    }
+
     layui.use(['table'], function(){
         var table = layui.table;//使用数据表格
-
         table.render({
             elem: '#flightList'
             ,height:600
@@ -315,8 +323,6 @@
     });
 var now= new Date();
 var now1=new Date(now.setHours(now.getHours()+2));
-
-
     function compareNow(str,str2) {
         var querytime = str + " " + str2;
         querytime = querytime.replace(".", "/");

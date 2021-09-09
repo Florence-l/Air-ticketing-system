@@ -1,0 +1,22 @@
+<ehcache name="test">
+
+    <diskStore path="java.io.tmpdir"/>
+    <defaultCache
+            maxEntriesLocalHeap="1000"
+            eternal="false"
+            timeToIdleSeconds="300"
+            timeToLiveSeconds="600"
+            overflowToDisk="true"
+            memoryStoreEvictionPolicy="LRU">
+    </defaultCache>
+
+    <cache name="flight"
+           maxEntriesLocalHeap="10000"
+           maxElementsInMemory="50000"
+           eternal="false"
+           clearOnFlush="true"
+           timeToIdleSeconds="300"
+           timeToLiveSeconds="600"
+           overflowToDisk="true">
+    </cache>
+</ehcache>
