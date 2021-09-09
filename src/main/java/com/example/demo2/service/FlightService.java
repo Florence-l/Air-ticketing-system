@@ -21,7 +21,6 @@ import java.util.Random;
 
 @Component
 @Service
-@CacheConfig(cacheNames = "flight")
 public class FlightService implements FlightMapper{
     @Resource
     private FlightMapper flightMapper;
@@ -32,7 +31,7 @@ public class FlightService implements FlightMapper{
 
 
     @Override
-    @Cacheable(key="#departurecity+'-'+#arrivalcity+'-'+#date")
+    @Cacheable(value = "flight1",key="#departurecity+'-'+#arrivalcity+'-'+#date")
     public List<Flight> findByRequired(String departurecity, String arrivalcity, String date) {
         System.out.printf(departurecity+arrivalcity+date+"没有使用缓存\n");
         List<Flight> list = flightMapper.findByRequired(departurecity,arrivalcity,date);
@@ -43,11 +42,9 @@ public class FlightService implements FlightMapper{
     }
 
     @Override
-    @Cacheable(key="#departurecity+'-'+#arrivalcity")
+    @Cacheable(value = "flight2",key="#departurecity+'-'+#arrivalcity")
     public List<Flight> findByDAA(String departurecity, String arrivalcity) {
-        System.out.printf("\n "+departurecity+arrivalcity);
         List<Flight> list = flightMapper.findByDAA(departurecity,arrivalcity);
-        System.out.printf("没有使用缓存\n");
         if(list!=null){
             System.out.printf("\n the size of list is "+list.size());
             return list;
@@ -56,6 +53,7 @@ public class FlightService implements FlightMapper{
     }
 
     @Override
+    @Cacheable(key="'allFlight'")
     public int countAllFlight() {
         int count = flightMapper.countAllFlight();
         if(count>0){
@@ -104,6 +102,7 @@ public class FlightService implements FlightMapper{
     }
 
     @Override
+    @Cacheable(value = "flightPrice")
     public List<Flight> findByPrice(){
         List<Flight> list = flightMapper.findByPrice();
         if(list!=null){

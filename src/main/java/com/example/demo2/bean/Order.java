@@ -2,7 +2,9 @@ package com.example.demo2.bean;
 
 //import java.util.Date;
 
-public class Order {
+import java.io.Serializable;
+
+public class Order implements Serializable {
     private Integer order_id;
     private Integer user_id;
     private String user_name;

@@ -248,7 +248,7 @@
                     });
                 }
                 else {
-                        window.location.href='http://localhost:8080/seatchooser?order_id='+order_id+"&flight_id="+flight_id+"&type="+type+"&seat_type="+seat_type;
+                        window.location.href='/seatchooser?order_id='+order_id+"&flight_id="+flight_id+"&type="+type+"&seat_type="+seat_type;
                         }
                 }
 
@@ -279,7 +279,7 @@
                                     layui.use('layer', function(){
                                     layer.confirm('退票成功！', {title:'提示',btn: ['确定'],btn1:function(index,layero){
                                     layer.close(index);
-                                    window.location.href='http://localhost:8080/orderdetail';
+                                    window.location.href='/orderdetail';
                                     }});
                                     });
 

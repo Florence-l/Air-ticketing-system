@@ -226,7 +226,6 @@ console.log(seatArray);
             },
             success:function(res){
                 if(res==="success"){
-                    console.log(111111)
                 }
             }
         })
@@ -248,7 +247,6 @@ console.log(seatArray);
                 order_num:order_num,
             },
             success:function(res){
-                console.log(222222)
             }
         })
     }
@@ -264,7 +262,6 @@ console.log(seatArray);
             order_num: order_num
         },
         success: function(response) {
-            console.log(1234567)
             var newPage = window.open("about:blank", "_self");
             newPage.document.write(response);
         }

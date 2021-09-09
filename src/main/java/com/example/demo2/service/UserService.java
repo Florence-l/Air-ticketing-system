@@ -37,10 +37,11 @@ public class UserService  implements UserDetailsService {
     public UserDetails loadUserByUsername(String name) throws UsernameNotFoundException {
         //在数据库中查找用户
         User user = userMapper.loadUserByUsername(name);
-        if (user == null)
+        if(user == null) {
             throw new BadCredentialsException("用户不存在");
-        else
+        } else {
             System.out.println("用户名"+user.getUsername()+"   密码"+user.getPassword());
+        }
         List<SimpleGrantedAuthority> authorities=new ArrayList<>();
         authorities.add(new SimpleGrantedAuthority("ROLE_USER"));
         //对用户信息进行封装，返回给Provider，进行身份认证
@@ -68,10 +69,13 @@ public class UserService  implements UserDetailsService {
                 userMapper.insert(user);
                 return 1;
             }
-            else
+            else {
                 return 2;
+            }
         }
-        else return 3;
+        else {
+            return 3;
+        }
     }
 
     //判断该邮箱是否已被使用

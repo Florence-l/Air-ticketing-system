@@ -10,11 +10,35 @@
             memoryStoreEvictionPolicy="LRU">
     </defaultCache>
 
-    <cache name="flight"
+    <cache name="flight1"
            maxEntriesLocalHeap="10000"
            maxElementsInMemory="50000"
            eternal="false"
            clearOnFlush="true"
+           timeToIdleSeconds="300"
+           timeToLiveSeconds="600"
+           overflowToDisk="true">
+    </cache>
+    <cache name="flight2"
+           maxEntriesLocalHeap="10000"
+           eternal="false"
+           clearOnFlush="true"
+           timeToIdleSeconds="300"
+           timeToLiveSeconds="600"
+           overflowToDisk="true">
+    </cache>
+    <cache name="flightPrice"
+           maxEntriesLocalHeap="10000"
+           eternal="false"
+           clearOnFlush="true"
+           timeToIdleSeconds="300"
+           timeToLiveSeconds="600"
+           overflowToDisk="true">
+    </cache>
+
+    <cache name="order"
+           maxEntriesLocalHeap="20000"
+           eternal="false"
            timeToIdleSeconds="300"
            timeToLiveSeconds="600"
            overflowToDisk="true">

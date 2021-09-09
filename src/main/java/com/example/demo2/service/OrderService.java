@@ -5,6 +5,9 @@ import com.example.demo2.bean.User;
 import com.example.demo2.mapper.OrderMapper;
 import com.example.demo2.mapper.UserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheConfig;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
@@ -14,12 +17,12 @@ import java.util.List;
 
 @Component
 @Service
+@CacheConfig(cacheNames = "order")
 public class OrderService {
     @Resource
     private OrderMapper orderMapper;
-//    private UserMapper userMapper;
 
-
+    @Cacheable(key="#user_id+'-'+#page+'-'+#limits")
     public List<Order> findByid(Integer user_id, int page, int limits) {
         List<Order> list = orderMapper.findByid(user_id,(limits-1)*page,page);
         if(list!=null){
@@ -28,6 +31,7 @@ public class OrderService {
         return null;
     }
 
+    @Cacheable(key="#order_num+'-'+#passenger_id")
     public Order findByNum(String order_num,String passenger_id){
         Order order = orderMapper.findByNum(order_num,passenger_id);
         if(order != null){
@@ -36,6 +40,7 @@ public class OrderService {
         return null;
     }
 
+    @Cacheable(key="'all-'+#user_id")
     public int countAllOrder(Integer user_id) {
         int count = orderMapper.countAllOrder(user_id);
         if(count>0){
@@ -44,6 +49,7 @@ public class OrderService {
         return 0;
     }
 
+    @Cacheable(key="'unpayCount-'+#user_id")
     public  int countUnpayOrder(Integer user_id){
         int count = orderMapper.countUnpayOrder(user_id);
         if(count>0){
@@ -53,6 +59,7 @@ public class OrderService {
 
     }
 
+    @Cacheable(key="'ungoCount-'+#user_id")
     public int countUngo(Integer user_id){
         int count = orderMapper.countUngo(user_id);
         if(count>0){
@@ -61,9 +68,8 @@ public class OrderService {
         return 0;
     }
 
+    @Cacheable(key="'unpay-'+#user_id+'-'+#page+'-'+#limits")
     public List<Order> findUnpay(Integer user_id, int page, int limits){
-//        User user = userMapper.selectUserByName(user_name);
-//        Integer user_id=user.getUserId();
         List<Order> list = orderMapper.findUnpay(user_id,(limits-1)*page,page);
         if(list!=null){
             return list;
@@ -71,6 +77,7 @@ public class OrderService {
         return null;
     }
 
+    @Cacheable(key="'ungo-'+#user_id+'-'+#page+'-'+#limits")
     public List<Order> findUngo(Integer user_id,int page, int limits){
         List<Order> list = orderMapper.findUngo(user_id,(limits-1)*page,page);
         if(list!=null){
@@ -108,6 +115,7 @@ public class OrderService {
     public void updateStatus(String orderTime){
         orderMapper.updateStatus(orderTime);
     }
+
     public void updateGo(Integer order_id){ orderMapper.updateGo(order_id);}
 
 
