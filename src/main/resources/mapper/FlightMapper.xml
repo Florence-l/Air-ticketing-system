@@ -42,7 +42,7 @@
   </select>
 
   <select id="findByRandom" resultType="com.example.demo2.bean.Flight" resultMap="FlightResultMap">
-    select * from flight_table where date="2021.06.19" and (bc_remaining+ec_remaining)>0 order by rand() limit 5
+    select * from flight_table where date="2021.09.10" and (bc_remaining+ec_remaining)>0 order by rand() limit 5
   </select>
 
   <select id="findByPrice" resultType="com.example.demo2.bean.Flight" resultMap="FlightResultMap">
