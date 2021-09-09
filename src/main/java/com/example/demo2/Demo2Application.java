@@ -15,6 +15,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupp
 @MapperScan("com.example.demo2.mapper")
 @EnableWebSecurity
 @EnableScheduling //定时任务
+@EnableCaching
 @EnableTransactionManagement // 开启事务，保证redis与mysql中数据的一致性
 public class Demo2Application  {
 

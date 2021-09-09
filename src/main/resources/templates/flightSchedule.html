@@ -157,9 +157,6 @@
     </div>
 </div>
 
-
-
-
 <th:block th:include="common.html :: footer"></th:block>
 
 <script type="text/html" id="toolbtn">
@@ -176,24 +173,6 @@
         $("#garrivalcity").val(arrivalcity);
         $("#gdate").val(date);
     }
-
-    // if(departurecity.length==0||arrivalcity.length==0||date.length==0);
-    // else if(departurecity==null||arrivalcity==null||date.length==null);
-    // else if(/^[\u4e00-\u9fa5]+$/.test(departurecity)==false||/^[\u4e00-\u9fa5]+$/.test(arrivalcity)==false);
-    // else if(isvalidate(date)==false);
-    // else {
-    //
-    // }
-    $.ajax({
-        type: 'POST',
-        url: '/index',
-        data: {
-            'departurecity': $.getUrlParam('departurecity'),
-            'arrivalcity': $.getUrlParam('arrivalcity'),
-            'date':$.getUrlParam('date')
-        }
-    })
-
 </script>
 
 <script type="text/javascript">
@@ -248,9 +227,25 @@
 
 <script th:inline="none">
     var id;
+    if(departurecity.length==0||arrivalcity.length==0||date.length==0);
+    else if(departurecity==null||arrivalcity==null||date.length==null);
+    else if(/^[\u4e00-\u9fa5]+$/.test(departurecity)==false||/^[\u4e00-\u9fa5]+$/.test(arrivalcity)==false);
+    else if(isvalidate(date)==false);
+    else {
+        $.ajax({
+            type: 'POST',
+            url: '/index',
+            async:false,
+            data: {
+                'departurecity': departurecity,
+                'arrivalcity': arrivalcity,
+                'date':date
+            }
+        })
+    }
+
     layui.use(['table'], function(){
         var table = layui.table;//使用数据表格
-
         table.render({
             elem: '#flightList'
             ,height:600

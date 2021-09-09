@@ -1,8 +1,9 @@
 package com.example.demo2.bean;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class Flight {
+public class Flight implements Serializable{
     private Integer flight_id;
 
     private Integer airplane_id;

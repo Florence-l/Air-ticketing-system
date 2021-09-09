@@ -21,7 +21,7 @@ import java.util.Random;
 
 @Component
 @Service
-//@CacheConfig(cacheNames = "flights")
+@CacheConfig(cacheNames = "flight")
 public class FlightService implements FlightMapper{
     @Resource
     private FlightMapper flightMapper;
@@ -32,10 +32,9 @@ public class FlightService implements FlightMapper{
 
 
     @Override
-//    @Transactional
-//    @Cacheable(value="flight",key="#departurecity+'-'+#arrivalcity+'-'+#date")
+    @Cacheable(key="#departurecity+'-'+#arrivalcity+'-'+#date")
     public List<Flight> findByRequired(String departurecity, String arrivalcity, String date) {
-        System.out.printf("没有使用缓存\n");
+        System.out.printf(departurecity+arrivalcity+date+"没有使用缓存\n");
         List<Flight> list = flightMapper.findByRequired(departurecity,arrivalcity,date);
         if(list!=null){
             return list;
@@ -44,7 +43,7 @@ public class FlightService implements FlightMapper{
     }
 
     @Override
-//    @Cacheable(value="flight",key="#departurecity+'-'+#arrivalcity")
+    @Cacheable(key="#departurecity+'-'+#arrivalcity")
     public List<Flight> findByDAA(String departurecity, String arrivalcity) {
         System.out.printf("\n "+departurecity+arrivalcity);
         List<Flight> list = flightMapper.findByDAA(departurecity,arrivalcity);
