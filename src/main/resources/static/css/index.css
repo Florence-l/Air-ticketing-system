@@ -1,1 +1,241 @@
-*{margin:0;padding:0}html{width:100%;height:100vh;justify-content:center;align-items:center}body{width:100%;height:100vh;justify-content:center;align-items:center;background-color:rgba(206,215,229,0.33)}.tab_contents ul{list-style:none}.tab_contents{width:1100px}.tab_contents .tab_nav{display:flex}.tab_contents .tab_nav li{padding:10px 20px;border-top-left-radius:5px;border-top-right-radius:5px;background:#e5e9ea;margin-right:2px;cursor:pointer;display:flex;position:relative;overflow:hidden}.tab_contents .tab_nav li img{width:30px;margin-right:5px;opacity:.3;transition:opacity .3s}.tab_contents .tab_nav li:hover img{opacity:1}.tab_contents .tab_nav li h2{font-size:14px}.tab_contents .tabNav_active{background:#f9f9f9!important}.tab_contents .tabNav_active img{opacity:1!important}.tab_contents .tab_box{position:relative;min-height:300px;padding:2em;color:#607291;background:#f9f9f9;box-shadow:0 15px 30px -10px rgba(92,92,92,0.36);border-radius:0 12px 12px 12px}.tab_contents .tab_box li{width:100%;height:100%;position:absolute;top:0;left:0;display:flex!important;align-items:center;padding:15px;overflow:hidden;box-sizing:border-box;visibility:hidden;opacity:0;transition:all .4s ease-in}.tab_contents .tab_box li img{width:128px}.tab_contents .tabBox_active{visibility:visible!important;opacity:1!important}.tab_contents .tab_box li div{position:relative;margin-left:20px}.tab_contents .tab_box li h2{position:absolute;top:0}.tab_contents .tab_box li p{margin-top:40px;line-height:1.5em;overflow:hidden;text-overflow:ellipsis;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical}.tab_contents .tab_box li button{width:110px;height:35px;border:1px solid #2196f3;float:right;cursor:pointer;margin-top:10px;background:transparent;outline:0}.tab_contents .tab_box li button a{display:block;color:#2196f3;text-decoration:none}.flight{font-family:Arial,Helvetica,sans-serif;border-collapse:collapse;width:100%}.flight td,#flight th{border:1px solid #ddd;padding:8px}.flight tr:nth-child(even){background-color:#f2f2f2}.flight tr:hover{background-color:#ddd}.flight th{padding-top:12px;padding-bottom:12px;text-align:left;background-color:#50508b;color:white}a.one:link,a.one:visited{background-color:white;color:black;border:2px solid #3acd99;padding:10px 20px;text-align:center;text-decoration:none;display:inline-block}a.one:hover,a.one:active{background-color:green;color:white}.filter-v2 .result-wrapper .flight-list.root-flights .flight-item .flight-box .flight-detail{width:410px}.flight-list .flight-item .flight-box .flight-detail{display:inline-block;vertical-align:middle;width:360px;text-align:center}.filter-v2 .result-wrapper .flight-list.root-flights .flight-item .flight-box .flight-detail .depart-box{width:100px}.flight-list .flight-item .flight-box .flight-detail .depart-box{position:relative;display:inline-block;vertical-align:top;width:110px;text-align:right}.flight-list .flight-item .flight-box .flight-detail .airport .name{max-width:83px}.flight-list .flight-item .flight-box .flight-detail .airport .name{display:inline-block;overflow:hidden;-o-text-overflow:ellipsis;text-overflow:ellipsis;white-space:nowrap;vertical-align:middle}.low-price-reprot-container-v2 .search-box{display:-webkit-box;display:-ms-flexbox;display:flex;height:38px;-webkit-box-align:center;-ms-flex-align:center;align-items:center;-webkit-box-pack:justify;-ms-flex-pack:justify;justify-content:space-between}.low-price-reprot-container .search-box{margin-bottom:16px}.low-price-reprot-container-v2 .search-box>div:nth-of-type(1) .low-price-reprot-title-v2{color:#333;font-size:26px;font-weight:600;line-height:32px;margin-right:24px}
+* {
+    margin: 0;
+    padding: 0
+}
+
+html {
+    width: 100%;
+    height: 100vh;
+    justify-content: center;
+    align-items: center
+}
+
+body {
+    width: 100%;
+    height: 100vh;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(206, 215, 229, 0.33)
+}
+
+.tab_contents ul {
+    list-style: none
+}
+
+.tab_contents {
+    width: 1100px
+}
+
+.tab_contents .tab_nav {
+    display: flex
+}
+
+.tab_contents .tab_nav li {
+    padding: 10px 20px;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    background: #e5e9ea;
+    margin-right: 2px;
+    cursor: pointer;
+    display: flex;
+    position: relative;
+    overflow: hidden
+}
+
+.tab_contents .tab_nav li img {
+    width: 30px;
+    margin-right: 5px;
+    opacity: .3;
+    transition: opacity .3s
+}
+
+.tab_contents .tab_nav li:hover img {
+    opacity: 1
+}
+
+.tab_contents .tab_nav li h2 {
+    font-size: 14px
+}
+
+.tab_contents .tabNav_active {
+    background: #f9f9f9 !important
+}
+
+.tab_contents .tabNav_active img {
+    opacity: 1 !important
+}
+
+.tab_contents .tab_box {
+    position: relative;
+    min-height: 300px;
+    padding: 2em;
+    color: #607291;
+    background: #f9f9f9;
+    box-shadow: 0 15px 30px -10px rgba(92, 92, 92, 0.36);
+    border-radius: 0 12px 12px 12px
+}
+
+.tab_contents .tab_box li {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: flex !important;
+    align-items: center;
+    padding: 15px;
+    overflow: hidden;
+    box-sizing: border-box;
+    visibility: hidden;
+    opacity: 0;
+    transition: all .4s ease-in
+}
+
+.tab_contents .tab_box li img {
+    width: 128px
+}
+
+.tab_contents .tabBox_active {
+    visibility: visible !important;
+    opacity: 1 !important
+}
+
+.tab_contents .tab_box li div {
+    position: relative;
+    margin-left: 20px
+}
+
+.tab_contents .tab_box li h2 {
+    position: absolute;
+    top: 0
+}
+
+.tab_contents .tab_box li p {
+    margin-top: 40px;
+    line-height: 1.5em;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical
+}
+
+.tab_contents .tab_box li button {
+    width: 110px;
+    height: 35px;
+    border: 1px solid #2196f3;
+    float: right;
+    cursor: pointer;
+    margin-top: 10px;
+    background: transparent;
+    outline: 0
+}
+
+.tab_contents .tab_box li button a {
+    display: block;
+    color: #2196f3;
+    text-decoration: none
+}
+
+.flight {
+    font-family: Arial, Helvetica, sans-serif;
+    border-collapse: collapse;
+    width: 100%
+}
+
+.flight td, #flight th {
+    border: 1px solid #ddd;
+    padding: 8px
+}
+
+.flight tr:nth-child(even) {
+    background-color: #f2f2f2
+}
+
+.flight tr:hover {
+    background-color: #ddd
+}
+
+.flight th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    background-color: #50508b;
+    color: white
+}
+
+a.one:link, a.one:visited {
+    background-color: white;
+    color: black;
+    border: 2px solid #3acd99;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block
+}
+
+a.one:hover, a.one:active {
+    background-color: green;
+    color: white
+}
+
+.filter-v2 .result-wrapper .flight-list.root-flights .flight-item .flight-box .flight-detail {
+    width: 410px
+}
+
+.flight-list .flight-item .flight-box .flight-detail {
+    display: inline-block;
+    vertical-align: middle;
+    width: 360px;
+    text-align: center
+}
+
+.filter-v2 .result-wrapper .flight-list.root-flights .flight-item .flight-box .flight-detail .depart-box {
+    width: 100px
+}
+
+.flight-list .flight-item .flight-box .flight-detail .depart-box {
+    position: relative;
+    display: inline-block;
+    vertical-align: top;
+    width: 110px;
+    text-align: right
+}
+
+.flight-list .flight-item .flight-box .flight-detail .airport .name {
+    max-width: 83px
+}
+
+.flight-list .flight-item .flight-box .flight-detail .airport .name {
+    display: inline-block;
+    overflow: hidden;
+    -o-text-overflow: ellipsis;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    vertical-align: middle
+}
+
+.low-price-reprot-container-v2 .search-box {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    height: 38px;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    -webkit-box-pack: justify;
+    -ms-flex-pack: justify;
+    justify-content: space-between
+}
+
+.low-price-reprot-container .search-box {
+    margin-bottom: 16px
+}
+
+.low-price-reprot-container-v2 .search-box > div:nth-of-type(1) .low-price-reprot-title-v2 {
+    color: #333;
+    font-size: 26px;
+    font-weight: 600;
+    line-height: 32px;
+    margin-right: 24px
+}
