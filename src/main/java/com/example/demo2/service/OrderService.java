@@ -22,7 +22,7 @@ public class OrderService {
     @Resource
     private OrderMapper orderMapper;
 
-    @Cacheable(key="#user_id+'-'+#page+'-'+#limits")
+//    @Cacheable(key="#user_id+'-'+#page+'-'+#limits")
     public List<Order> findByid(Integer user_id, int page, int limits) {
         List<Order> list = orderMapper.findByid(user_id,(limits-1)*page,page);
         if(list!=null){
